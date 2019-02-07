@@ -21,7 +21,6 @@ class UserController {
     public String submitForm(@Valid @ModelAttribute("user") CreateUserDto dto, BindingResult result, Model model) {
 
         if (result.hasErrors()) {
-            System.out.println(result.getAllErrors());
             model.addAttribute("user", dto);
             return "register";
         }

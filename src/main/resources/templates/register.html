@@ -4,23 +4,29 @@
 <head>
     <meta charset="UTF-8">
     <title>Register</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
-          integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
 </head>
 <body>
     <form method="post" action="#" th:action="@{/register}" th:object="${user}">
-        <label>Login<input type="text" th:field="*{login}"></label><br>
-
-        <label>Password<input type="password" th:field="*{password}"></label><br>
-
-
-        <label>Email<input type="text" th:field="*{email}"></label><br>
-
-
-        <label>Phone Number<input type="text" th:field="*{phoneNumber}"></label><br>
+        <label>Login <input type="text" placeholder="John Doe" th:field="*{login}"></label>
+        <p th:if="${#fields.hasErrors('login')}" th:errors="*{login}"></p>
+        <br>
+        <label>Email <input type="text" placeholder="you@email.com" th:field="*{email}"></label>
+        <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+        <br>
+        <label>Phone Number <input type="text" placeholder="xxx-xxx-xxx" th:field="*{phoneNumber}"></label>
         <p th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"></p>
-
-        <label>Submit<input type="submit" value="Submit"></label>
+        <br>
+        <label>Password <input type="password" placeholder="Password" th:field="*{password}"></label>
+        <p th:if="${#fields.hasErrors('password')}"  th:errors="*{password}"></p>
+        <br>
+        <label>Confirm Password <input type="password" placeholder="Password" th:field="*{confirmedPassword}"></label>
+        <p th:if="${#fields.hasErrors('confirmedPassword')}"  th:errors="*{confirmedPassword}"></p>
+        <br>
+        <label>Submit <input type="submit" value="Submit"></label>
     </form>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
 </body>
 </html>
