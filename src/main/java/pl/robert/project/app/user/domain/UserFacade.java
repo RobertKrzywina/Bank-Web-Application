@@ -18,11 +18,13 @@ public class UserFacade {
 
     private String formatPhoneNumber(String phoneNumber) {
         StringBuilder sb = new StringBuilder(15);
+        int temp = 0;
         sb.append("+48 ");
-        sb.append(phoneNumber);
-        sb.insert(7,  '-');
-        sb.insert(11, '-');
-
+        for (char c : phoneNumber.toCharArray()) {
+            sb.append(c);
+            if (temp == 2 || temp == 5) sb.append('-');
+            temp++;
+        }
         return sb.toString();
     }
 
