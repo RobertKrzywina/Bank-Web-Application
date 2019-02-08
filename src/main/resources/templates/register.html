@@ -7,26 +7,38 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
 </head>
 <body>
-    <form method="post" action="#" th:action="@{/register}" th:object="${user}">
-        <label>Login <input type="text" placeholder="John Doe" th:field="*{login}"></label>
-        <p th:if="${#fields.hasErrors('login')}" th:errors="*{login}"></p>
-        <br>
-        <label>Email <input type="text" placeholder="you@email.com" th:field="*{email}"></label>
-        <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
-        <br>
-        <label>Phone Number <input type="text" placeholder="xxx-xxx-xxx" th:field="*{phoneNumber}"></label>
-        <p th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"></p>
-        <br>
-        <label>Password <input type="password" placeholder="Password" th:field="*{password}"></label>
-        <p th:if="${#fields.hasErrors('password')}"  th:errors="*{password}"></p>
-        <br>
-        <label>Confirm Password <input type="password" placeholder="Password" th:field="*{confirmedPassword}"></label>
-        <p th:if="${#fields.hasErrors('confirmedPassword')}"  th:errors="*{confirmedPassword}"></p>
-        <br>
-        <label>Submit <input type="submit" value="Submit"></label>
-    </form>
+    <div class="container">
+        <h1>Register</h1>
+        <hr/>
+        <form method="post" action="#" th:action="@{/register}" th:object="${user}">
+            Login <input type="text" placeholder="John Doe" th:field="*{login}">
+            <p th:if="${#fields.hasErrors('login')}" th:errors="*{login}" class="alert alert-danger"></p>
+            <br>
+            Email <input type="text" placeholder="you@email.com" th:field="*{email}">
+            <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="alert alert-danger"></p>
+            <br>
+            Phone Number <input type="text" placeholder="xxx-xxx-xxx" th:field="*{phoneNumber}">
+            <p th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}" class="alert alert-danger"></p>
+            <br>
+            Password <input type="password" placeholder="Password" th:field="*{password}" id="password">
+            <p th:if="${#fields.hasErrors('password')}"  th:errors="*{password}" class="alert alert-danger"></p>
+            <br>
+            Confirm Password <input type="password" placeholder="Password" th:field="*{confirmedPassword}" id="confirmedPassword">
+            <p th:if="${#fields.hasErrors('confirmedPassword')}"  th:errors="*{confirmedPassword}" class="alert alert-danger"></p>
+            <br>
+            <input type="submit" value="Submit">
+        </form>
+        <a th:href="@{/}">Back</a>
+    </div>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+    <script>
+        $(function () {
+            $('input[type="text"]').change(function () {
+                this.value = $.trim(this.value);
+            });
+        });
+    </script>
 </body>
 </html>

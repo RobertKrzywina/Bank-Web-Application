@@ -4,7 +4,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.stereotype.Component;
-import pl.robert.project.app.validation.*;
+import pl.robert.project.app.validation.IsUnique;
+import pl.robert.project.app.validation.RegexExpressions;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
@@ -25,7 +26,7 @@ public class CreateUserDto implements RegexExpressions {
     @NotEmpty(message = "{email.notEmpty}")
     private String email;
 
-    @IsUnique(fieldName = "Phone number")
+    @IsUnique(fieldName = "Phone")
     @Pattern(regexp = phoneNumberRegex, message = "{phoneNumber.wrongFormat}")
     @NotEmpty(message = "{phoneNumber.notEmpty}")
     private String phoneNumber;
@@ -34,6 +35,5 @@ public class CreateUserDto implements RegexExpressions {
     @NotEmpty(message = "{password.notEmpty}")
     private String password;
 
-    @ConfirmedPassword
     private String confirmedPassword;
 }

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import pl.robert.project.app.user.domain.UserFacade;
 import pl.robert.project.app.user.domain.dto.CreateUserDto;
+import pl.robert.project.app.validation.ValidationFacade;
 
 import javax.validation.Valid;
 
@@ -16,16 +17,19 @@ import javax.validation.Valid;
 class UserController {
 
     private UserFacade userFacade;
+    private ValidationFacade validationFacade;
 
     @PostMapping("/register")
     public String submitForm(@Valid @ModelAttribute("user") CreateUserDto dto, BindingResult result, Model model) {
 
+        validationFacade.checkIfConfirmedPasswordMatchPassword(dto, result);
         if (result.hasErrors()) {
             model.addAttribute("user", dto);
             return "register";
         }
 
         userFacade.addUser(dto);
-        return "index";
+        model.addAttribute("msg", "Successfully registered new account.");
+        return "registerCompleted";
     }
 }
