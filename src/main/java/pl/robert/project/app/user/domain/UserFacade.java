@@ -3,6 +3,7 @@ package pl.robert.project.app.user.domain;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import pl.robert.project.app.user.domain.dto.CreateUserDto;
+import pl.robert.project.app.user.domain.dto.AuthorizationDto;
 
 @Component
 @AllArgsConstructor
@@ -46,5 +47,13 @@ public class UserFacade {
 
     public boolean isLoginAndPasswordCorrect(String login, String password) {
         return repository.findByLoginAndPassword(login, password) != null;
+    }
+
+    public AuthorizationDto findByLogin(String login) {
+        User user = repository.findByLogin(login);
+
+        if (user == null) return null;
+
+        return new AuthorizationDto(user.getLogin(), user.getPassword(), user.getRoles());
     }
 }

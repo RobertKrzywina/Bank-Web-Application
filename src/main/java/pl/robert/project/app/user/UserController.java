@@ -43,6 +43,6 @@ class UserController {
         }
 
         model.addAttribute("msg", "Hello " + dto.getLogin() + ".");
-        return "userPanel";
+        return "redirect:/user-panel";
     }
 }

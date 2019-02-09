@@ -14,7 +14,7 @@
             Login <input type="text" placeholder="John Doe" th:field="*{login}">
             <p th:if="${#fields.hasErrors('login')}" th:errors="*{login}" class="alert alert-danger"></p>
             <br>
-            Password <input type="password" placeholder="Password" th:field="*{password}" id="password">
+            Password <input type="password" placeholder="Password" th:field="*{password}">
             <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="alert alert-danger"></p>
             <br>
             <input type="submit" value="Submit">

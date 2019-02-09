@@ -16,7 +16,7 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter @Setter
-class Role {
+public class Role {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

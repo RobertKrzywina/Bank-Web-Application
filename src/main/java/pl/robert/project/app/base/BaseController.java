@@ -4,7 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import pl.robert.project.app.user.domain.dto.CreateUserDto;
-import pl.robert.project.app.user.domain.dto.SignInDto;
+import pl.robert.project.app.user.domain.dto.AuthorizationDto;
 
 @Controller
 class BaseController {
@@ -22,7 +22,12 @@ class BaseController {
 
     @GetMapping("/login")
     public String login(Model model) {
-        model.addAttribute("user", new SignInDto());
+        model.addAttribute("user", new AuthorizationDto());
         return "login";
+    }
+
+    @GetMapping("/user-panel")
+    public String userPanel() {
+        return "userPanel";
     }
 }
