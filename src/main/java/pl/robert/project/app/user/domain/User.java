@@ -5,6 +5,8 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity(name = "users")
 @NoArgsConstructor
@@ -32,4 +34,7 @@ class User {
     @NotNull
     @Length(max = 15)
     private String phoneNumber;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<Role> roles = new HashSet<>();
 }

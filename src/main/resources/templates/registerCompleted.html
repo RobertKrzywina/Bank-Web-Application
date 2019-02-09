@@ -12,6 +12,8 @@
         <hr/>
         <div th:if="${msg.isEmpty()!=null}">
             <p th:text="${msg}"></p>
+            <br>
+            <a th:href="@{/login}">Sign in</a>
         </div>
         <a th:href="@{/}">Back</a>
     </div>

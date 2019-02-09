@@ -39,4 +39,12 @@ public class UserFacade {
     public boolean isPhoneUnique(String phone) {
         return repository.findByPhoneNumber(formatPhoneNumber(phone)) == null;
     }
+
+    public boolean isLoginExists(String login) {
+        return repository.findByLogin(login) != null;
+    }
+
+    public boolean isLoginAndPasswordCorrect(String login, String password) {
+        return repository.findByLoginAndPassword(login, password) != null;
+    }
 }
