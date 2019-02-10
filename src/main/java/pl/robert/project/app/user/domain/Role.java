@@ -23,6 +23,6 @@ public class Role {
     private long id;
 
     @NotNull
-    @Length(max = 10)
+    @Length(min = 9, max = 10)
     private String role;
 }

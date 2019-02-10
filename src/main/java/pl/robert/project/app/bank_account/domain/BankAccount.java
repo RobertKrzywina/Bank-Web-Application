@@ -1,12 +1,8 @@
 package pl.robert.project.app.bank_account.domain;
 
 import lombok.*;
-import org.hibernate.validator.constraints.Length;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity(name = "bank_accounts")
@@ -21,7 +17,7 @@ public class BankAccount {
     private long id;
 
     @NotNull
-    @Length(max = 29)
+    @Column(length = 29)
     private String number;
 
     private double balance;

@@ -13,15 +13,16 @@
         <form method="post" action="#" th:action="@{/login}" th:object="${user}">
             Login <input type="text" placeholder="John Doe" th:field="*{login}">
             <p th:if="${#fields.hasErrors('login')}" th:errors="*{login}" class="alert alert-danger"></p>
-            <br>
+
             Password <input type="password" placeholder="Password" th:field="*{password}">
             <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="alert alert-danger"></p>
-            <br>
+            <div th:unless="${#fields.hasErrors('password')}"><br></div>
+
             <input type="submit" value="Submit">
         </form>
         <a th:href="@{/register}">Don't have account yet?</a>
         <br>
-        <a th:href="@{/}">Back</a>
+        <a th:href="@{/}">Back to the homepage</a>
     </div>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>

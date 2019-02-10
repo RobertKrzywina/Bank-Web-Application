@@ -3,15 +3,14 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>User panel</title>
+    <title>Access denied</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
 </head>
 <body>
     <div class="container">
-        <h1>User panel</h1>
+        <h1>403 Forbidden</h1>
         <hr/>
-        <h3 th:text="${sayHello}"></h3>
-        <a th:href="@{/logout}">Log me out</a>
+        <p>You don't have permission to access this page</p>
         <br>
         <a th:href="@{/}">Back to the homepage</a>
     </div>

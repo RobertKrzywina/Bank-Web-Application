@@ -28,32 +28,26 @@ class UserController {
 
     @PostMapping("/register")
     public String registerForm(@Valid @ModelAttribute("user") CreateUserDto dto, BindingResult result, Model model) {
-
         validationFacade.checkIfConfirmedPasswordMatchPassword(dto, result);
         if (result.hasErrors()) {
             model.addAttribute("user", dto);
             return "register";
         }
-
         userFacade.addUser(dto);
-        model.addAttribute("msg", "Successfully registered new account.");
         return "registerCompleted";
     }
 
     @PostMapping("/login")
     public String loginForm(@Valid @ModelAttribute("user") SignInDto dto, BindingResult result, Model model) {
-
         if (result.hasErrors()) {
             model.addAttribute("user", dto);
             return "login";
         }
-
-        model.addAttribute("msg", "Hello " + dto.getLogin() + ".");
         return "redirect:/user-panel";
     }
 
     @GetMapping("/logout")
-    public String logMeOut(HttpServletRequest request, HttpServletResponse response, Model model) {
+    public String logMeOut(HttpServletRequest request, HttpServletResponse response) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null) {
             new SecurityContextLogoutHandler().logout(request, response, authentication);

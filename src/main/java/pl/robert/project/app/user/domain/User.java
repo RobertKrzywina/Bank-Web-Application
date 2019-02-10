@@ -1,7 +1,6 @@
 package pl.robert.project.app.user.domain;
 
 import lombok.*;
-import org.hibernate.validator.constraints.Length;
 import pl.robert.project.app.bank_account.domain.BankAccount;
 
 import javax.persistence.*;
@@ -21,19 +20,18 @@ class User {
     private long id;
 
     @NotNull
-    @Length(max = 12)
+    @Column(length = 12)
     private String login;
 
     @NotNull
-    @Length(max = 60)
+    @Column(length = 60)
     private String password;
 
     @NotNull
     private String email;
 
-    @Column(name = "phone_number")
     @NotNull
-    @Length(max = 15)
+    @Column(name = "phone_number", length = 15)
     private String phoneNumber;
 
     @ManyToMany(fetch = FetchType.EAGER)

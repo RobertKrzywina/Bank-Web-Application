@@ -13,22 +13,27 @@
         <form method="post" action="#" th:action="@{/register}" th:object="${user}">
             Login <input type="text" placeholder="John Doe" th:field="*{login}">
             <p th:if="${#fields.hasErrors('login')}" th:errors="*{login}" class="alert alert-danger"></p>
-            <br>
+            <div th:unless="${#fields.hasErrors('login')}"><br></div>
+
             Email <input type="text" placeholder="you@email.com" th:field="*{email}">
             <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="alert alert-danger"></p>
-            <br>
+            <div th:unless="${#fields.hasErrors('login')}"><br></div>
+
             Phone Number <input type="text" placeholder="xxx-xxx-xxx" th:field="*{phoneNumber}">
             <p th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}" class="alert alert-danger"></p>
-            <br>
+            <div th:unless="${#fields.hasErrors('login')}"><br></div>
+
             Password <input type="password" placeholder="Password" th:field="*{password}" id="password">
             <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="alert alert-danger"></p>
-            <br>
+            <div th:unless="${#fields.hasErrors('login')}"><br></div>
+
             Confirm Password <input type="password" placeholder="Password" th:field="*{confirmedPassword}" id="confirmedPassword">
             <p th:if="${#fields.hasErrors('confirmedPassword')}" th:errors="*{confirmedPassword}" class="alert alert-danger"></p>
             <br>
+
             <input type="submit" value="Submit">
         </form>
-        <a th:href="@{/}">Back</a>
+        <a th:href="@{/}">Back to the homepage</a>
     </div>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
