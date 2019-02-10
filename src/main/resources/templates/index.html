@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Homepage</title>
@@ -10,9 +11,14 @@
     <div class="container">
         <h1>Homepage</h1>
         <hr/>
-        <a th:href="@{/register}">Register</a>
-        <br>
-        <a th:href="@{/login}">Sign in</a>
+        <div sec:authorize="isAuthenticated()">
+            <a th:href="@{/user-panel}">Go to the user panel.</a>
+        </div>
+        <div sec:authorize="isAnonymous()">
+            <a th:href="@{/register}">Register</a>
+            <br>
+            <a th:href="@{/login}">Sign in</a>
+        </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
