@@ -3,6 +3,7 @@ package pl.robert.project.app.user.domain.dto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import pl.robert.project.app.bank_account.domain.BankAccount;
 import pl.robert.project.app.validation.IsUnique;
 import pl.robert.project.app.validation.RegexExpressions;
 
@@ -34,4 +35,6 @@ public class CreateUserDto implements RegexExpressions {
     private String password;
 
     private String confirmedPassword;
+
+    private BankAccount bankAccount;
 }

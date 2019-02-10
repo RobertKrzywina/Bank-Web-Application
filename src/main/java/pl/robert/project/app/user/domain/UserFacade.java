@@ -2,6 +2,7 @@ package pl.robert.project.app.user.domain;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
+import pl.robert.project.app.bank_account.domain.BankAccountFacade;
 import pl.robert.project.app.user.domain.dto.CreateUserDto;
 import pl.robert.project.app.user.domain.dto.AuthorizationDto;
 
@@ -11,9 +12,11 @@ public class UserFacade {
 
     private UserFactory factory;
     private UserRepository repository;
+    private BankAccountFacade bankAccountFacade;
 
     public void addUser(CreateUserDto dto) {
         dto.setPhoneNumber(formatPhoneNumber(dto.getPhoneNumber()));
+        dto.setBankAccount(bankAccountFacade.create());
         repository.saveAndFlush(factory.create(dto));
     }
 

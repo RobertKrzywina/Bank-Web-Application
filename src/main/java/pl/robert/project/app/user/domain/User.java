@@ -2,6 +2,7 @@ package pl.robert.project.app.user.domain;
 
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
+import pl.robert.project.app.bank_account.domain.BankAccount;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -37,4 +38,8 @@ class User {
 
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles = new HashSet<>();
+
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @JoinColumn(name = "user_id")
+    private BankAccount bankAccount;
 }
