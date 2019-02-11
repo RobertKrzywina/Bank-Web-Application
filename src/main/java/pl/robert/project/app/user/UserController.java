@@ -1,5 +1,6 @@
 package pl.robert.project.app.user;
 
+import com.google.common.collect.ImmutableMap;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -14,6 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.robert.project.app.user.domain.UserFacade;
 import pl.robert.project.app.user.domain.dto.CreateUserDto;
 import pl.robert.project.app.user.domain.dto.SignInDto;
+import pl.robert.project.app.user.query.UserQuery;
 import pl.robert.project.app.validation.ValidationFacade;
 
 import javax.servlet.http.HttpServletRequest;
@@ -55,5 +57,19 @@ class UserController {
         }
         redirectAttributes.addFlashAttribute("msg", "You have successfully logged out!");
         return "redirect:/login";
+    }
+
+    @GetMapping("/about-me")
+    public String aboutMe(Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth == null) {
+            return "redirect:/access-denied";
+        }
+        UserQuery userQuery = userFacade.QueryByLogin(auth.getName());
+
+        ImmutableMap<String, String> map = userFacade.initializeMapWithUserDetails(userQuery);
+
+        model.addAttribute("map", map);
+        return "aboutMe";
     }
 }

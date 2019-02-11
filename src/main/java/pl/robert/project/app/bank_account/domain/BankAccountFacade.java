@@ -36,4 +36,8 @@ public class BankAccountFacade {
     private boolean isAccountNumberExists(String number) {
         return bankAccountRepository.findByNumber(number) != null;
     }
+
+    public BankAccount findById(long id) {
+        return bankAccountRepository.findById(id);
+    }
 }

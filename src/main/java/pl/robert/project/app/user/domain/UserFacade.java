@@ -1,10 +1,12 @@
 package pl.robert.project.app.user.domain;
 
+import com.google.common.collect.ImmutableMap;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import pl.robert.project.app.bank_account.domain.BankAccountFacade;
-import pl.robert.project.app.user.domain.dto.CreateUserDto;
 import pl.robert.project.app.user.domain.dto.AuthorizationDto;
+import pl.robert.project.app.user.domain.dto.CreateUserDto;
+import pl.robert.project.app.user.query.UserQuery;
 
 @Component
 @AllArgsConstructor
@@ -58,5 +60,27 @@ public class UserFacade {
         if (user == null) return null;
 
         return new AuthorizationDto(user.getLogin(), user.getPassword(), user.getRoles());
+    }
+
+    public UserQuery QueryByLogin(String login) {
+        User user = repository.findByLogin(login);
+
+        if (user == null) return null;
+
+        user.setBankAccount(bankAccountFacade.findById(user.getId()));
+
+        return factory.create(user);
+    }
+
+    public ImmutableMap<String, String> initializeMapWithUserDetails(UserQuery userQuery) {
+        return ImmutableMap.<String, String>builder()
+                .put("id", String.valueOf(userQuery.getId()))
+                .put("login", userQuery.getLogin())
+                .put("email", userQuery.getEmail())
+                .put("phoneNumber", userQuery.getPhoneNumber())
+                .put("password", userQuery.getPassword())
+                .put("bankAccountNumber", userQuery.getBankAccountNumber())
+                .put("balance", String.valueOf(userQuery.getBalance()))
+                .build();
     }
 }

@@ -1,9 +1,11 @@
 package pl.robert.project.app.bank_account.domain;
 
 import lombok.*;
+import pl.robert.project.app.transactions.domain.Transaction;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Entity(name = "bank_accounts")
 @NoArgsConstructor
@@ -21,4 +23,7 @@ public class BankAccount {
     private String number;
 
     private double balance;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    private List<Transaction> transactions;
 }
