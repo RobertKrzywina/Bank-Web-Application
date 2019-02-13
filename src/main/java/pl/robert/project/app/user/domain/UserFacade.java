@@ -83,4 +83,8 @@ public class UserFacade {
                 .put("balance", String.valueOf(userQuery.getBalance()))
                 .build();
     }
+
+    public long findIdByLogin(String login) {
+        return repository.findByLogin(login).getId();
+    }
 }

@@ -5,9 +5,11 @@ import pl.robert.project.app.transactions.domain.Transaction;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.LinkedList;
 import java.util.List;
 
-@Entity(name = "bank_accounts")
+@Entity
+@Table(name = "bank_accounts")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter @Setter
@@ -24,6 +26,6 @@ public class BankAccount {
 
     private double balance;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    private List<Transaction> transactions;
+    @OneToMany(mappedBy = "account")
+    private List<Transaction> transactions = new LinkedList<>();
 }

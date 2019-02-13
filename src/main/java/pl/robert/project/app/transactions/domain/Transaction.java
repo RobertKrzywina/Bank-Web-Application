@@ -6,7 +6,6 @@ import pl.robert.project.app.bank_account.domain.BankAccount;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity(name = "transactions")
 @NoArgsConstructor
@@ -38,6 +37,7 @@ public class Transaction {
 
     private double amount;
 
-    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "transactions")
-    private List<BankAccount> bankAccounts;
+    @ManyToOne
+    @JoinColumn(name = "transaction_id")
+    private BankAccount account;
 }

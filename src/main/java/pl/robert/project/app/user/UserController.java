@@ -2,6 +2,8 @@ package pl.robert.project.app.user;
 
 import com.google.common.collect.ImmutableMap;
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
@@ -12,6 +14,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import pl.robert.project.app.bank_account.domain.BankAccount;
+import pl.robert.project.app.bank_account.domain.BankAccountFacade;
+import pl.robert.project.app.transactions.domain.TransactionFacade;
+import pl.robert.project.app.transactions.domain.dto.SendTransactionDto;
 import pl.robert.project.app.user.domain.UserFacade;
 import pl.robert.project.app.user.domain.dto.CreateUserDto;
 import pl.robert.project.app.user.domain.dto.SignInDto;
@@ -26,8 +32,12 @@ import javax.validation.Valid;
 @AllArgsConstructor
 class UserController {
 
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
     private UserFacade userFacade;
     private ValidationFacade validationFacade;
+    private BankAccountFacade bankAccountFacade;
+    private TransactionFacade transactionFacade;
 
     @PostMapping("/register")
     public String registerForm(@Valid @ModelAttribute("user") CreateUserDto dto, BindingResult result, Model model) {
@@ -71,5 +81,39 @@ class UserController {
 
         model.addAttribute("map", map);
         return "aboutMe";
+    }
+
+    @GetMapping("/send-transaction")
+    public String sendTransaction(SendTransactionDto dto, Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth == null) {
+            return "redirect:/access-denied";
+        }
+        BankAccount bankAccount = bankAccountFacade.findById(userFacade.findIdByLogin(auth.getName()));
+        dto.setSenderAccountNumber(bankAccount.getNumber());
+
+        model.addAttribute("senderAccountNumber", bankAccount.getNumber());
+        model.addAttribute("currentBalance", bankAccount.getBalance());
+        model.addAttribute("transaction", dto);
+        return "sendTransaction";
+    }
+
+    @PostMapping("/send-transaction")
+    public String sendTransaction(@Valid @ModelAttribute("transaction") SendTransactionDto dto, BindingResult result, Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth == null) {
+            return "redirect:/access-denied";
+        }
+
+        if (result.hasErrors()) {
+            logger.info("transaction: {}", dto);
+            model.addAttribute("transaction", dto);
+            return "sendTransaction";
+        }
+        BankAccount bankAccount = bankAccountFacade.findById(userFacade.findIdByLogin(auth.getName()));
+        dto.setSenderAccountNumber(bankAccount.getNumber());
+
+        transactionFacade.addTransaction(dto);
+        return "sendTransactionCompleted";
     }
 }

@@ -9,11 +9,11 @@ import java.util.Random;
 @AllArgsConstructor
 public class BankAccountFacade {
 
-    private BankAccountRepository bankAccountRepository;
+    private BankAccountRepository repository;
     private BankAccountFactory factory;
 
     public BankAccount create() {
-        return bankAccountRepository.save(factory.create(numberGenerator()));
+        return repository.save(factory.create(numberGenerator()));
     }
 
     private String numberGenerator() {
@@ -34,10 +34,19 @@ public class BankAccountFacade {
     }
 
     private boolean isAccountNumberExists(String number) {
-        return bankAccountRepository.findByNumber(number) != null;
+        return repository.findByNumber(number) != null;
     }
 
     public BankAccount findById(long id) {
-        return bankAccountRepository.findById(id);
+        return repository.findById(id);
+    }
+
+    public BankAccount findByNumber(String number) {
+        return repository.findByNumber(number);
+    }
+
+    public void updateMoney(double money, long senderId, long receiverId) {
+        repository.getMoneyFromSender(money, senderId);
+        repository.addAmountToReceiver(money, receiverId);
     }
 }
