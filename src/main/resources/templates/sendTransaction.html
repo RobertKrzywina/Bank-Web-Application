@@ -19,7 +19,7 @@
             <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="alert alert-danger"></p>
             <div th:unless="${#fields.hasErrors('title')}"><br></div>
 
-            Description<br> <textarea rows="5" cols="80" placeholder="Enjoy your money :)" th:field="*{description}"></textarea>
+            Description<br> <textarea rows="5" cols="80" style="resize: none;" placeholder="Enjoy your money :)" th:field="*{description}"></textarea>
             <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="alert alert-danger"></p>
             <div th:unless="${#fields.hasErrors('description')}"><br></div>
 
@@ -27,17 +27,19 @@
             <br>
             <br>
 
-            Receiver bank account number<input type="text" placeholder="PL00 0000 0000 0000 0000 0000" th:field="*{receiverAccountNumber}">
+            Receiver bank account number<input type="text" placeholder="PL00 0000 0000 0000 0000 0000 " maxlength="29" th:field="*{receiverAccountNumber}">
             <p th:if="${#fields.hasErrors('receiverAccountNumber')}" th:errors="*{receiverAccountNumber}" class="alert alert-danger"></p>
             <div th:unless="${#fields.hasErrors('receiverAccountNumber')}"><br></div>
 
-            Amount <input type="number" placeholder="00.1" th:field="*{amount}">
+            Amount <input type="number" step="any" placeholder="1.99" th:field="*{amount}">
             <p th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}" class="alert alert-danger"></p>
             <div th:unless="${#fields.hasErrors('amount')}"><br></div>
             <br>
 
             <input type="submit" value="Submit">
         </form>
+        <br>
+        <a th:href="@{/user-panel}">Back to the user panel</a>
     </div>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>

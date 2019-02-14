@@ -105,8 +105,14 @@ class UserController {
             return "redirect:/access-denied";
         }
 
+        validationFacade.checkReceiverBankAccountNumber(auth.getName(), dto, result);
+        validationFacade.checkSenderAmount(auth.getName(), dto, result);
+
         if (result.hasErrors()) {
-            logger.info("transaction: {}", dto);
+            BankAccount bankAccount = bankAccountFacade.findById(userFacade.findIdByLogin(auth.getName()));
+
+            model.addAttribute("senderAccountNumber", bankAccount.getNumber());
+            model.addAttribute("currentBalance", bankAccount.getBalance());
             model.addAttribute("transaction", dto);
             return "sendTransaction";
         }
