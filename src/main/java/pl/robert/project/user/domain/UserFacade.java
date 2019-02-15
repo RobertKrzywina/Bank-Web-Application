@@ -2,6 +2,9 @@ package pl.robert.project.user.domain;
 
 import com.google.common.collect.ImmutableMap;
 import lombok.AllArgsConstructor;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import pl.robert.project.bank_account.domain.BankAccountFacade;
 import pl.robert.project.user.domain.dto.AuthorizationDTO;
@@ -86,5 +89,22 @@ public class UserFacade {
 
     public long findIdByLogin(String login) {
         return repository.findByLogin(login).getId();
+    }
+
+    public void changeEmail(long userId, String newEmail) {
+        repository.findUserByIdAndUpdateEmail(userId, newEmail);
+    }
+
+    public void changePhoneNumber(long userId, String newPhoneNumber) {
+        repository.findUserByIdAndUpdatePhoneNumber(userId, formatPhoneNumber(newPhoneNumber));
+    }
+
+    public void changePassword(long userId, String newPassword) {
+        repository.findUserByIdAndUpdatePasswordAnAndDecodedBCryptPassword(userId, passwordEncoder().encode(newPassword), newPassword);
+    }
+
+    @Bean
+    private PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 }

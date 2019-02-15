@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Change email</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Change email</h1>
+        <hr/>
+        <form method="post" action="#" th:action="@{/change-email}" th:object="${DTO}">
+            Email <input type="text" placeholder="Enter your new email" th:field="*{email}">
+            <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="alert alert-danger"></p>
+            <div th:unless="${#fields.hasErrors('email')}"><br></div>
+
+            Confirm Email <input type="text" placeholder="Confirm your new email" th:field="*{confirmedEmail}" id="confirmedEmail">
+            <p th:if="${#fields.hasErrors('confirmedEmail')}" th:errors="*{confirmedEmail}" class="alert alert-danger"></p>
+            <br>
+
+            <input type="submit" value="Submit">
+        </form>
+        <br>
+        <a th:href="@{/about-me}">Back to the about me</a>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+    <script>
+        $(function () {
+            $('input[type="text"]').change(function () {
+                this.value = $.trim(this.value);
+            });
+        });
+    </script>
+</body>
+</html>

@@ -3,23 +3,14 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>About me</title>
+    <title>Change value completed</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
 </head>
 <body>
     <div class="container">
-        <h1>About me</h1>
+        <h1>Change value completed</h1>
         <hr/>
-        <p th:each="entry:${map}">
-            <span th:text="${entry.key} + ' : ' + ${entry.value}"></span>
-        </p>
-        <br>
-        <a th:href="@{/change-email}">Change email</a>
-        <br>
-        <a th:href="@{/change-phone}">Change phone number</a>
-        <br>
-        <a th:href="@{/change-password}">Change password</a>
-        <br>
+        <h3 class="alert alert-success" th:text="${msg}"></h3>
         <br>
         <a th:href="@{/user-panel}">Back to the user panel</a>
     </div>

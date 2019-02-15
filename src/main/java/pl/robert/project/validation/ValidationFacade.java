@@ -7,6 +7,9 @@ import pl.robert.project.bank_account.domain.BankAccount;
 import pl.robert.project.bank_account.domain.BankAccountFacade;
 import pl.robert.project.transactions.domain.dto.SendTransactionDTO;
 import pl.robert.project.user.domain.UserFacade;
+import pl.robert.project.user.domain.dto.ChangeEmailDTO;
+import pl.robert.project.user.domain.dto.ChangePasswordDTO;
+import pl.robert.project.user.domain.dto.ChangePhoneNumberDTO;
 import pl.robert.project.user.domain.dto.CreateUserDTO;
 
 @Component
@@ -16,9 +19,31 @@ public class ValidationFacade {
     private UserFacade userFacade;
     private BankAccountFacade bankAccountFacade;
 
-    public void checkIfConfirmedPasswordMatchPassword(CreateUserDTO dto, BindingResult result) {
-        if (!dto.getPassword().equals(dto.getConfirmedPassword())) {
-            result.rejectValue("confirmedPassword", "NotMatch.user.confirmedPassword", "Confirmed password not match password");
+    public void checkIfConfirmedPasswordMatchPassword(Object obj, BindingResult result) {
+        if (obj instanceof CreateUserDTO) {
+            CreateUserDTO dto = (CreateUserDTO) obj;
+
+            if (!dto.getPassword().equals(dto.getConfirmedPassword())) {
+                result.rejectValue("confirmedPassword", "NotMatch.user.confirmedPassword", "Confirmed password not match password");
+            }
+        } else if (obj instanceof ChangePasswordDTO) {
+            ChangePasswordDTO dto = (ChangePasswordDTO) obj;
+
+            if (!dto.getPassword().equals(dto.getConfirmedPassword())) {
+                result.rejectValue("confirmedPassword", "NotMatch.user.confirmedPassword", "Confirmed password not match password");
+            }
+        }
+    }
+
+    public void checkIfConfirmedEmailMatchEmail(ChangeEmailDTO dto, BindingResult result) {
+        if (!dto.getEmail().equals(dto.getConfirmedEmail())) {
+            result.rejectValue("confirmedEmail", "NotMatch.user.confirmedEmail", "Confirmed email not match email");
+        }
+    }
+
+    public void checkIfConfirmedPhoneNumberMatchPhoneNumber(ChangePhoneNumberDTO dto, BindingResult result) {
+        if (!dto.getPhoneNumber().equals(dto.getConfirmedPhoneNumber())) {
+            result.rejectValue("confirmedPhoneNumber", "NotMatch.user.confirmedPhoneNumber", "Confirmed phone number not match phone number");
         }
     }
 

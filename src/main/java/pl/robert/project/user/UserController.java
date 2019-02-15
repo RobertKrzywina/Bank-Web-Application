@@ -10,9 +10,7 @@ import org.springframework.security.web.authentication.logout.SecurityContextLog
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.robert.project.bank_account.domain.BankAccount;
 import pl.robert.project.bank_account.domain.BankAccountFacade;
@@ -20,6 +18,9 @@ import pl.robert.project.transactions.domain.TransactionFacade;
 import pl.robert.project.transactions.domain.dto.SendTransactionDTO;
 import pl.robert.project.transactions.query.TransactionQuery;
 import pl.robert.project.user.domain.UserFacade;
+import pl.robert.project.user.domain.dto.ChangeEmailDTO;
+import pl.robert.project.user.domain.dto.ChangePasswordDTO;
+import pl.robert.project.user.domain.dto.ChangePhoneNumberDTO;
 import pl.robert.project.user.query.UserQuery;
 import pl.robert.project.validation.ValidationFacade;
 
@@ -139,5 +140,77 @@ class UserController {
         model.addAttribute("transactions", transactions);
 
         return "sentTransactions";
+    }
+
+    @GetMapping("/change-email")
+    public String changeEmail(Model model) {
+        model.addAttribute("DTO", new ChangeEmailDTO());
+        return "changeEmail";
+    }
+
+    @PostMapping("/change-email")
+    public String changeEmail(@Valid @ModelAttribute("DTO") ChangeEmailDTO dto, BindingResult result, Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth == null) {
+            return "redirect:/access-denied";
+        }
+        validationFacade.checkIfConfirmedEmailMatchEmail(dto, result);
+
+        if (result.hasErrors()) {
+            model.addAttribute("DTO", dto);
+            return "changeEmail";
+        }
+        long id = userFacade.findIdByLogin(auth.getName());
+        userFacade.changeEmail(id, dto.getConfirmedEmail());
+        model.addAttribute("msg", "You have successfully changed email");
+        return "changeValueCompleted";
+    }
+
+    @GetMapping("/change-phone")
+    public String changePhoneNumber(Model model) {
+        model.addAttribute("DTO", new ChangePhoneNumberDTO());
+        return "changePhoneNumber";
+    }
+
+    @PostMapping("/change-phone")
+    public String changePhoneNumber(@Valid @ModelAttribute("DTO") ChangePhoneNumberDTO dto, BindingResult result, Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth == null) {
+            return "redirect:/access-denied";
+        }
+        validationFacade.checkIfConfirmedPhoneNumberMatchPhoneNumber(dto, result);
+
+        if (result.hasErrors()) {
+            model.addAttribute("DTO", dto);
+            return "changePhoneNumber";
+        }
+        long id = userFacade.findIdByLogin(auth.getName());
+        userFacade.changePhoneNumber(id, dto.getConfirmedPhoneNumber());
+        model.addAttribute("msg", "You have successfully changed phone number");
+        return "changeValueCompleted";
+    }
+
+    @GetMapping("/change-password")
+    public String changePassword(Model model) {
+        model.addAttribute("DTO", new ChangePasswordDTO());
+        return "changePassword";
+    }
+
+    @PostMapping("/change-password")
+    public String changePassword(@Valid @ModelAttribute("DTO") ChangePasswordDTO dto, BindingResult result, Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth == null) {
+            return "redirect:/access-denied";
+        }
+        validationFacade.checkIfConfirmedPasswordMatchPassword(dto, result);
+
+        if (result.hasErrors()) {
+            model.addAttribute("DTO", dto);
+            return "changePassword";
+        }
+        long id = userFacade.findIdByLogin(auth.getName());
+        userFacade.changePassword(id, dto.getConfirmedPassword());
+        model.addAttribute("msg", "You have successfully changed password");
+        return "changeValueCompleted";
     }
 }

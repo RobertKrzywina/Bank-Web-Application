@@ -17,15 +17,15 @@
 
             Email <input type="text" placeholder="you@email.com" th:field="*{email}">
             <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="alert alert-danger"></p>
-            <div th:unless="${#fields.hasErrors('login')}"><br></div>
+            <div th:unless="${#fields.hasErrors('email')}"><br></div>
 
             Phone Number <input type="text" placeholder="xxx-xxx-xxx" th:field="*{phoneNumber}">
             <p th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}" class="alert alert-danger"></p>
-            <div th:unless="${#fields.hasErrors('login')}"><br></div>
+            <div th:unless="${#fields.hasErrors('phoneNumber')}"><br></div>
 
             Password <input type="password" placeholder="Password" th:field="*{password}" id="password">
             <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="alert alert-danger"></p>
-            <div th:unless="${#fields.hasErrors('login')}"><br></div>
+            <div th:unless="${#fields.hasErrors('password')}"><br></div>
 
             Confirm Password <input type="password" placeholder="Password" th:field="*{confirmedPassword}" id="confirmedPassword">
             <p th:if="${#fields.hasErrors('confirmedPassword')}" th:errors="*{confirmedPassword}" class="alert alert-danger"></p>
