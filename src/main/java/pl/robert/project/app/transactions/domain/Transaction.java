@@ -38,6 +38,6 @@ public class Transaction {
     private double amount;
 
     @ManyToOne
-    @JoinColumn(name = "transaction_id")
+    @JoinColumn(name = "bank_account_id")
     private BankAccount account;
 }

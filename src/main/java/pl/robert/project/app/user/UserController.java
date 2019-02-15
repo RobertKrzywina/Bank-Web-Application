@@ -18,6 +18,7 @@ import pl.robert.project.app.bank_account.domain.BankAccount;
 import pl.robert.project.app.bank_account.domain.BankAccountFacade;
 import pl.robert.project.app.transactions.domain.TransactionFacade;
 import pl.robert.project.app.transactions.domain.dto.SendTransactionDto;
+import pl.robert.project.app.transactions.query.TransactionQuery;
 import pl.robert.project.app.user.domain.UserFacade;
 import pl.robert.project.app.user.domain.dto.CreateUserDto;
 import pl.robert.project.app.user.domain.dto.SignInDto;
@@ -27,6 +28,7 @@ import pl.robert.project.app.validation.ValidationFacade;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 @AllArgsConstructor
@@ -121,5 +123,37 @@ class UserController {
 
         transactionFacade.addTransaction(dto);
         return "sendTransactionCompleted";
+    }
+
+    @GetMapping("/received-transactions")
+    public String receivedTransactions(Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth == null) {
+            return "redirect:/access-denied";
+        }
+        TransactionQuery.setIdTemp(0);
+        long id = userFacade.findIdByLogin(auth.getName());
+        BankAccount bankAccount = bankAccountFacade.findById(id);
+        List<TransactionQuery> transactions = transactionFacade.findAllByReceiverAccountNumber(bankAccount.getNumber());
+
+        model.addAttribute("transactions", transactions);
+
+        return "receivedTransactions";
+    }
+
+    @GetMapping("/sent-transactions")
+    public String sentTransactions(Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth == null) {
+            return "redirect:/access-denied";
+        }
+        TransactionQuery.setIdTemp(0);
+        long id = userFacade.findIdByLogin(auth.getName());
+        BankAccount bankAccount = bankAccountFacade.findById(id);
+        List<TransactionQuery> transactions = transactionFacade.findAllBySenderAccountNumber(bankAccount.getNumber());
+
+        model.addAttribute("transactions", transactions);
+
+        return "sentTransactions";
     }
 }
