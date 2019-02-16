@@ -31,7 +31,7 @@ import java.util.List;
 
 @Controller
 @AllArgsConstructor
-class UserController {
+class UserController implements Messages {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -42,7 +42,7 @@ class UserController {
 
     @GetMapping("/user-panel")
     public String userPanel(Model model, Authentication auth) {
-        model.addAttribute("sayHello", "Welcome " + auth.getName() + "");
+        model.addAttribute("sayHello", "Welcome " + auth.getName());
         return "userPanel";
     }
 
@@ -52,7 +52,7 @@ class UserController {
         if (authentication != null) {
             new SecurityContextLogoutHandler().logout(request, response, authentication);
         }
-        redirectAttributes.addFlashAttribute("msg", "You have successfully logged out!");
+        redirectAttributes.addFlashAttribute("msg", SUCCESSFULLY_LOGGED_OUT);
         return "redirect:/login";
     }
 
@@ -162,7 +162,7 @@ class UserController {
         }
         long id = userFacade.findIdByLogin(auth.getName());
         userFacade.changeEmail(id, dto.getConfirmedEmail());
-        model.addAttribute("msg", "You have successfully changed email");
+        model.addAttribute("msg", SUCCESSFULLY_CHANGED_EMAIL);
         return "changeValueCompleted";
     }
 
@@ -186,7 +186,7 @@ class UserController {
         }
         long id = userFacade.findIdByLogin(auth.getName());
         userFacade.changePhoneNumber(id, dto.getConfirmedPhoneNumber());
-        model.addAttribute("msg", "You have successfully changed phone number");
+        model.addAttribute("msg", SUCCESSFULLY_CHANGED_PHONE_NUMBER);
         return "changeValueCompleted";
     }
 
@@ -210,7 +210,7 @@ class UserController {
         }
         long id = userFacade.findIdByLogin(auth.getName());
         userFacade.changePassword(id, dto.getConfirmedPassword());
-        model.addAttribute("msg", "You have successfully changed password");
+        model.addAttribute("msg", SUCCESSFULLY_CHANGED_PASSWORD);
         return "changeValueCompleted";
     }
 }

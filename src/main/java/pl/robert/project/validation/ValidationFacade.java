@@ -14,7 +14,7 @@ import pl.robert.project.user.domain.dto.CreateUserDTO;
 
 @Component
 @AllArgsConstructor
-public class ValidationFacade {
+public class ValidationFacade implements ValidationStrings {
 
     private UserFacade userFacade;
     private BankAccountFacade bankAccountFacade;
@@ -24,26 +24,26 @@ public class ValidationFacade {
             CreateUserDTO dto = (CreateUserDTO) obj;
 
             if (!dto.getPassword().equals(dto.getConfirmedPassword())) {
-                result.rejectValue("confirmedPassword", "NotMatch.user.confirmedPassword", "Confirmed password not match password");
+                result.rejectValue(F_CONFIRMED_PASSWORD, C_CONFIRMED_PASSWORD_NOT_MATCH, M_CONFIRMED_PASSWORD_NOT_MATCH);
             }
         } else if (obj instanceof ChangePasswordDTO) {
             ChangePasswordDTO dto = (ChangePasswordDTO) obj;
 
             if (!dto.getPassword().equals(dto.getConfirmedPassword())) {
-                result.rejectValue("confirmedPassword", "NotMatch.user.confirmedPassword", "Confirmed password not match password");
+                result.rejectValue(F_CONFIRMED_PASSWORD, C_CONFIRMED_PASSWORD_NOT_MATCH, M_CONFIRMED_PASSWORD_NOT_MATCH);
             }
         }
     }
 
     public void checkIfConfirmedEmailMatchEmail(ChangeEmailDTO dto, BindingResult result) {
         if (!dto.getEmail().equals(dto.getConfirmedEmail())) {
-            result.rejectValue("confirmedEmail", "NotMatch.user.confirmedEmail", "Confirmed email not match email");
+            result.rejectValue(F_CONFIRMED_EMAIL, C_CONFIRMED_EMAIL_NOT_MATCH, M_CONFIRMED_EMAIL_NOT_MATCH);
         }
     }
 
     public void checkIfConfirmedPhoneNumberMatchPhoneNumber(ChangePhoneNumberDTO dto, BindingResult result) {
         if (!dto.getPhoneNumber().equals(dto.getConfirmedPhoneNumber())) {
-            result.rejectValue("confirmedPhoneNumber", "NotMatch.user.confirmedPhoneNumber", "Confirmed phone number not match phone number");
+            result.rejectValue(F_CONFIRMED_PHONE_NUMBER, C_CONFIRMED_PHONE_NUMBER_NOT_MATCH, M_CONFIRMED_PHONE_NUMBER_NOT_MATCH);
         }
     }
 
@@ -52,11 +52,11 @@ public class ValidationFacade {
         BankAccount bankAccount = bankAccountFacade.findByNumber(dto.getReceiverAccountNumber());
 
         if (bankAccount == null) {
-            result.rejectValue("receiverAccountNumber", "NotExists.receiverAccountNumber", "Receiver account number do not exists");
+            result.rejectValue(F_RECEIVER_ACCOUNT_NUMBER, C_RECEIVER_ACCOUNT_NUMBER_NOT_EXISTS, M_RECEIVER_ACCOUNT_NUMBER_NOT_EXISTS);
         }
 
         if (bankAccount != null && (userFacade.findIdByLogin(login) == bankAccount.getId())) {
-            result.rejectValue("receiverAccountNumber", "Match.sender.receiver", "You can't send money for yourself");
+            result.rejectValue(F_RECEIVER_ACCOUNT_NUMBER, C_RECEIVER_ACCOUNT_NUMBER_MATCH_SENDER, M_RECEIVER_ACCOUNT_NUMBER_MATCH_SENDER);
         }
     }
 
@@ -88,7 +88,7 @@ public class ValidationFacade {
         BankAccount bankAccount = bankAccountFacade.findById(userFacade.findIdByLogin(login));
 
         if (dto.getAmount() != null && (dto.getAmount() > bankAccount.getBalance())) {
-            result.rejectValue("amount", "NotEnough.amount", "Current balance is lower than wanted amount");
+            result.rejectValue(F_AMOUNT, C_AMOUNT_NOT_ENOUGH, M_AMOUNT_NOT_ENOUGH);
         }
     }
 }

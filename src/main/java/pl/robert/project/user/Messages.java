@@ -1,0 +1,9 @@
+package pl.robert.project.user;
+
+interface Messages {
+
+    String SUCCESSFULLY_LOGGED_OUT = "You have successfully logged out!";
+    String SUCCESSFULLY_CHANGED_EMAIL = "You have successfully changed email";
+    String SUCCESSFULLY_CHANGED_PHONE_NUMBER = "You have successfully changed phone number";
+    String SUCCESSFULLY_CHANGED_PASSWORD = "You have successfully changed password";
+}
