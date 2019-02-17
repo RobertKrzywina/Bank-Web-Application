@@ -11,6 +11,9 @@ import pl.robert.project.user.domain.dto.AuthorizationDTO;
 import pl.robert.project.user.domain.dto.CreateUserDTO;
 import pl.robert.project.user.query.UserQuery;
 
+import java.util.LinkedList;
+import java.util.List;
+
 @Component
 @AllArgsConstructor
 public class UserFacade {
@@ -106,5 +109,20 @@ public class UserFacade {
     @Bean
     private PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    public List<UserQuery> findAll() {
+        List<UserQuery> usersQuery = new LinkedList<>();
+        List<User> users = repository.findAll();
+
+        for (User user : users) {
+            usersQuery.add(factory.create(user));
+        }
+
+        return usersQuery;
+    }
+
+    public void deleteById(long id) {
+        repository.deleteById(id);
     }
 }

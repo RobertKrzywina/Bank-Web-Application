@@ -13,6 +13,9 @@
         <hr/>
         <div sec:authorize="isAuthenticated()">
             <a th:href="@{/user-panel}">Go to the user panel</a>
+            <div sec:authorize="hasRole('ROLE_ADMIN')">
+                <a th:href="@{/admin-panel}">Go to the admin panel</a>
+            </div>
         </div>
         <div sec:authorize="isAnonymous()">
             <a th:href="@{/register}">Register</a>

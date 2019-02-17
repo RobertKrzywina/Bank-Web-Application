@@ -42,6 +42,7 @@ class UserFactory {
                 .password(user.getDecodedBCryptPassword())
                 .bankAccountNumber(user.getBankAccount().getNumber())
                 .balance(user.getBankAccount().getBalance())
+                .roles(user.getRoles())
                 .build();
     }
 }
