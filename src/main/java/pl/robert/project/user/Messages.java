@@ -1,6 +1,6 @@
 package pl.robert.project.user;
 
-interface Messages {
+public interface Messages {
 
     String SUCCESSFULLY_LOGGED_OUT = "You have successfully logged out!";
     String SUCCESSFULLY_CHANGED_EMAIL = "You have successfully changed email";

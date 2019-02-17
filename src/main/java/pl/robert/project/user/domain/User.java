@@ -42,7 +42,6 @@ class User {
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles = new HashSet<>();
 
-    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
-    @JoinColumn(name = "bank_account_id")
+    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.REMOVE})
     private BankAccount bankAccount;
 }

@@ -11,17 +11,15 @@
         <h1>User panel</h1>
         <hr/>
         <h3 th:text="${sayHello}" class="alert alert-primary"></h3>
-        <a th:href="@{/logout}">Log me out</a>
-        <br>
         <a th:href="@{/}">Back to the homepage</a>
         <br>
-        <a th:href="@{/about-me}">About me</a>
+        <a th:href="@{/user-panel/about-me}">About me</a>
         <br>
-        <a th:href="@{/send-transaction}">Send transaction</a>
+        <a th:href="@{/user-panel/send-transaction}">Send transaction</a>
         <br>
-        <a th:href="@{/received-transactions}">List of received transactions</a>
+        <a th:href="@{/user-panel/received-transactions}">List of received transactions</a>
         <br>
-        <a th:href="@{/sent-transactions}">List of sent transactions</a>
+        <a th:href="@{/user-panel/sent-transactions}">List of sent transactions</a>
     </div>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>

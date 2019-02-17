@@ -10,7 +10,7 @@
     <div class="container">
         <h1>Change email</h1>
         <hr/>
-        <form method="post" action="#" th:action="@{/change-email}" th:object="${DTO}">
+        <form method="post" action="#" th:action="@{/user-panel/change-email}" th:object="${DTO}">
             Email <input type="text" placeholder="Enter your new email" th:field="*{email}">
             <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="alert alert-danger"></p>
             <div th:unless="${#fields.hasErrors('email')}"><br></div>
@@ -22,7 +22,7 @@
             <input type="submit" value="Submit">
         </form>
         <br>
-        <a th:href="@{/about-me}">Back to the about me</a>
+        <a th:href="@{/user-panel/about-me}">Back to the about me</a>
     </div>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>

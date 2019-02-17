@@ -19,4 +19,5 @@ public class UserQuery {
     private String bankAccountNumber;
     private double balance;
     private Set<Role> roles;
+    private String rolesToDisplay;
 }

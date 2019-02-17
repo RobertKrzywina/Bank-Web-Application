@@ -23,6 +23,7 @@ class UserFactory {
                 .email(dto.getEmail())
                 .phoneNumber(dto.getPhoneNumber())
                 .roles(new HashSet<>(Collections.singleton(new Role(1L, "ROLE_USER"))))
+                .bankAccount(dto.getBankAccount())
                 .build();
     }
 
@@ -43,6 +44,7 @@ class UserFactory {
                 .bankAccountNumber(user.getBankAccount().getNumber())
                 .balance(user.getBankAccount().getBalance())
                 .roles(user.getRoles())
+                .rolesToDisplay(user.getRoles().size() == 2 ? "user, admin" : "user")
                 .build();
     }
 }

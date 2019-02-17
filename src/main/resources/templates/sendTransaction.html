@@ -10,7 +10,7 @@
     <div class="container">
         <h1>Send transaction</h1>
         <hr/>
-        <form action="#" method="post" th:action="@{/send-transaction}" th:object="${transaction}">
+        <form action="#" method="post" th:action="@{/user-panel/send-transaction}" th:object="${transaction}">
             Current balance <input readonly="readonly" th:placeholder="${currentBalance}">
             <br>
             <br>

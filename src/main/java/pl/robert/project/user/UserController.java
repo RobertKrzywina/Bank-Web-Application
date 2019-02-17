@@ -4,14 +4,16 @@ import com.google.common.collect.ImmutableMap;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import pl.robert.project.bank_account.domain.BankAccount;
 import pl.robert.project.bank_account.domain.BankAccountFacade;
 import pl.robert.project.transactions.domain.TransactionFacade;
@@ -24,13 +26,13 @@ import pl.robert.project.user.domain.dto.ChangePhoneNumberDTO;
 import pl.robert.project.user.query.UserQuery;
 import pl.robert.project.validation.ValidationFacade;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.List;
 
 @Controller
 @AllArgsConstructor
+@RequestMapping("/user-panel")
+@PreAuthorize("hasRole('ROLE_USER')")
 class UserController implements Messages {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -40,20 +42,10 @@ class UserController implements Messages {
     private BankAccountFacade bankAccountFacade;
     private TransactionFacade transactionFacade;
 
-    @GetMapping("/user-panel")
+    @GetMapping
     public String userPanel(Model model, Authentication auth) {
         model.addAttribute("sayHello", "Welcome " + auth.getName());
         return "userPanel";
-    }
-
-    @GetMapping("/logout")
-    public String logMeOut(HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttributes) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null) {
-            new SecurityContextLogoutHandler().logout(request, response, authentication);
-        }
-        redirectAttributes.addFlashAttribute("msg", SUCCESSFULLY_LOGGED_OUT);
-        return "redirect:/login";
     }
 
     @GetMapping("/about-me")

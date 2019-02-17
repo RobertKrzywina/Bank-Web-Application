@@ -33,9 +33,7 @@ class AdminController {
         if (auth == null) {
             return "redirect:/access-denied";
         }
-        double moneyToAdd = 0.0;
         model.addAttribute("users", userFacade.findAll());
-        model.addAttribute("moneyToAdd", moneyToAdd);
 
         return "users";
     }

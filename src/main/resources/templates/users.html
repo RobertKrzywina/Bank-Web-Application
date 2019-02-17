@@ -18,10 +18,7 @@
                     <th>Email</th>
                     <th>Phone number</th>
                     <th>Password</th>
-                    <th>Bank account number</th>
-                    <th>Balance</th>
                     <th>Roles</th>
-                    <th></th>
                     <th>Action</th>
                 </tr>
                 <tr th:each="user:${users}">
@@ -30,14 +27,9 @@
                     <td th:text="${user.email}"></td>
                     <td th:text="${user.phoneNumber}"></td>
                     <td th:text="${user.password}"></td>
-                    <td th:text="${user.bankAccountNumber}"></td>
-                    <td th:text="${user.balance}"></td>
-                    <td th:each="role:${user.getRoles()}">
-                        <p th:text="${role.role}"></p>
-                    </td>
-                    <td th:if="${user.getRoles().size()==1}"></td>
+                    <td th:text="${user.rolesToDisplay}"></td>
                     <td th:if="${user.getRoles().size()==1}">
-                        <form action="#" th:action="@{'/admin-panel/users/{id}'(id=${user.id})}" th:method="delete">
+                        <form action="#" th:action="@{/admin-panel/users/{id}(id=${user.id})}" th:method="delete">
                             <input type="hidden" name="_method" value="delete">
                             <button type="submit" onclick="clicked(event, 'delete')" class="btn btn-danger">delete</button>
                         </form>
@@ -50,7 +42,7 @@
             <h3 class="alert alert-info">No users in database!</h3>
         </div>
         <br>
-        <a th:href="@{'/admin-panel'}">Back to the admin-panel</a>
+        <a th:href="@{/admin-panel}">Back to the admin-panel</a>
     </div>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
