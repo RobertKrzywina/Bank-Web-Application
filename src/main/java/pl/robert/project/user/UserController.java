@@ -10,10 +10,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import pl.robert.project.bank_account.domain.BankAccount;
 import pl.robert.project.bank_account.domain.BankAccountFacade;
 import pl.robert.project.transactions.domain.TransactionFacade;
@@ -140,7 +137,7 @@ class UserController implements Messages {
         return "changeEmail";
     }
 
-    @PostMapping("/change-email")
+    @PatchMapping("/change-email")
     public String changeEmail(@Valid @ModelAttribute("DTO") ChangeEmailDTO dto, BindingResult result, Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth == null) {
@@ -164,7 +161,7 @@ class UserController implements Messages {
         return "changePhoneNumber";
     }
 
-    @PostMapping("/change-phone")
+    @PatchMapping("/change-phone")
     public String changePhoneNumber(@Valid @ModelAttribute("DTO") ChangePhoneNumberDTO dto, BindingResult result, Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth == null) {
@@ -188,7 +185,7 @@ class UserController implements Messages {
         return "changePassword";
     }
 
-    @PostMapping("/change-password")
+    @PatchMapping("/change-password")
     public String changePassword(@Valid @ModelAttribute("DTO") ChangePasswordDTO dto, BindingResult result, Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth == null) {

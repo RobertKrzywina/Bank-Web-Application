@@ -25,4 +25,9 @@ interface BankAccountRepository extends JpaRepository<BankAccount, Long> {
            "WHERE b.id = :id")
     void addAmountToReceiver(@Param("money") double money,
                              @Param("id") long id);
+
+    @Modifying
+    @Transactional
+    @Query("UPDATE BankAccount b SET b.balance = :newBalance WHERE b.id = :id")
+    void modifyBalance(@Param("newBalance") double newBalance, @Param("id") long id);
 }

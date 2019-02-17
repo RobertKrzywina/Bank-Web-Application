@@ -1,13 +1,11 @@
 package pl.robert.project.transactions.query;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter @Setter
 @Builder
 public class TransactionQuery {
@@ -17,6 +15,8 @@ public class TransactionQuery {
     private long id;
     private String title;
     private String description;
+    private String senderAccountNumber;
+    private String receiverAccountNumber;
     private String number;
     private LocalDateTime date;
     private double amount;

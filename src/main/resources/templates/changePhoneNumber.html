@@ -10,7 +10,7 @@
     <div class="container">
         <h1>Change phone number</h1>
         <hr/>
-        <form method="post" action="#" th:action="@{/user-panel/change-phone}" th:object="${DTO}">
+        <form action="#" th:action="@{/user-panel/change-phone}" th:object="${DTO}" th:method="patch">
             Phone number <input type="text" placeholder="Your new phone number" th:field="*{phoneNumber}">
             <p th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}" class="alert alert-danger"></p>
             <div th:unless="${#fields.hasErrors('phoneNumber')}"><br></div>
@@ -19,7 +19,7 @@
             <p th:if="${#fields.hasErrors('confirmedPhoneNumber')}" th:errors="*{confirmedPhoneNumber}" class="alert alert-danger"></p>
             <br>
 
-            <input type="submit" value="Submit">
+            <button type="submit" class="btn btn-info">Change</button>
         </form>
         <br>
         <a th:href="@{/user-panel/about-me}">Back to the about me</a>

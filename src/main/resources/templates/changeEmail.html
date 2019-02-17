@@ -10,7 +10,7 @@
     <div class="container">
         <h1>Change email</h1>
         <hr/>
-        <form method="post" action="#" th:action="@{/user-panel/change-email}" th:object="${DTO}">
+        <form action="#" th:action="@{/user-panel/change-email}" th:object="${DTO}" th:method="patch">
             Email <input type="text" placeholder="Enter your new email" th:field="*{email}">
             <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="alert alert-danger"></p>
             <div th:unless="${#fields.hasErrors('email')}"><br></div>
@@ -19,7 +19,7 @@
             <p th:if="${#fields.hasErrors('confirmedEmail')}" th:errors="*{confirmedEmail}" class="alert alert-danger"></p>
             <br>
 
-            <input type="submit" value="Submit">
+            <button type="submit" class="btn btn-info">Change</button>
         </form>
         <br>
         <a th:href="@{/user-panel/about-me}">Back to the about me</a>

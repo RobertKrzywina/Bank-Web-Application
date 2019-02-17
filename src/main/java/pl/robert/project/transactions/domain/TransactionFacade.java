@@ -8,6 +8,7 @@ import pl.robert.project.transactions.domain.dto.SendTransactionDTO;
 import pl.robert.project.transactions.query.TransactionQuery;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 @Component
@@ -53,5 +54,16 @@ public class TransactionFacade {
         }
 
         return senderTransactionsQuery;
+    }
+
+    public List<TransactionQuery> findAll() {
+        List<TransactionQuery> transactionsQuery = new LinkedList<>();
+        List<Transaction> transactions = repository.findAll();
+
+        for (Transaction transaction : transactions) {
+            transactionsQuery.add(factory.create(transaction));
+        }
+
+        return transactionsQuery;
     }
 }
