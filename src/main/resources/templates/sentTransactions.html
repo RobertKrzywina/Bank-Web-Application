@@ -10,7 +10,7 @@
     <div class="container">
         <h1>Sent transactions</h1>
         <hr/>
-        <div th:if="${not#lists.isEmpty(transactions)}">
+        <div th:if="${!transactions.isEmpty()}">
             <table class="table table-striped">
                 <tr>
                     <th>Id</th>
@@ -24,13 +24,20 @@
                     <td th:text="${transaction.id}"></td>
                     <td th:text="${transaction.title}"></td>
                     <td th:text="${transaction.description}"></td>
-                    <td th:text="${transaction.number}"></td>
+                    <td th:text="${transaction.receiverAccountNumber}"></td>
                     <td th:text="${transaction.date}"></td>
                     <td th:text="${transaction.amount}"></td>
                 </tr>
             </table>
+            <ul class="nav nav-pills">
+                <li class="nav-item"
+                    th:each="i : ${#numbers.sequence(0, transactions.totalPages - 1)}">
+                    <a th:href="@{/user-panel/sent-transactions/(page=${i})}" th:text="${i+1}" class="nav-link"
+                       th:classappend="${currentPage}==${i} ? 'active' : ''"></a>
+                </li>
+            </ul>
         </div>
-        <div th:unless="${not#lists.isEmpty(transactions)}">
+        <div th:unless="${!transactions.isEmpty()}">
             <h3 class="alert alert-info">You have no sent transactions!</h3>
         </div>
         <br>

@@ -1,4 +1,4 @@
-package pl.robert.project.bank_account.domain;
+package pl.robert.project.bank_account;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

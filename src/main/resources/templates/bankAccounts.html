@@ -10,7 +10,7 @@
     <div class="container">
         <h1>List of all bank accounts</h1>
         <hr/>
-        <div th:if="${not#lists.isEmpty(bankAccounts)}">
+        <div th:if="${!bankAccounts.isEmpty()}">
             <table class="table table-striped">
                 <tr>
                     <th>User id</th>
@@ -19,19 +19,26 @@
                     <th>Action</th>
                 </tr>
                 <tr th:each="account:${bankAccounts}">
-                    <td th:text="${account.userId}"></td>
+                    <td th:text="${account.id}"></td>
                     <td th:text="${account.number}"></td>
                     <td th:text="${account.balance}"></td>
                     <td>
-                        <form action="#" th:action="@{/admin-panel/bank-accounts/{userId}(userId=${account.userId})}" th:object="${DTO}" th:method="patch">
+                        <form action="#" th:action="@{/admin-panel/bank-accounts/{userId}(userId=${account.id})}" th:object="${DTO}" th:method="patch">
                             <input type="number" placeholder="Enter new balance" th:field="*{newBalance}">
                             <button type="submit" onclick="clicked(event, 'modify balance')" class="btn btn-danger">modify</button>
                         </form>
                     </td>
                 </tr>
             </table>
+            <ul class="nav nav-pills">
+                <li class="nav-item"
+                    th:each="i : ${#numbers.sequence(0, bankAccounts.totalPages - 1)}">
+                    <a th:href="@{/admin-panel/bank-accounts/(page=${i})}" th:text="${i+1}" class="nav-link"
+                       th:classappend="${currentPage}==${i} ? 'active' : ''"></a>
+                </li>
+            </ul>
         </div>
-        <div th:unless="${not#lists.isEmpty(bankAccounts)}">
+        <div th:unless="${!bankAccounts.isEmpty()}">
             <h3 class="alert alert-info">No bank accounts in database!</h3>
         </div>
         <br>

@@ -1,12 +1,11 @@
-package pl.robert.project.bank_account.domain;
+package pl.robert.project.bank_account;
 
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
-import pl.robert.project.bank_account.domain.dto.ModifyBalanceDTO;
-import pl.robert.project.bank_account.query.BankAccountQuery;
+import pl.robert.project.bank_account.dto.ModifyBalanceDTO;
 
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Random;
 
 @Component
@@ -54,15 +53,8 @@ public class BankAccountFacade {
         repository.addAmountToReceiver(money, receiverId);
     }
 
-    public List<BankAccountQuery> findAll() {
-        List<BankAccountQuery> bankAccountsQuery = new LinkedList<>();
-        List<BankAccount> bankAccounts = repository.findAll();
-
-        for (BankAccount bankAccount : bankAccounts) {
-            bankAccountsQuery.add(factory.create(bankAccount));
-        }
-
-        return bankAccountsQuery;
+    public Page<BankAccount> findAll(int page, int size) {
+        return repository.findAll(new PageRequest(page, size));
     }
 
     public void modifyBalance(ModifyBalanceDTO dto) {

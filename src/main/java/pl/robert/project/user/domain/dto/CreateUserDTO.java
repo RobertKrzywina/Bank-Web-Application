@@ -3,7 +3,7 @@ package pl.robert.project.user.domain.dto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import pl.robert.project.bank_account.domain.BankAccount;
+import pl.robert.project.bank_account.BankAccount;
 import pl.robert.project.validation.IsUnique;
 import pl.robert.project.validation.RegexExpressions;
 

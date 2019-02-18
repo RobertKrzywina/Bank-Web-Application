@@ -10,7 +10,7 @@
     <div class="container">
         <h1>List of all transactions</h1>
         <hr/>
-        <div th:if="${not#lists.isEmpty(transactions)}">
+        <div th:if="${!transactions.isEmpty()}">
             <table class="table table-striped">
                 <tr>
                     <th>Id</th>
@@ -31,8 +31,15 @@
                     <td th:text="${transaction.amount}"></td>
                 </tr>
             </table>
+            <ul class="nav nav-pills">
+                <li class="nav-item"
+                    th:each="i : ${#numbers.sequence(0, transactions.totalPages - 1)}">
+                    <a th:href="@{/admin-panel/transactions/(page=${i})}" th:text="${i+1}" class="nav-link"
+                       th:classappend="${currentPage}==${i} ? 'active' : ''"></a>
+                </li>
+            </ul>
         </div>
-        <div th:unless="${not#lists.isEmpty(transactions)}">
+        <div th:unless="${!transactions.isEmpty()}">
             <h3 class="alert alert-info">No transactions in database!</h3>
         </div>
         <br>

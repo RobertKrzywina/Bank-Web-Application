@@ -11,11 +11,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import pl.robert.project.bank_account.domain.BankAccount;
-import pl.robert.project.bank_account.domain.BankAccountFacade;
-import pl.robert.project.transactions.domain.TransactionFacade;
-import pl.robert.project.transactions.domain.dto.SendTransactionDTO;
-import pl.robert.project.transactions.query.TransactionQuery;
+import pl.robert.project.bank_account.BankAccount;
+import pl.robert.project.bank_account.BankAccountFacade;
+import pl.robert.project.transactions.TransactionFacade;
+import pl.robert.project.transactions.dto.SendTransactionDTO;
 import pl.robert.project.user.domain.UserFacade;
 import pl.robert.project.user.domain.dto.ChangeEmailDTO;
 import pl.robert.project.user.domain.dto.ChangePasswordDTO;
@@ -24,7 +23,6 @@ import pl.robert.project.user.query.UserQuery;
 import pl.robert.project.validation.ValidationFacade;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @Controller
 @AllArgsConstructor
@@ -100,33 +98,31 @@ class UserController implements Messages {
     }
 
     @GetMapping("/received-transactions")
-    public String receivedTransactions(Model model) {
+    public String receivedTransactions(Model model, @RequestParam(defaultValue = "0") int page) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth == null) {
             return "redirect:/access-denied";
         }
-        TransactionQuery.setIdTemp(0);
         long id = userFacade.findIdByLogin(auth.getName());
         BankAccount bankAccount = bankAccountFacade.findById(id);
-        List<TransactionQuery> transactions = transactionFacade.findAllByReceiverAccountNumber(bankAccount.getNumber());
 
-        model.addAttribute("transactions", transactions);
+        model.addAttribute("transactions", transactionFacade.findAllByReceiverAccountNumber(bankAccount.getNumber(), page, 5));
+        model.addAttribute("currentPage", page);
 
         return "receivedTransactions";
     }
 
     @GetMapping("/sent-transactions")
-    public String sentTransactions(Model model) {
+    public String sentTransactions(Model model, @RequestParam(defaultValue = "0") int page) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth == null) {
             return "redirect:/access-denied";
         }
-        TransactionQuery.setIdTemp(0);
         long id = userFacade.findIdByLogin(auth.getName());
         BankAccount bankAccount = bankAccountFacade.findById(id);
-        List<TransactionQuery> transactions = transactionFacade.findAllBySenderAccountNumber(bankAccount.getNumber());
 
-        model.addAttribute("transactions", transactions);
+        model.addAttribute("transactions", transactionFacade.findAllBySenderAccountNumber(bankAccount.getNumber(), page, 5));
+        model.addAttribute("currentPage", page);
 
         return "sentTransactions";
     }

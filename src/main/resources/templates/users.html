@@ -10,7 +10,7 @@
     <div class="container">
         <h1>List of all users</h1>
         <hr/>
-        <div th:if="${not#lists.isEmpty(users)}">
+        <div th:if="${!users.isEmpty()}">
             <table class="table table-striped">
                 <tr>
                     <th>Id</th>
@@ -26,8 +26,9 @@
                     <td th:text="${user.login}"></td>
                     <td th:text="${user.email}"></td>
                     <td th:text="${user.phoneNumber}"></td>
-                    <td th:text="${user.password}"></td>
-                    <td th:text="${user.rolesToDisplay}"></td>
+                    <td th:text="${user.decodedBCryptPassword}"></td>
+                    <td th:if="${user.getRoles().size()==1}">user</td>
+                    <td th:unless="${user.getRoles().size()==1}">user, admin</td>
                     <td th:if="${user.getRoles().size()==1}">
                         <form action="#" th:action="@{/admin-panel/users/{id}(id=${user.id})}" th:method="delete">
                             <input type="hidden" name="_method" value="delete">
@@ -37,8 +38,15 @@
                     <td th:unless="${user.getRoles().size()==1}">Can't delete</td>
                 </tr>
             </table>
+            <ul class="nav nav-pills">
+                <li class="nav-item"
+                    th:each="i : ${#numbers.sequence(0, users.totalPages - 1)}">
+                    <a th:href="@{/admin-panel/users/(page=${i})}" th:text="${i+1}" class="nav-link"
+                       th:classappend="${currentPage}==${i} ? 'active' : ''"></a>
+                </li>
+            </ul>
         </div>
-        <div th:unless="${not#lists.isEmpty(users)}">
+        <div th:unless="${!users.isEmpty()}">
             <h3 class="alert alert-info">No users in database!</h3>
         </div>
         <br>

@@ -1,7 +1,7 @@
-package pl.robert.project.transactions.domain;
+package pl.robert.project.transactions;
 
 import lombok.*;
-import pl.robert.project.bank_account.domain.BankAccount;
+import pl.robert.project.bank_account.BankAccount;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Getter @Setter
 @Builder
+@ToString
 public class Transaction {
 
     @Id

@@ -3,16 +3,15 @@ package pl.robert.project.user.domain;
 import com.google.common.collect.ImmutableMap;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-import pl.robert.project.bank_account.domain.BankAccountFacade;
+import pl.robert.project.bank_account.BankAccountFacade;
 import pl.robert.project.user.domain.dto.AuthorizationDTO;
 import pl.robert.project.user.domain.dto.CreateUserDTO;
 import pl.robert.project.user.query.UserQuery;
-
-import java.util.LinkedList;
-import java.util.List;
 
 @Component
 @AllArgsConstructor
@@ -111,15 +110,8 @@ public class UserFacade {
         return new BCryptPasswordEncoder();
     }
 
-    public List<UserQuery> findAll() {
-        List<UserQuery> usersQuery = new LinkedList<>();
-        List<User> users = repository.findAll();
-
-        for (User user : users) {
-            usersQuery.add(factory.create(user));
-        }
-
-        return usersQuery;
+    public Page<User> findAll(int page, int size) {
+        return repository.findAll(new PageRequest(page, size));
     }
 
     public void deleteById(long id) {

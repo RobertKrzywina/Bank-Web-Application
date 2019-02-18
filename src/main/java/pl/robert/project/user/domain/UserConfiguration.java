@@ -2,7 +2,7 @@ package pl.robert.project.user.domain;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import pl.robert.project.bank_account.domain.BankAccountFacade;
+import pl.robert.project.bank_account.BankAccountFacade;
 
 @Configuration
 class UserConfiguration {

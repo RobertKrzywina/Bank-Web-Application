@@ -1,4 +1,4 @@
-package pl.robert.project.bank_account.domain;
+package pl.robert.project.bank_account;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
