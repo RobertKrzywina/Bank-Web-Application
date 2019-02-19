@@ -26,6 +26,6 @@ public class BankAccount {
 
     private double balance;
 
-    @OneToMany(mappedBy = "account")
+    @OneToMany(mappedBy = "account", cascade = {CascadeType.MERGE, CascadeType.REMOVE})
     private List<Transaction> transactions = new LinkedList<>();
 }

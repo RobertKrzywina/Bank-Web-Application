@@ -29,7 +29,7 @@ class BaseController implements Messages {
     private UserFacade userFacade;
     private ValidationFacade validationFacade;
 
-    @GetMapping
+    @GetMapping("/")
     public String index() {
         return "index";
     }
