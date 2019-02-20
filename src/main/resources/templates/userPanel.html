@@ -6,24 +6,77 @@
     <title>User panel</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/fontello/fontello.css}">
 </head>
 <body>
-    <div class="container">
-        <h1>User panel</h1>
-        <hr/>
-        <h3 th:text="${sayHello}" class="alert alert-primary"></h3>
-        <a th:href="@{/}">Back to the homepage</a>
-        <br>
-        <a th:href="@{/user-panel/about-me}">About me</a>
-        <br>
-        <a th:href="@{/user-panel/send-transaction}">Send transaction</a>
-        <br>
-        <a th:href="@{/user-panel/received-transactions}">List of received transactions</a>
-        <br>
-        <a th:href="@{/user-panel/sent-transactions}">List of sent transactions</a>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a th:href="@{/}" class="nav-link">Home</a>
+                </li>
+                <li class="active">
+                    <a th:href="@{/user-panel}" class="nav-link">User panel</a>
+                </li>
+                <li class="nav-item">
+                    <a th:href="@{/logout}" class="nav-link" onclick="clicked(event, 'logout')">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="userPanel">
+        <div class="container">
+            <hr/>
+            <div class="row">
+                <div class="col-sm-6 col-md-5 offset-md-1">
+                    <figure>
+                        <div class="overlay">
+                            <a th:href="@{/user-panel/about-me}"><img src="#" th:src="@{/img/aboutMe.png}" alt=""></a>
+                            <a class="link" th:href="@{/user-panel/about-me}"><span class="icon"><i class="icon-account"></i><p>Information about your account!</p></span></a>
+                        </div>
+                        <p class="description">About me</p>
+                    </figure>
+                </div>
+
+                <div class="col-sm-6 col-md-5">
+                    <figure>
+                        <div class="overlay">
+                            <a th:href="@{/user-panel/send-transaction}"><img src="#" th:src="@{/img/sendTransaction.png}" alt=""></a>
+                            <a class="link" th:href="@{/user-panel/about-me}"><span class="icon"><i class="icon-send"></i><p>Send transaction to other user!</p></span></a>
+                        </div>
+                        <p class="description">Send transaction</p>
+                    </figure>
+                </div>
+
+                <div class="col-sm-6 col-md-5 offset-md-1">
+                    <figure>
+                        <div class="overlay">
+                            <a th:href="@{/user-panel/received-transactions}"><img src="#" th:src="@{/img/receivedTransactions.png}" alt=""></a>
+                            <a class="link" th:href="@{/user-panel/about-me}"><span class="icon"><i class="icon-received"></i><p>List of your received transactions!</p></span></a>
+                        </div>
+                        <p class="description">Received transactions</p>
+                    </figure>
+                </div>
+
+                <div class="col-sm-6 col-md-5">
+                    <figure>
+                        <div class="overlay">
+                            <a th:href="@{/user-panel/sent-transaction}"><img src="#" th:src="@{/img/sentTransactions.png}" alt=""></a>
+                            <a class="link" th:href="@{/user-panel/about-me}"><span class="icon"><i class="icon-sent"></i><p>List of your sent transactions!</p></span></a>
+                        </div>
+                        <p class="description">Sent transactions</p>
+                    </figure>
+                </div>
+            </div>
+        </div>
     </div>
+
+    <div th:replace="fragments/footer::footer"></div>
+
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script th:src="@{/js/script.js}"></script>
 </body>
 </html>
