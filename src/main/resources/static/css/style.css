@@ -1,3 +1,10 @@
+#aboutProject {
+    position: absolute;
+    left: 28%;
+    top: 25%;
+    text-align: center;
+}
+
 html {
     position: relative;
     min-height: 100%;
@@ -25,9 +32,14 @@ footer {
     margin-top: -10px;
 }
 
-.nav-item:hover::after { width:100%; }
+.nav-item:hover::after {
+    width:100%;
+}
 
-.nav-link{ padding:15px 5px; transition:0.2s; }
+.nav-link{
+    padding:15px 5px;
+    transition:0.2s;
+}
 
 .navbar-nav .nav-link {
     color: #000;
