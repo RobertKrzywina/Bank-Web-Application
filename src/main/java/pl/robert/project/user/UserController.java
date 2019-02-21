@@ -108,6 +108,7 @@ class UserController implements Messages {
 
         model.addAttribute("transactions", transactionFacade.findAllByReceiverAccountNumber(bankAccount.getNumber(), page, 5));
         model.addAttribute("currentPage", page);
+        model.addAttribute("values", transactionFacade.getValuesToDisplayId(transactionFacade.getNumberOfElements(), page));
 
         return "receivedTransactions";
     }
@@ -123,6 +124,7 @@ class UserController implements Messages {
 
         model.addAttribute("transactions", transactionFacade.findAllBySenderAccountNumber(bankAccount.getNumber(), page, 5));
         model.addAttribute("currentPage", page);
+        model.addAttribute("values", transactionFacade.getValuesToDisplayId(transactionFacade.getNumberOfElements(), page));
 
         return "sentTransactions";
     }

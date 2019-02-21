@@ -1,5 +1,6 @@
 package pl.robert.project.transactions;
 
+import com.google.common.primitives.Ints;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -33,5 +34,27 @@ public class TransactionFacade {
 
     public Page<Transaction> findAll(int page, int size) {
         return repository.findAll(new PageRequest(page, size));
+    }
+
+    public int getNumberOfElements() {
+        return Ints.checkedCast(repository.findFirstByOrderByIdDesc().getId());
+    }
+
+    public int[] getValuesToDisplayId(int numberOfElements, int page) {
+        int difference = (numberOfElements / 5) * 5 - 5;
+        int endIndex = ((numberOfElements / 5) + page) * 5 - difference;
+
+        if (endIndex > numberOfElements) {
+            endIndex = ((numberOfElements / 5) * 5) + 1;
+        }
+
+        int startIndex = endIndex - 5;
+
+        int[] values = new int[5];
+
+        for (int i=startIndex, j=0; i<endIndex; i++, j++) {
+            values[j] = i + 1;
+        }
+        return values;
     }
 }

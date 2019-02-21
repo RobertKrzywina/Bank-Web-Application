@@ -8,4 +8,5 @@ interface TransactionRepository extends JpaRepository<Transaction, Long> {
 
     Page<Transaction> findAllByReceiverAccountNumber(String receiverAccountNumber, Pageable pageable);
     Page<Transaction> findAllBySenderAccountNumber(String senderAccountNumber, Pageable pageable);
+    Transaction findFirstByOrderByIdDesc();
 }

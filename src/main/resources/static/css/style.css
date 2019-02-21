@@ -91,6 +91,10 @@ hr {
     opacity: 0.9;
 }
 
+.overlay a:link {
+    text-decoration: none;
+}
+
 .icon {
     display: block;
     top: 25%;
@@ -100,4 +104,17 @@ hr {
 
 .icon p {
     font-size: 20px;
+}
+
+table {
+    text-align: center;
+}
+
+.tableHeader {
+    background-color: #428bca;
+    color: #efefef;
+}
+
+.tableContent {
+    color: #efefef;
 }
