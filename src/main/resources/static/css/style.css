@@ -122,3 +122,26 @@ table {
 input[readonly] {
     font-weight: bold;
 }
+
+.error {
+    margin: 0 auto;
+    text-align: center;
+}
+
+.error-code {
+    bottom: 60%;
+    font-size: 96px;
+    line-height: 100px;
+}
+
+.m-b-10 {
+    margin-bottom: 10px!important;
+}
+
+.m-b-20 {
+    margin-bottom: 20px!important;
+}
+
+.m-t-20 {
+    margin-top: 20px!important;
+}

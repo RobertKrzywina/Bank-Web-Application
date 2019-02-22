@@ -41,8 +41,8 @@
                     <th>Date</th>
                     <th>Amount</th>
                 </tr>
-                <tr class="tableContent" th:each="transaction:${transactions}">
-                    <td th:text="${transaction.id}"></td>
+                <tr class="tableContent" th:each="transaction, iterator:${transactions}">
+                    <td th:text="${values[iterator.index]}"></td>
                     <td th:text="${transaction.title}"></td>
                     <td th:text="${transaction.description}"></td>
                     <td th:text="${transaction.receiverAccountNumber}"></td>

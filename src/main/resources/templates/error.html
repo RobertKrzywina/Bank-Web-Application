@@ -4,7 +4,7 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
-    <title>Access denied</title>
+    <title>Not found</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
@@ -44,13 +44,13 @@
     </nav>
 
     <div class="container">
-        <h3>Access denied</h3>
+        <h3>Not found</h3>
         <hr/>
     </div>
 
     <div class="error">
-        <div class="error-code m-b-10 m-t-20">403 <i class="fa fa-warning"></i></div>
-        <h3 class="font-bold">You don't have permissions to access this page..</h3>
+        <div class="error-code m-b-10 m-t-20">404 <i class="fa fa-warning"></i></div>
+        <h3 class="font-bold">We couldn't find the page..</h3>
         <div><a th:href="@{/}"><i class="fa fa-arrow-left"></i>Go back to Homepage</a></div>
     </div>
 

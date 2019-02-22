@@ -35,7 +35,7 @@
                 <li class="nav-item"
                     th:each="i : ${#numbers.sequence(0, bankAccounts.totalPages - 1)}">
                     <a th:href="@{/admin-panel/bank-accounts/(page=${i})}" th:text="${i+1}" class="nav-link"
-                       th:classappend="${currentPage}==${i} ? 'active' : ''"></a>
+                       th:classappend="${currentPage}==${i} ? 'active' :''"></a>
                 </li>
             </ul>
         </div>
