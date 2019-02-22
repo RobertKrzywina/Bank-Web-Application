@@ -8,12 +8,31 @@
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a th:href="@{/}" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a th:href="@{/user-panel}" class="nav-link">User panel</a>
+                </li>
+                <li class="nav-item">
+                    <a th:href="@{/admin-panel}" class="nav-link">Admin panel</a>
+                </li>
+                <li class="nav-item">
+                    <a th:href="@{/logout}" class="nav-link" onclick="clicked(event, 'logout')">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
     <div class="container">
-        <h1>List of all transactions</h1>
+        <h3>List of all transactions</h3>
         <hr/>
         <div th:if="${!transactions.isEmpty()}">
-            <table class="table table-striped">
-                <tr>
+            <table class="table">
+                <tr class="tableHeader">
                     <th>Id</th>
                     <th>Title</th>
                     <th>Description</th>
@@ -22,7 +41,7 @@
                     <th>Date</th>
                     <th>Amount</th>
                 </tr>
-                <tr th:each="transaction:${transactions}">
+                <tr class="tableContent" th:each="transaction:${transactions}">
                     <td th:text="${transaction.id}"></td>
                     <td th:text="${transaction.title}"></td>
                     <td th:text="${transaction.description}"></td>
@@ -33,7 +52,7 @@
                 </tr>
             </table>
             <ul class="nav nav-pills">
-                <li class="nav-item"
+                <li
                     th:each="i : ${#numbers.sequence(0, transactions.totalPages - 1)}">
                     <a th:href="@{/admin-panel/transactions/(page=${i})}" th:text="${i+1}" class="nav-link"
                        th:classappend="${currentPage}==${i} ? 'active' : ''"></a>
@@ -43,11 +62,13 @@
         <div th:unless="${!transactions.isEmpty()}">
             <h3 class="alert alert-info">No transactions in database!</h3>
         </div>
-        <br>
-        <a th:href="@{/admin-panel}">Back to the admin-panel</a>
     </div>
+
+    <div th:replace="fragments/footer::footer"></div>
+
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script th:src="@{/js/script.js}"></script>
 </body>
 </html>

@@ -6,22 +6,73 @@
     <title>Admin panel</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/fontello/fontello.css}">
 </head>
 <body>
-    <div class="container">
-        <h1>Admin panel</h1>
-        <hr/>
-        <h3 th:text="${sayHello}" class="alert alert-primary"></h3>
-        <a th:href="@{/}">Back to the homepage</a>
-        <br>
-        <a th:href="@{/admin-panel/users}">List of all users</a>
-        <br>
-        <a th:href="@{/admin-panel/bank-accounts}">List of all bank accounts</a>
-        <br>
-        <a th:href="@{/admin-panel/transactions}">List of all transactions</a>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a th:href="@{/}" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a th:href="@{/user-panel}" class="nav-link">User panel</a>
+                </li>
+                <li class="active">
+                    <a th:href="@{/admin-panel}" class="nav-link">Admin panel</a>
+                </li>
+                <li class="nav-item">
+                    <a th:href="@{/logout}" class="nav-link" onclick="clicked(event, 'logout')">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="userPanel">
+        <div class="container">
+            <hr/>
+            <div class="row">
+                <div class="col-sm-6 col-md-5 offset-md-1">
+                    <figure>
+                        <div class="overlay">
+                            <a th:href="@{/admin-panel/users}"><img src="#" th:src="@{/img/users.png}" alt=""></a>
+                            <a class="link" th:href="@{/admin-panel/users}">
+                                <span class="icon"><i class="icon-users"></i><p><i>List of all users!</i></p></span></a>
+                        </div>
+                        <p class="description">Users</p>
+                    </figure>
+                </div>
+
+                <div class="col-sm-6 col-md-5">
+                    <figure>
+                        <div class="overlay">
+                            <a th:href="@{/admin-panel/bank-accounts}"><img src="#" th:src="@{/img/accounts.png}" alt=""></a>
+                            <a class="link" th:href="@{/admin-panel/bank-accounts}">
+                                <span class="icon"><i class="icon-accounts"></i><p><i>List of all bank accounts!</i></p></span></a>
+                        </div>
+                        <p class="description">Accounts</p>
+                    </figure>
+                </div>
+
+                <div class="col-sm-6 col-md-5" style="margin-left: 29%">
+                    <figure>
+                        <div class="overlay">
+                            <a th:href="@{/admin-panel/transactions}"><img src="#" th:src="@{/img/transactions.png}" alt=""></a>
+                            <a class="link" th:href="@{/admin-panel/transactions}">
+                                <span class="icon"><i class="icon-transactions"></i><p><i>List of all transactions!</i></p></span></a>
+                        </div>
+                        <p class="description">Transactions</p>
+                    </figure>
+                </div>
+            </div>
+        </div>
     </div>
+
+    <div th:replace="fragments/footer::footer"></div>
+
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script th:src="@{/js/script.js}"></script>
 </body>
 </html>

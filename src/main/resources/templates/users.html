@@ -5,14 +5,34 @@
     <meta charset="UTF-8">
     <title>Users</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a th:href="@{/}" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a th:href="@{/user-panel}" class="nav-link">User panel</a>
+                </li>
+                <li class="nav-item">
+                    <a th:href="@{/admin-panel}" class="nav-link">Admin panel</a>
+                </li>
+                <li class="nav-item">
+                    <a th:href="@{/logout}" class="nav-link" onclick="clicked(event, 'logout')">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
     <div class="container">
-        <h1>List of all users</h1>
+        <h3>List of all users</h3>
         <hr/>
         <div th:if="${!users.isEmpty()}">
-            <table class="table table-striped">
-                <tr>
+            <table class="table">
+                <tr class="tableHeader">
                     <th>Id</th>
                     <th>Login</th>
                     <th>Email</th>
@@ -21,7 +41,7 @@
                     <th>Roles</th>
                     <th>Action</th>
                 </tr>
-                <tr th:each="user:${users}">
+                <tr class="tableContent" th:each="user:${users}">
                     <td th:text="${user.id}"></td>
                     <td th:text="${user.login}"></td>
                     <td th:text="${user.email}"></td>
@@ -39,7 +59,7 @@
                 </tr>
             </table>
             <ul class="nav nav-pills">
-                <li class="nav-item"
+                <li
                     th:each="i : ${#numbers.sequence(0, users.totalPages - 1)}">
                     <a th:href="@{/admin-panel/users/(page=${i})}" th:text="${i+1}" class="nav-link"
                        th:classappend="${currentPage}==${i} ? 'active' : ''"></a>
@@ -49,9 +69,10 @@
         <div th:unless="${!users.isEmpty()}">
             <h3 class="alert alert-info">No users in database!</h3>
         </div>
-        <br>
-        <a th:href="@{/admin-panel}">Back to the admin-panel</a>
     </div>
+
+    <div th:replace="fragments/footer::footer"></div>
+
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
