@@ -16,5 +16,6 @@ public class AuthorizationDTO {
 
     private String login;
     private String password;
+    private boolean isVerified;
     private Set<Role> roles = new HashSet<>();
 }

@@ -30,7 +30,6 @@ class LoginPasswordValidator implements ConstraintValidator<LoginPassword, Strin
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
-
         if (fieldName.equals("Login")) {
             login = value;
             isLoginCorrect = userFacade.isLoginExists(login);

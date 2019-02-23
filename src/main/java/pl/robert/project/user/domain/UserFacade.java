@@ -56,6 +56,7 @@ public class UserFacade {
         if (token != null) {
             User user = repository.findByEmail(token.getUser().getEmail());
             repository.findUserByEmailAndUpdateEnabled(user.getEmail());
+            tokenRepository.delete(token);
             logger.info("Email confirmation correct");
             return true;
         }
@@ -100,7 +101,7 @@ public class UserFacade {
 
         if (user == null) return null;
 
-        return new AuthorizationDTO(user.getLogin(), user.getPassword(), user.getRoles());
+        return new AuthorizationDTO(user.getLogin(), user.getPassword(), user.isEnabled(), user.getRoles());
     }
 
     public UserQuery QueryByLogin(String login) {

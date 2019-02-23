@@ -12,7 +12,7 @@ public @interface LoginPassword {
 
     String fieldName();
 
-    String message() default "Given login or password are incorrect.";
+    String message() default "Given login or password are incorrect OR your account is not verified by email.";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }

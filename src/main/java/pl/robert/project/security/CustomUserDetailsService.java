@@ -1,6 +1,8 @@
 package pl.robert.project.security;
 
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,10 +15,13 @@ import pl.robert.project.user.domain.dto.AuthorizationDTO;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 @Component
 @AllArgsConstructor
 class CustomUserDetailsService implements UserDetailsService {
+
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private UserFacade userFacade;
 
@@ -25,6 +30,11 @@ class CustomUserDetailsService implements UserDetailsService {
         AuthorizationDTO user = userFacade.findByLogin(login);
 
         if (user == null) throw new UsernameNotFoundException("User not found");
+
+        if (!user.isVerified()) {
+            user.setPassword(UUID.randomUUID().toString());
+            logger.warn("User is not verified! Changing password to random UUID!");
+        }
 
         return new org.springframework.security.core.userdetails.User(
                 user.getLogin(),
