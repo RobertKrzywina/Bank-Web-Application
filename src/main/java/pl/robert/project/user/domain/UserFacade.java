@@ -2,9 +2,12 @@ package pl.robert.project.user.domain;
 
 import com.google.common.collect.ImmutableMap;
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -17,14 +20,47 @@ import pl.robert.project.user.query.UserQuery;
 @AllArgsConstructor
 public class UserFacade {
 
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
     private UserFactory factory;
     private UserRepository repository;
     private BankAccountFacade bankAccountFacade;
+    private ConfirmationTokenRepository tokenRepository;
+    private EmailSenderService emailSenderService;
 
-    public void addUser(CreateUserDTO dto) {
+    public void generateBankAccount(CreateUserDTO dto) {
         dto.setPhoneNumber(formatPhoneNumber(dto.getPhoneNumber()));
         dto.setBankAccount(bankAccountFacade.create());
-        repository.saveAndFlush(factory.create(dto));
+    }
+
+    public void generateEmailConfirmationToken(CreateUserDTO dto) {
+        User user = factory.create(dto);
+        repository.save(user);
+
+        ConfirmationToken confirmationToken = new ConfirmationToken(user);
+        tokenRepository.save(confirmationToken);
+
+        SimpleMailMessage mailMessage = new SimpleMailMessage();
+        mailMessage.setTo(user.getEmail());
+        mailMessage.setSubject("Complete Registration!");
+        mailMessage.setFrom("Rob");
+        mailMessage.setText("To confirm your account, please click here : " +
+                "http://localhost:8080/confirm-account?token=" + confirmationToken.getConfirmationToken());
+
+        emailSenderService.sendEmail(mailMessage);
+    }
+
+    public boolean checkConfirmationToken(String confirmationToken) {
+        ConfirmationToken token = tokenRepository.findByConfirmationToken(confirmationToken);
+
+        if (token != null) {
+            User user = repository.findByEmail(token.getUser().getEmail());
+            repository.findUserByEmailAndUpdateEnabled(user.getEmail());
+            logger.info("Email confirmation correct");
+            return true;
+        }
+
+        return false;
     }
 
     private String formatPhoneNumber(String phoneNumber) {

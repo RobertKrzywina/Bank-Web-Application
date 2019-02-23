@@ -3,7 +3,7 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Register completed</title>
+    <title>Congratulations!</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
@@ -14,7 +14,7 @@
                 <li class="nav-item">
                     <a th:href="@{/}" class="nav-link">Home</a>
                 </li>
-                <li class="active">
+                <li class="nav-item">
                     <a th:href="@{/register}" class="nav-link">Register</a>
                 </li>
                 <li class="nav-item">
@@ -26,8 +26,8 @@
 
     <div class="container">
         <hr/>
-        <h3 class="alert alert-success" th:text="'A verification email has been sent to: ' + ${email}"></h3>
-        <h3>Please confirm your email, so u can <a th:href="@{/login}"><u>sign in</u></a> to my application!</h3>
+        <h3 class="alert alert-success">Congratulations! Your account has been verified!</h3>
+        <h3>Now u can <a th:href="@{/login}"><u>sign in</u></a> to the bank application!</h3>
     </div>
 
     <div th:replace="fragments/footer::footer"></div>

@@ -10,7 +10,9 @@ class UserConfiguration {
     @Bean
     UserFacade userFacade(UserFactory factory,
                           UserRepository repository,
-                          BankAccountFacade bankAccountFacade) {
-        return new UserFacade(factory, repository, bankAccountFacade);
+                          BankAccountFacade bankAccountFacade,
+                          ConfirmationTokenRepository tokenRepository,
+                          EmailSenderService emailSenderService) {
+        return new UserFacade(factory, repository, bankAccountFacade, tokenRepository, emailSenderService);
     }
 }

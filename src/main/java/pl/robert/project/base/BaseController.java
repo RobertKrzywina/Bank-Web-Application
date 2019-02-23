@@ -1,6 +1,8 @@
 package pl.robert.project.base;
 
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
@@ -10,6 +12,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.robert.project.user.Messages;
 import pl.robert.project.user.domain.UserFacade;
@@ -25,6 +29,8 @@ import javax.validation.Valid;
 @Controller
 @AllArgsConstructor
 class BaseController implements Messages {
+
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private UserFacade userFacade;
     private ValidationFacade validationFacade;
@@ -47,8 +53,20 @@ class BaseController implements Messages {
             model.addAttribute("user", dto);
             return "register";
         }
-        userFacade.addUser(dto);
+        userFacade.generateBankAccount(dto);
+        userFacade.generateEmailConfirmationToken(dto);
+        model.addAttribute("email", dto.getEmail());
         return "registerCompleted";
+    }
+
+    @GetMapping("/confirm-account")
+    public ModelAndView confirmUserAccount(ModelAndView modelAndView, @RequestParam("token") String confirmationToken) {
+        boolean flag = userFacade.checkConfirmationToken(confirmationToken);
+
+        if (flag) modelAndView.setViewName("accountVerified");
+        else modelAndView.setViewName("error");
+
+        return modelAndView;
     }
 
     @GetMapping("/login")

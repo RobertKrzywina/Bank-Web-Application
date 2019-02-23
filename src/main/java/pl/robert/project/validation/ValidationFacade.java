@@ -7,10 +7,7 @@ import pl.robert.project.bank_account.BankAccount;
 import pl.robert.project.bank_account.BankAccountFacade;
 import pl.robert.project.transactions.dto.SendTransactionDTO;
 import pl.robert.project.user.domain.UserFacade;
-import pl.robert.project.user.domain.dto.ChangeEmailDTO;
-import pl.robert.project.user.domain.dto.ChangePasswordDTO;
-import pl.robert.project.user.domain.dto.ChangePhoneNumberDTO;
-import pl.robert.project.user.domain.dto.CreateUserDTO;
+import pl.robert.project.user.domain.dto.*;
 
 @Component
 @AllArgsConstructor

@@ -14,6 +14,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Getter @Setter
 @Builder
+@ToString
 class User {
 
     @Id
@@ -44,4 +45,7 @@ class User {
 
     @OneToOne(cascade = {CascadeType.MERGE, CascadeType.REMOVE})
     private BankAccount bankAccount;
+
+    @Column(name = "is_enabled")
+    private boolean isEnabled;
 }

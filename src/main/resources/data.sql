@@ -10,16 +10,16 @@ INSERT INTO bank_accounts (balance, number) VALUES (4040, 'PL91 3018 4529 8669 0
                                                    (1005, 'PL62 2026 5721 5750 6891 6466'),
                                                    (1006, 'PL83 0721 2492 9992 7740 1693');
 
-INSERT INTO users (login, password, decoded_b_crypt_password, email, phone_number, bank_account_id)
-VALUES ('a', '$2a$10$nTtRs2ckjtjWuY/hP.SnnOkud3pLv0kyawerUaN.FdYzSvzg.H4bu', 'a', 'coffeeguy@email.com', '+48 509-154-295', 1),
-       ('b', '$2a$10$XHERx/vbTW1i5DEpIgw01uY5bSNB084sYPVmc8ohdgB9KKxjhNG/e', 'b', 'sampleeee@email.com', '+48 523-653-325', 2),
-       ('c', '$2a$10$Kv7SackFzZVDNJUbRE.y/ejbZkDMHwADeElIkTKIVEkIMuBKf27xC', 'c', 'emailemai@email.com', '+48 509-236-390', 3),
-       ('d', '$2a$10$P/jr.n8LtxDwvGMs327oIeJvo5emgfeYG1aksJoNO40m9kr69FdYO', 'd', 'imaeliame@email.com', '+48 512-652-431', 4),
-       ('e', '$2a$10$qQuI.t2TLxwkXTORakhwUemJZFFE.a2wMoAkLMxwd6u.zbPYKt2qq', 'e', 'mailmaile@email.com', '+48 513-236-541', 5),
-       ('f', '$2a$10$4V1UW6iAipENbb3Gv.oEoutPSWK8hXUO1IPDxNGfo8sROhKsDLvHe', 'f', 'eeeelpmas@email.com', '+48 554-236-124', 6),
-       ('g', '$2a$10$mKb/F4cNb4YIZMFFkBh5YuOBeYcSdIkYcAYR0pWehGMy1dgcFfXPu', 'g', 'uygeeffoc@email.com', '+48 453-534-322', 7),
-       ('h', '$2a$10$dYGQ68zutjcH3kboolV7jeEl8bNfAOp7MYZpARhtgqBXpesUArFcu', 'h', 'elimaelim@email.com', '+48 534-453-555', 8),
-       ('i', '$2a$10$kRRvoiFr1w2PTWusk5Cgj.b6uadBnN5x0maWvDnlIzsYXCkS02Ihq', 'i', 'eeffocguy@email.com', '+48 657-236-463', 9);
+INSERT INTO users (login, password, decoded_b_crypt_password, email, phone_number, bank_account_id, is_enabled)
+VALUES ('a', '$2a$10$nTtRs2ckjtjWuY/hP.SnnOkud3pLv0kyawerUaN.FdYzSvzg.H4bu', 'a', 'coffeeguy@email.com', '+48 509-154-295', 1, true),
+       ('b', '$2a$10$XHERx/vbTW1i5DEpIgw01uY5bSNB084sYPVmc8ohdgB9KKxjhNG/e', 'b', 'sampleeee@email.com', '+48 523-653-325', 2, true),
+       ('c', '$2a$10$Kv7SackFzZVDNJUbRE.y/ejbZkDMHwADeElIkTKIVEkIMuBKf27xC', 'c', 'emailemai@email.com', '+48 509-236-390', 3, true),
+       ('d', '$2a$10$P/jr.n8LtxDwvGMs327oIeJvo5emgfeYG1aksJoNO40m9kr69FdYO', 'd', 'imaeliame@email.com', '+48 512-652-431', 4, true),
+       ('e', '$2a$10$qQuI.t2TLxwkXTORakhwUemJZFFE.a2wMoAkLMxwd6u.zbPYKt2qq', 'e', 'mailmaile@email.com', '+48 513-236-541', 5, true),
+       ('f', '$2a$10$4V1UW6iAipENbb3Gv.oEoutPSWK8hXUO1IPDxNGfo8sROhKsDLvHe', 'f', 'eeeelpmas@email.com', '+48 554-236-124', 6, true),
+       ('g', '$2a$10$mKb/F4cNb4YIZMFFkBh5YuOBeYcSdIkYcAYR0pWehGMy1dgcFfXPu', 'g', 'uygeeffoc@email.com', '+48 453-534-322', 7, true),
+       ('h', '$2a$10$dYGQ68zutjcH3kboolV7jeEl8bNfAOp7MYZpARhtgqBXpesUArFcu', 'h', 'elimaelim@email.com', '+48 534-453-555', 8, true),
+       ('i', '$2a$10$kRRvoiFr1w2PTWusk5Cgj.b6uadBnN5x0maWvDnlIzsYXCkS02Ihq', 'i', 'eeffocguy@email.com', '+48 657-236-463', 9, true);
 
 INSERT INTO users_roles (user_id, roles_id) VALUES (1, 1), (1, 2),
                                                    (2, 1), (2, 2),
