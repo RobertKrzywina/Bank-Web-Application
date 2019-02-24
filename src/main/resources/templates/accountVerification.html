@@ -3,7 +3,7 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Congratulations!</title>
+    <title>Account verification</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
@@ -12,8 +12,14 @@
 
     <div class="container">
         <hr/>
-        <h3 class="alert alert-success">Congratulations! Your account has been verified!</h3>
-        <h3>Now u can <a th:href="@{/login}"><u>sign in</u></a> to the bank application!</h3>
+        <div th:if="${flag==true}">
+            <h3 class="alert alert-success">Congratulations! Your account has been verified!</h3>
+            <h3>Now u can <a th:href="@{/login}"><u>sign in</u></a> to the bank application!</h3>
+        </div>
+        <div th:unless="${flag==true}">
+            <h3 class="alert alert-warning">Oops! Your confirmation token has been expired!</h3>
+            <h3>But don't worry! U can <a th:href="@{/register}"><u>register</u></a> your account again!</h3>
+        </div>
     </div>
 
     <div th:replace="fragments/footer::footer"></div>

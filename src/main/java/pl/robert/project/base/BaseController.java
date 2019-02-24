@@ -63,9 +63,10 @@ class BaseController implements Messages {
     public ModelAndView confirmUserAccount(ModelAndView modelAndView, @RequestParam("token") String confirmationToken) {
         boolean flag = userFacade.checkConfirmationToken(confirmationToken);
 
-        if (flag) modelAndView.setViewName("accountVerified");
-        else modelAndView.setViewName("error");
+        if (flag) modelAndView.setViewName("accountVerification");
+        else modelAndView.setViewName("accountVerification");
 
+        modelAndView.addObject("flag", flag);
         return modelAndView;
     }
 

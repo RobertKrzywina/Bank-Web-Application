@@ -13,7 +13,8 @@
     <div class="container">
         <hr/>
         <h3 class="alert alert-success" th:text="'A verification email has been sent to: ' + ${email}"></h3>
-        <h3>Please confirm your email, so u can <a th:href="@{/login}"><u>sign in</u></a> to my application!</h3>
+        <h3>Confirmation token has been sent to your email. After 15 minutes token will expire so please,
+            confirm it and <a th:href="@{/login}"><u>sign in</u></a>!</h3>
     </div>
 
     <div th:replace="fragments/footer::footer"></div>

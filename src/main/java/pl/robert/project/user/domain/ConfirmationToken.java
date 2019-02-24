@@ -6,8 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Date;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 @Entity
 @Table(name = "confirmation_tokens")
@@ -19,13 +19,13 @@ class ConfirmationToken {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
-    private long tokenId;
+    private long id;
 
     @Column(name = "confirmation_token", length = 36)
     private String confirmationToken;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createdDate;
+    @Column(name = "created_date_in_seconds", length = 11)
+    private String createdDateInSeconds;
 
     @OneToOne(targetEntity = User.class, fetch = FetchType.EAGER)
     @JoinColumn(nullable = false, name = "user_id")
@@ -33,7 +33,7 @@ class ConfirmationToken {
 
     ConfirmationToken(User user) {
         this.user = user;
-        createdDate = new Date();
+        createdDateInSeconds = String.valueOf(TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis()));
         confirmationToken = UUID.randomUUID().toString();
     }
 }

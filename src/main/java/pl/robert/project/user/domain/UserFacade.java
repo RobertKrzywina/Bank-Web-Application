@@ -1,6 +1,7 @@
 package pl.robert.project.user.domain;
 
 import com.google.common.collect.ImmutableMap;
+import com.google.common.primitives.Ints;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +16,8 @@ import pl.robert.project.bank_account.BankAccountFacade;
 import pl.robert.project.user.domain.dto.AuthorizationDTO;
 import pl.robert.project.user.domain.dto.CreateUserDTO;
 import pl.robert.project.user.query.UserQuery;
+
+import java.util.concurrent.TimeUnit;
 
 @Component
 @AllArgsConstructor
@@ -52,16 +55,38 @@ public class UserFacade {
 
     public boolean checkConfirmationToken(String confirmationToken) {
         ConfirmationToken token = tokenRepository.findByConfirmationToken(confirmationToken);
+        User user = repository.findByEmail(token.getUser().getEmail());
+        if (getNumberOfTokens() > 1) {
+            for (long i=1L; i<getNumberOfTokens(); ++i) {
+                ConfirmationToken tokenToCheck = tokenRepository.findById(i);
+                if ((getCurrentTimeInSeconds() - Long.parseLong(tokenToCheck.getCreatedDateInSeconds())) > 900) {
+                    tokenRepository.delete(tokenToCheck);
+                }
+            }
+        } else {
+            if ((getCurrentTimeInSeconds() - Long.parseLong(token.getCreatedDateInSeconds())) > 900) {
+                tokenRepository.delete(token);
+            }
+        }
 
+        token = tokenRepository.findByConfirmationToken(confirmationToken);
         if (token != null) {
-            User user = repository.findByEmail(token.getUser().getEmail());
             repository.findUserByEmailAndUpdateEnabled(user.getEmail());
             tokenRepository.delete(token);
             logger.info("Email confirmation correct");
             return true;
         }
-
+        logger.warn("Token expired! User email = {} is deleting now", user.getEmail());
+        repository.delete(user);
         return false;
+    }
+
+    private int getNumberOfTokens() {
+        return Ints.checkedCast(tokenRepository.findFirstByOrderByIdDesc().getId());
+    }
+
+    private long getCurrentTimeInSeconds() {
+        return TimeUnit.MILLISECONDS.toSeconds((System.currentTimeMillis()));
     }
 
     private String formatPhoneNumber(String phoneNumber) {
