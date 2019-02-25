@@ -7,6 +7,7 @@ public interface ValidationStrings {
     String F_CONFIRMED_PHONE_NUMBER = "confirmedPhoneNumber";
     String F_RECEIVER_ACCOUNT_NUMBER = "receiverAccountNumber";
     String F_AMOUNT = "amount";
+    String F_FORGOTTEN_LOGIN_OR_PASSWORD = "forgottenEmail";
 
     /////////////////////////////////////////////////////
 
@@ -16,6 +17,7 @@ public interface ValidationStrings {
     String C_RECEIVER_ACCOUNT_NUMBER_NOT_EXISTS = "NotExists.receiverAccountNumber";
     String C_RECEIVER_ACCOUNT_NUMBER_MATCH_SENDER = "Match.sender.receiver";
     String C_AMOUNT_NOT_ENOUGH = "NotEnough.amount";
+    String C_FORGOTTEN_LOGIN_OR_PASSWORD = "NotExists.forgottenEmail";
 
     /////////////////////////////////////////////////////
 
@@ -25,4 +27,6 @@ public interface ValidationStrings {
     String M_RECEIVER_ACCOUNT_NUMBER_NOT_EXISTS = "Receiver account number do not exists";
     String M_RECEIVER_ACCOUNT_NUMBER_MATCH_SENDER = "You can't send money to yourself";
     String M_AMOUNT_NOT_ENOUGH = "Current balance is lower than wanted amount";
+    String M_FORGOTTEN_LOGIN_OR_PASSWORD = "Email do not exists";
+    String M_FORGOTTEN_LOGIN_OR_PASSWORD_TOKEN_SENT = "Reset token already sent to given email";
 }

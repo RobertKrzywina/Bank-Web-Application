@@ -8,15 +8,19 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import pl.robert.project.bank_account.BankAccountFacade;
 import pl.robert.project.user.domain.dto.AuthorizationDTO;
 import pl.robert.project.user.domain.dto.CreateUserDTO;
+import pl.robert.project.user.domain.dto.ForgotLoginOrPasswordDTO;
 import pl.robert.project.user.query.UserQuery;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import java.util.concurrent.TimeUnit;
 
 @Component
@@ -29,7 +33,7 @@ public class UserFacade {
     private UserRepository repository;
     private BankAccountFacade bankAccountFacade;
     private ConfirmationTokenRepository tokenRepository;
-    private EmailSenderService emailSenderService;
+    private JavaMailSender mailSender;
 
     public void generateBankAccount(CreateUserDTO dto) {
         dto.setPhoneNumber(formatPhoneNumber(dto.getPhoneNumber()));
@@ -43,23 +47,51 @@ public class UserFacade {
         ConfirmationToken confirmationToken = new ConfirmationToken(user);
         tokenRepository.save(confirmationToken);
 
-        SimpleMailMessage mailMessage = new SimpleMailMessage();
-        mailMessage.setTo(user.getEmail());
-        mailMessage.setSubject("Complete Registration!");
-        mailMessage.setFrom("Rob");
-        mailMessage.setText("To confirm your account, please click here : " +
-                "http://localhost:8080/confirm-account?token=" + confirmationToken.getConfirmationToken());
-
-        emailSenderService.sendEmail(mailMessage);
+        try {
+            MimeMessage mimeMessage = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, false, "UTF-8");
+            String htmlMsg = "To confirm your account, please follow the link below:<br>" +
+                             "<a href='http://localhost:8080/confirm-account?token=" + confirmationToken.getConfirmationToken() + "'>" +
+                             "http://localhost:8080/confirm-account?token=" + confirmationToken.getConfirmationToken() + "</a>";
+            mimeMessage.setContent(htmlMsg, "text/html");
+            helper.setTo(user.getEmail());
+            helper.setSubject("Complete Registration!");
+            helper.setFrom("Rob");
+            mailSender.send(mimeMessage);
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
     }
 
-    public boolean checkConfirmationToken(String confirmationToken) {
+    public void generateResetToken(ForgotLoginOrPasswordDTO dto) {
+        User user = repository.findByEmail(dto.getForgottenEmail());
+        ConfirmationToken confirmationToken = new ConfirmationToken(user);
+        tokenRepository.save(confirmationToken);
+
+        try {
+            MimeMessage mimeMessage = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, false, "UTF-8");
+            String htmlMsg = "Thank you for your password reset request. Your login is: <b>" + user.getLogin() + "</b><br>" +
+                             "Please follow the link below to reset your password:<br>" +
+                             "<a href='http://localhost:8080/reset-password?token=" + confirmationToken.getConfirmationToken() + "'>" +
+                             "http://localhost:8080/reset-password?token=" + confirmationToken.getConfirmationToken() + "</a>";
+            mimeMessage.setContent(htmlMsg, "text/html");
+            helper.setTo(user.getEmail());
+            helper.setSubject("Forgotten Password!");
+            helper.setFrom("Rob");
+            mailSender.send(mimeMessage);
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public boolean checkConfirmationToken(int choice, String confirmationToken) {
         ConfirmationToken token = tokenRepository.findByConfirmationToken(confirmationToken);
         User user = repository.findByEmail(token.getUser().getEmail());
         if (getNumberOfTokens() > 1) {
             for (long i=1L; i<getNumberOfTokens(); ++i) {
                 ConfirmationToken tokenToCheck = tokenRepository.findById(i);
-                if ((getCurrentTimeInSeconds() - Long.parseLong(tokenToCheck.getCreatedDateInSeconds())) > 900) {
+                if (token != null && (getCurrentTimeInSeconds() - Long.parseLong(tokenToCheck.getCreatedDateInSeconds())) > 900) {
                     tokenRepository.delete(tokenToCheck);
                 }
             }
@@ -68,17 +100,21 @@ public class UserFacade {
                 tokenRepository.delete(token);
             }
         }
-
         token = tokenRepository.findByConfirmationToken(confirmationToken);
-        if (token != null) {
-            repository.findUserByEmailAndUpdateEnabled(user.getEmail());
-            tokenRepository.delete(token);
-            logger.info("Email confirmation correct");
-            return true;
+        // Register account
+        if (choice == 1) {
+            if (token != null) {
+                repository.findUserByEmailAndUpdateEnabled(user.getEmail());
+                tokenRepository.delete(token);
+                logger.info("Email confirmation correct");
+                return true;
+            }
+            logger.warn("Token expired! User email = {} is deleting now", user.getEmail());
+            repository.delete(user);
+            return false;
         }
-        logger.warn("Token expired! User email = {} is deleting now", user.getEmail());
-        repository.delete(user);
-        return false;
+        // Reset account
+        return true;
     }
 
     private int getNumberOfTokens() {
@@ -87,6 +123,22 @@ public class UserFacade {
 
     private long getCurrentTimeInSeconds() {
         return TimeUnit.MILLISECONDS.toSeconds((System.currentTimeMillis()));
+    }
+
+    public boolean checkIfConfirmationTokenAlreadySent(ForgotLoginOrPasswordDTO dto) {
+        User user = repository.findByEmail(dto.getForgottenEmail());
+
+        if (user == null) return false;
+
+        return tokenRepository.findByUser(user) != null;
+    }
+
+    public void resetPassword(String confirmationToken, String newPassword) {
+        ConfirmationToken token = tokenRepository.findByConfirmationToken(confirmationToken);
+        User user = repository.findByEmail(token.getUser().getEmail());
+        changePassword(user.getId(), newPassword);
+        tokenRepository.delete(token);
+        logger.info("User password has been changed successfully and token has been deleted");
     }
 
     private String formatPhoneNumber(String phoneNumber) {
@@ -115,6 +167,10 @@ public class UserFacade {
 
     public boolean isLoginExists(String login) {
         return repository.findByLogin(login) != null;
+    }
+
+    public boolean isEmailExists(String email) {
+        return repository.findByEmail(email) != null;
     }
 
     public boolean isLoginAndPasswordCorrect(String login, String password) {

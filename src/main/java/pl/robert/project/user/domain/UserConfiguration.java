@@ -2,6 +2,7 @@ package pl.robert.project.user.domain;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.mail.javamail.JavaMailSender;
 import pl.robert.project.bank_account.BankAccountFacade;
 
 @Configuration
@@ -12,7 +13,7 @@ class UserConfiguration {
                           UserRepository repository,
                           BankAccountFacade bankAccountFacade,
                           ConfirmationTokenRepository tokenRepository,
-                          EmailSenderService emailSenderService) {
-        return new UserFacade(factory, repository, bankAccountFacade, tokenRepository, emailSenderService);
+                          JavaMailSender mailSender) {
+        return new UserFacade(factory, repository, bankAccountFacade, tokenRepository, mailSender);
     }
 }

@@ -1,6 +1,8 @@
 package pl.robert.project.validation;
 
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindingResult;
 import pl.robert.project.bank_account.BankAccount;
@@ -12,6 +14,8 @@ import pl.robert.project.user.domain.dto.*;
 @Component
 @AllArgsConstructor
 public class ValidationFacade implements ValidationStrings {
+
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private UserFacade userFacade;
     private BankAccountFacade bankAccountFacade;
@@ -86,6 +90,19 @@ public class ValidationFacade implements ValidationStrings {
 
         if (dto.getAmount() != null && (dto.getAmount() > bankAccount.getBalance())) {
             result.rejectValue(F_AMOUNT, C_AMOUNT_NOT_ENOUGH, M_AMOUNT_NOT_ENOUGH);
+        }
+    }
+
+    public void validateForgottenEmail(boolean tokenAlreadySent, ForgotLoginOrPasswordDTO dto, BindingResult result) {
+        if (!dto.getForgottenEmail().isEmpty()) {
+
+            if (!userFacade.isEmailExists(dto.getForgottenEmail())) {
+                result.rejectValue(F_FORGOTTEN_LOGIN_OR_PASSWORD, C_FORGOTTEN_LOGIN_OR_PASSWORD, M_FORGOTTEN_LOGIN_OR_PASSWORD);
+            }
+
+            if (tokenAlreadySent) {
+                result.rejectValue(F_FORGOTTEN_LOGIN_OR_PASSWORD, C_FORGOTTEN_LOGIN_OR_PASSWORD, M_FORGOTTEN_LOGIN_OR_PASSWORD_TOKEN_SENT);
+            }
         }
     }
 }

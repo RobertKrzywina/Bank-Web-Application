@@ -7,4 +7,5 @@ interface ConfirmationTokenRepository extends JpaRepository<ConfirmationToken, S
     ConfirmationToken findByConfirmationToken(String confirmationToken);
     ConfirmationToken findFirstByOrderByIdDesc();
     ConfirmationToken findById(long id);
+    ConfirmationToken findByUser(User user);
 }

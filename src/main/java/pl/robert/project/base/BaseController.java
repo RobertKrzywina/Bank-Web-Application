@@ -9,17 +9,11 @@ import org.springframework.security.web.authentication.logout.SecurityContextLog
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.robert.project.user.Messages;
 import pl.robert.project.user.domain.UserFacade;
-import pl.robert.project.user.domain.dto.AuthorizationDTO;
-import pl.robert.project.user.domain.dto.CreateUserDTO;
-import pl.robert.project.user.domain.dto.SignInDTO;
+import pl.robert.project.user.domain.dto.*;
 import pl.robert.project.validation.ValidationFacade;
 
 import javax.servlet.http.HttpServletRequest;
@@ -56,18 +50,57 @@ class BaseController implements Messages {
         userFacade.generateBankAccount(dto);
         userFacade.generateEmailConfirmationToken(dto);
         model.addAttribute("email", dto.getEmail());
-        return "registerCompleted";
+        return "tokenSent";
     }
 
     @GetMapping("/confirm-account")
-    public ModelAndView confirmUserAccount(ModelAndView modelAndView, @RequestParam("token") String confirmationToken) {
-        boolean flag = userFacade.checkConfirmationToken(confirmationToken);
+    public String confirmUserAccount(Model model, @RequestParam("token") String confirmationToken) {
+        boolean flag = userFacade.checkConfirmationToken(1, confirmationToken);
+        model.addAttribute("flag", flag);
+        return "accountVerification";
+    }
 
-        if (flag) modelAndView.setViewName("accountVerification");
-        else modelAndView.setViewName("accountVerification");
+    @GetMapping("/forgot-password")
+    public String forgotLoginOrPassword(Model model) {
+        model.addAttribute("DTO", new ForgotLoginOrPasswordDTO());
+        return "forgotPassword";
+    }
 
-        modelAndView.addObject("flag", flag);
-        return modelAndView;
+    @PostMapping("/forgot-password")
+    public String forgotLoginOrPassword(@Valid @ModelAttribute("DTO") ForgotLoginOrPasswordDTO dto, BindingResult result, Model model) {
+        validationFacade.validateForgottenEmail(userFacade.checkIfConfirmationTokenAlreadySent(dto), dto, result);
+        if (result.hasErrors()) {
+            model.addAttribute("DTO", dto);
+            return "forgotPassword";
+        }
+        userFacade.generateResetToken(dto);
+        model.addAttribute("email", dto.getForgottenEmail());
+        return "tokenSent";
+    }
+
+    @GetMapping("/reset-password")
+    public String resetPassword(Model model, @RequestParam("token") String confirmationToken) {
+        boolean flag = userFacade.checkConfirmationToken(2, confirmationToken);
+
+        model.addAttribute("flag", flag);
+        model.addAttribute("DTO", new ChangePasswordDTO());
+        model.addAttribute("token", confirmationToken);
+
+        return "resetPassword";
+    }
+
+    @PatchMapping("/reset-password")
+    public String resetPassword(@Valid @ModelAttribute("DTO") ChangePasswordDTO dto, BindingResult result,
+                                Model model, @RequestParam("token") String confirmationToken) {
+        validationFacade.checkIfConfirmedPasswordMatchPassword(dto, result);
+        if (result.hasErrors()) {
+            model.addAttribute("flag", true);
+            model.addAttribute("DTO", dto);
+            model.addAttribute("token", confirmationToken);
+            return "resetPassword";
+        }
+        userFacade.resetPassword(confirmationToken, dto.getConfirmedPassword());
+        return "resetPasswordCompleted";
     }
 
     @GetMapping("/login")
