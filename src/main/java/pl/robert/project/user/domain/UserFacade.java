@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.mail.MailSendException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -58,8 +59,10 @@ public class UserFacade {
             helper.setSubject("Complete Registration!");
             helper.setFrom("Rob");
             mailSender.send(mimeMessage);
-        } catch (MessagingException e) {
-            e.printStackTrace();
+        } catch (MessagingException | MailSendException e) {
+            tokenRepository.delete(confirmationToken);
+            logger.info("Deleting token cause {} appeared...", e.getClass());
+            throw new MailSendException("MailSendException | MessagingException");
         }
     }
 
@@ -80,8 +83,10 @@ public class UserFacade {
             helper.setSubject("Forgotten Password!");
             helper.setFrom("Rob");
             mailSender.send(mimeMessage);
-        } catch (MessagingException e) {
-            e.printStackTrace();
+        } catch (MessagingException | MailSendException e) {
+            tokenRepository.delete(confirmationToken);
+            logger.info("Deleted token cause {} appeared...", e.getClass());
+            throw new MailSendException("MailSendException | MessagingException");
         }
     }
 
@@ -177,7 +182,7 @@ public class UserFacade {
         return repository.findByLoginAndPassword(login, password) != null;
     }
 
-    public AuthorizationDTO findByLogin(String login) {
+    public AuthorizationDTO findByLogin(String login) throws NullPointerException {
         User user = repository.findByLogin(login);
 
         if (user == null) return null;
@@ -185,7 +190,7 @@ public class UserFacade {
         return new AuthorizationDTO(user.getLogin(), user.getPassword(), user.isEnabled(), user.getRoles());
     }
 
-    public UserQuery QueryByLogin(String login) {
+    public UserQuery QueryByLogin(String login) throws NullPointerException {
         User user = repository.findByLogin(login);
 
         if (user == null) return null;
