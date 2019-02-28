@@ -1,4 +1,4 @@
-package pl.robert.project.transactions.dto;
+package pl.robert.project.transactions.domain.dto;
 
 import lombok.*;
 

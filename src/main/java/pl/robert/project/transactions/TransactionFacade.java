@@ -1,13 +1,13 @@
-package pl.robert.project.transactions;
+package pl.robert.project.transactions.domain;
 
 import com.google.common.primitives.Ints;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
-import pl.robert.project.bank_account.BankAccount;
-import pl.robert.project.bank_account.BankAccountFacade;
-import pl.robert.project.transactions.dto.SendTransactionDTO;
+import pl.robert.project.bank_account.domain.BankAccount;
+import pl.robert.project.bank_account.domain.BankAccountFacade;
+import pl.robert.project.transactions.domain.dto.SendTransactionDTO;
 
 @Component
 @AllArgsConstructor
