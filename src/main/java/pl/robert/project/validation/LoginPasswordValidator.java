@@ -1,5 +1,7 @@
 package pl.robert.project.validation;
 
+import lombok.AccessLevel;
+import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
 import pl.robert.project.user.domain.UserFacade;
 
@@ -7,16 +9,17 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 @SuppressWarnings("FieldCanBeLocal")
+@FieldDefaults(level = AccessLevel.PRIVATE)
 class LoginPasswordValidator implements ConstraintValidator<LoginPassword, String> {
 
-    private String fieldName;
-    private UserFacade userFacade;
+    String fieldName;
+    UserFacade userFacade;
 
-    private static String login;
-    private static String password;
-    private static boolean isLoginCorrect;
-    private static boolean isPasswordCorrect;
-    private static boolean isBothCorrect;
+    static String login;
+    static String password;
+    static boolean isLoginCorrect;
+    static boolean isPasswordCorrect;
+    static boolean isBothCorrect;
 
     @Autowired
     public LoginPasswordValidator(UserFacade userFacade) {

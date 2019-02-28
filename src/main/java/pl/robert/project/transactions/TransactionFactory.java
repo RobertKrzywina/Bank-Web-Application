@@ -1,15 +1,13 @@
 package pl.robert.project.transactions;
 
-import org.springframework.stereotype.Component;
 import pl.robert.project.bank_account.BankAccount;
-import pl.robert.project.transactions.dto.SendTransactionDTO;
+import pl.robert.project.transactions.dto.TransactionDTO;
 
 import java.time.LocalDateTime;
 
-@Component
 class TransactionFactory {
 
-    Transaction create(SendTransactionDTO dto, BankAccount bankAccount) {
+    static Transaction create(TransactionDTO dto, BankAccount bankAccount) {
 
         return Transaction
                 .builder()

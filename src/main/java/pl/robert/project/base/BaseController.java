@@ -1,6 +1,8 @@
 package pl.robert.project.base;
 
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
@@ -22,12 +24,13 @@ import javax.validation.Valid;
 
 @Controller
 @AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 class BaseController implements Messages {
 
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+    final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    private UserFacade userFacade;
-    private ValidationFacade validationFacade;
+    UserFacade userFacade;
+    ValidationFacade validationFacade;
 
     @GetMapping("/")
     public String index() {

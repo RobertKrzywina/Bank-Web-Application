@@ -6,14 +6,14 @@
     <th:block th:replace="fragments/navErrors"/>
 
     <div class="container">
-        <h3 th:text="${'status'} + ' http code'"></h3>
+        <h3 th:text="${status} + ' http code'"></h3>
         <hr/>
     </div>
 
     <div class="error">
-        <div class="error-code m-b-10 m-t-20" th:text="${'status'}"><i class="fa fa-warning"></i></div>
-        <h3 class="font-bold" th:if="${'status!=404'}" th:text="${'title'} + ' appeared...'"></h3>
-        <h3 class="font-bold" th:unless="${'status!=404'}">NotFoundException appeared...</h3>
+        <div class="error-code m-b-10 m-t-20" th:text="${status}"><i class="fa fa-warning"></i></div>
+        <h3 class="font-bold" th:if="${status!=404}" th:text="${title} + ' appeared...'"></h3>
+        <h3 class="font-bold" th:unless="${status!=404}">NotFoundException appeared...</h3>
         <div><a th:href="@{/}"><i class="fa fa-arrow-left"></i>Go back to Homepage</a></div>
     </div>
 

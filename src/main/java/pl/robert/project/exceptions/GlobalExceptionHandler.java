@@ -1,6 +1,8 @@
 package pl.robert.project.exceptions;
 
 
+import lombok.AccessLevel;
+import lombok.experimental.FieldDefaults;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.mail.MailSendException;
@@ -17,12 +19,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 @ControllerAdvice
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class GlobalExceptionHandler {
 
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+    final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    private static final String DEFAULT_ERROR_VIEW = "error";
-    private Map<Integer, String> map = new HashMap<>();
+    final String DEFAULT_ERROR_VIEW = "error";
+    Map<Integer, String> map = new HashMap<>();
 
     @ExceptionHandler({Exception.class})
     public String handleException(HttpServletRequest request, final Exception e, Model model) {

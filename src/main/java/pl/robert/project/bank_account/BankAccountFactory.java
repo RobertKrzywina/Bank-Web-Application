@@ -1,11 +1,8 @@
 package pl.robert.project.bank_account;
 
-import org.springframework.stereotype.Component;
-
-@Component
 class BankAccountFactory {
 
-    BankAccount create(String generatedNumber) {
+    static BankAccount create(String generatedNumber) {
 
         return BankAccount
                 .builder()

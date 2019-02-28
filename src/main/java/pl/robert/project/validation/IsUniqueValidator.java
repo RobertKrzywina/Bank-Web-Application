@@ -1,15 +1,18 @@
 package pl.robert.project.validation;
 
+import lombok.AccessLevel;
+import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
 import pl.robert.project.user.domain.UserFacade;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
+@FieldDefaults(level = AccessLevel.PRIVATE)
 class IsUniqueValidator implements ConstraintValidator<IsUnique, String>, RegexExpressions {
 
-    private String fieldName;
-    private UserFacade userFacade;
+    String fieldName;
+    UserFacade userFacade;
 
     @Autowired
     public IsUniqueValidator(UserFacade userFacade) {

@@ -2,7 +2,9 @@ package pl.robert.project.user.domain;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.primitives.Ints;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
@@ -26,15 +28,15 @@ import java.util.concurrent.TimeUnit;
 
 @Component
 @AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserFacade {
 
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+    final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    private UserFactory factory;
-    private UserRepository repository;
-    private BankAccountFacade bankAccountFacade;
-    private ConfirmationTokenRepository tokenRepository;
-    private JavaMailSender mailSender;
+    UserRepository repository;
+    BankAccountFacade bankAccountFacade;
+    ConfirmationTokenRepository tokenRepository;
+    JavaMailSender mailSender;
 
     public void generateBankAccount(CreateUserDTO dto) {
         dto.setPhoneNumber(formatPhoneNumber(dto.getPhoneNumber()));
@@ -42,7 +44,7 @@ public class UserFacade {
     }
 
     public void generateEmailConfirmationToken(CreateUserDTO dto) {
-        User user = factory.create(dto);
+        User user = UserFactory.create(dto);
         repository.save(user);
 
         ConfirmationToken confirmationToken = new ConfirmationToken(user);
@@ -197,7 +199,7 @@ public class UserFacade {
 
         user.setBankAccount(bankAccountFacade.findById(user.getId()));
 
-        return factory.create(user);
+        return UserFactory.create(user);
     }
 
     public ImmutableMap<String, String> initializeMapWithUserDetails(UserQuery userQuery) {
@@ -206,7 +208,6 @@ public class UserFacade {
                 .put("login", userQuery.getLogin())
                 .put("email", userQuery.getEmail())
                 .put("phoneNumber", userQuery.getPhoneNumber())
-                .put("password", userQuery.getPassword())
                 .put("bankAccountNumber", userQuery.getBankAccountNumber())
                 .put("balance", String.valueOf(userQuery.getBalance()))
                 .build();
@@ -225,7 +226,7 @@ public class UserFacade {
     }
 
     public void changePassword(long userId, String newPassword) {
-        repository.findUserByIdAndUpdatePasswordAnAndDecodedBCryptPassword(userId, passwordEncoder().encode(newPassword), newPassword);
+        repository.findUserByIdAndUpdatePassword(userId, passwordEncoder().encode(newPassword));
     }
 
     @Bean

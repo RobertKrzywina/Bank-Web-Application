@@ -9,11 +9,10 @@ import pl.robert.project.bank_account.BankAccountFacade;
 class UserConfiguration {
 
     @Bean
-    UserFacade userFacade(UserFactory factory,
-                          UserRepository repository,
+    UserFacade userFacade(UserRepository repository,
                           BankAccountFacade bankAccountFacade,
                           ConfirmationTokenRepository tokenRepository,
                           JavaMailSender mailSender) {
-        return new UserFacade(factory, repository, bankAccountFacade, tokenRepository, mailSender);
+        return new UserFacade(repository, bankAccountFacade, tokenRepository, mailSender);
     }
 }

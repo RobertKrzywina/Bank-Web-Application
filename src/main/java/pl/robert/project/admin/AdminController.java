@@ -1,6 +1,8 @@
 package pl.robert.project.admin;
 
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -16,19 +18,19 @@ import pl.robert.project.user.domain.UserFacade;
 
 @Controller
 @AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 @RequestMapping("/admin-panel")
 @PreAuthorize("hasRole('ROLE_ADMIN')")
 class AdminController {
 
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+    final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    private UserFacade userFacade;
-    private BankAccountFacade bankAccountFacade;
-    private TransactionFacade transactionFacade;
+    UserFacade userFacade;
+    BankAccountFacade bankAccountFacade;
+    TransactionFacade transactionFacade;
 
     @GetMapping
-    public String adminPanel(Model model, Authentication auth) {
-        model.addAttribute("sayHello", "Welcome " + auth.getName());
+    public String adminPanel() {
         return "adminPanel";
     }
 

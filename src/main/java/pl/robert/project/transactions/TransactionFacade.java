@@ -1,26 +1,28 @@
 package pl.robert.project.transactions;
 
 import com.google.common.primitives.Ints;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 import pl.robert.project.bank_account.BankAccount;
 import pl.robert.project.bank_account.BankAccountFacade;
-import pl.robert.project.transactions.dto.SendTransactionDTO;
+import pl.robert.project.transactions.dto.TransactionDTO;
 
 @Component
+@FieldDefaults(level = AccessLevel.PRIVATE)
 @AllArgsConstructor
 public class TransactionFacade {
 
-    private TransactionFactory factory;
     private TransactionRepository repository;
     private BankAccountFacade bankAccountFacade;
 
-    public void addTransaction(SendTransactionDTO dto) {
+    public void addTransaction(TransactionDTO dto) {
         BankAccount senderBankAccount = bankAccountFacade.findByNumber(dto.getSenderAccountNumber());
         BankAccount receiverBankAccount = bankAccountFacade.findByNumber(dto.getReceiverAccountNumber());
-        repository.saveAndFlush(factory.create(dto, senderBankAccount));
+        repository.saveAndFlush(TransactionFactory.create(dto, senderBankAccount));
         bankAccountFacade.updateMoney(dto.getAmount(), senderBankAccount.getId(), receiverBankAccount.getId());
     }
 

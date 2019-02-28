@@ -1,6 +1,8 @@
 package pl.robert.project.bank_account;
 
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
@@ -10,13 +12,13 @@ import java.util.Random;
 
 @Component
 @AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class BankAccountFacade {
 
-    private BankAccountRepository repository;
-    private BankAccountFactory factory;
+    BankAccountRepository repository;
 
     public BankAccount create() {
-        return repository.save(factory.create(numberGenerator()));
+        return repository.save(BankAccountFactory.create(numberGenerator()));
     }
 
     private String numberGenerator() {

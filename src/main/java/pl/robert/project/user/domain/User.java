@@ -1,6 +1,7 @@
 package pl.robert.project.user.domain;
 
 import lombok.*;
+import lombok.experimental.FieldDefaults;
 import pl.robert.project.bank_account.BankAccount;
 
 import javax.persistence.*;
@@ -12,6 +13,7 @@ import java.util.Set;
 @Table(name = "users")
 @NoArgsConstructor
 @AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 @Getter @Setter
 @Builder
 @ToString
@@ -19,33 +21,29 @@ class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    long id;
 
     @NotNull
     @Column(length = 12)
-    private String login;
+    String login;
 
     @NotNull
     @Column(length = 60)
-    private String password;
+    String password;
 
     @NotNull
-    @Column(name = "decoded_b_crypt_password")
-    private String decodedBCryptPassword;
-
-    @NotNull
-    private String email;
+    String email;
 
     @NotNull
     @Column(name = "phone_number", length = 15)
-    private String phoneNumber;
+    String phoneNumber;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    private Set<Role> roles = new HashSet<>();
+    Set<Role> roles = new HashSet<>();
 
     @OneToOne(cascade = {CascadeType.MERGE, CascadeType.REMOVE})
-    private BankAccount bankAccount;
+    BankAccount bankAccount;
 
     @Column(name = "is_enabled")
-    private boolean isEnabled;
+    boolean isEnabled;
 }

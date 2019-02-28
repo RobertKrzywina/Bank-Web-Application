@@ -1,12 +1,14 @@
 package pl.robert.project.bank_account.dto;
 
 import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 @NoArgsConstructor
 @AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 @Getter @Setter
 public class ModifyBalanceDTO {
 
-    private long id;
-    private double newBalance;
+    long id;
+    double newBalance;
 }

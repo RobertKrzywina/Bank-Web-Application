@@ -1,9 +1,7 @@
 package pl.robert.project.user.domain.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 import pl.robert.project.user.domain.Role;
 
 import java.util.HashSet;
@@ -11,11 +9,12 @@ import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 @Getter @Setter
 public class AuthorizationDTO {
 
-    private String login;
-    private String password;
-    private boolean isVerified;
-    private Set<Role> roles = new HashSet<>();
+    String login;
+    String password;
+    boolean isVerified;
+    Set<Role> roles = new HashSet<>();
 }

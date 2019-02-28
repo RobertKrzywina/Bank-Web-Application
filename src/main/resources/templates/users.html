@@ -24,16 +24,18 @@
                     <td th:text="${user.login}"></td>
                     <td th:text="${user.email}"></td>
                     <td th:text="${user.phoneNumber}"></td>
-                    <td th:text="${user.decodedBCryptPassword}"></td>
+                    <td>Encoded</td>
                     <td th:if="${user.getRoles().size()==1}">user</td>
                     <td th:unless="${user.getRoles().size()==1}">user, admin</td>
                     <td th:if="${user.getRoles().size()==1}">
                         <form action="#" th:action="@{/admin-panel/users/{id}(id=${user.id})}" th:method="delete">
                             <input type="hidden" name="_method" value="delete">
-                            <button type="submit" onclick="clicked(event, 'delete')" class="btn btn-danger">delete</button>
+                            <button type="submit" onclick="clicked(event, 'delete current user')" class="btn btn-danger">delete</button>
                         </form>
                     </td>
-                    <td th:unless="${user.getRoles().size()==1}">Can't delete</td>
+                    <td th:unless="${user.getRoles().size()==1}">
+                        <button type="submit" class="btn btn-secondary" disabled>delete</button>
+                    </td>
                 </tr>
             </table>
             <ul class="nav nav-pills">

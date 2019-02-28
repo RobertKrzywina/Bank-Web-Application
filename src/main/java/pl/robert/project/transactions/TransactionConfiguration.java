@@ -8,9 +8,8 @@ import pl.robert.project.bank_account.BankAccountFacade;
 class TransactionConfiguration {
 
     @Bean
-    TransactionFacade transactionFacade(TransactionFactory factory,
-                                        TransactionRepository repository,
+    TransactionFacade transactionFacade(TransactionRepository repository,
                                         BankAccountFacade bankAccountFacade) {
-        return new TransactionFacade(factory, repository, bankAccountFacade);
+        return new TransactionFacade(repository, bankAccountFacade);
     }
 }

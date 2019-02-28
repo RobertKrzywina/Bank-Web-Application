@@ -1,6 +1,7 @@
 package pl.robert.project.bank_account;
 
 import lombok.*;
+import lombok.experimental.FieldDefaults;
 import pl.robert.project.transactions.Transaction;
 
 import javax.persistence.*;
@@ -12,20 +13,21 @@ import java.util.List;
 @Table(name = "bank_accounts")
 @NoArgsConstructor
 @AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 @Getter @Setter
 @Builder
 public class BankAccount {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    long id;
 
     @NotNull
     @Column(length = 29)
-    private String number;
+    String number;
 
-    private double balance;
+    double balance;
 
     @OneToMany(mappedBy = "account", cascade = {CascadeType.MERGE, CascadeType.REMOVE})
-    private List<Transaction> transactions = new LinkedList<>();
+    List<Transaction> transactions = new LinkedList<>();
 }

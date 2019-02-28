@@ -1,7 +1,9 @@
 package pl.robert.project.user;
 
 import com.google.common.collect.ImmutableMap;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -14,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import pl.robert.project.bank_account.BankAccount;
 import pl.robert.project.bank_account.BankAccountFacade;
 import pl.robert.project.transactions.TransactionFacade;
-import pl.robert.project.transactions.dto.SendTransactionDTO;
+import pl.robert.project.transactions.dto.TransactionDTO;
 import pl.robert.project.user.domain.UserFacade;
 import pl.robert.project.user.domain.dto.ChangeEmailDTO;
 import pl.robert.project.user.domain.dto.ChangePasswordDTO;
@@ -26,20 +28,20 @@ import javax.validation.Valid;
 
 @Controller
 @AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 @RequestMapping("/user-panel")
 @PreAuthorize("hasRole('ROLE_USER')")
 class UserController implements Messages {
 
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+    final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    private UserFacade userFacade;
-    private ValidationFacade validationFacade;
-    private BankAccountFacade bankAccountFacade;
-    private TransactionFacade transactionFacade;
+    UserFacade userFacade;
+    ValidationFacade validationFacade;
+    BankAccountFacade bankAccountFacade;
+    TransactionFacade transactionFacade;
 
     @GetMapping
-    public String userPanel(Model model, Authentication auth) {
-        model.addAttribute("sayHello", "Welcome " + auth.getName());
+    public String userPanel() {
         return "userPanel";
     }
 
@@ -58,7 +60,7 @@ class UserController implements Messages {
     }
 
     @GetMapping("/send-transaction")
-    public String sendTransaction(SendTransactionDTO dto, Model model) {
+    public String sendTransaction(TransactionDTO dto, Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth == null) {
             return "redirect:/access-denied";
@@ -73,7 +75,7 @@ class UserController implements Messages {
     }
 
     @PostMapping("/send-transaction")
-    public String sendTransaction(@Valid @ModelAttribute("transaction") SendTransactionDTO dto, BindingResult result, Model model) {
+    public String sendTransaction(@Valid @ModelAttribute("transaction") TransactionDTO dto, BindingResult result, Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth == null) {
             return "redirect:/access-denied";

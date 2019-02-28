@@ -14,17 +14,13 @@ interface BankAccountRepository extends JpaRepository<BankAccount, Long> {
 
     @Modifying
     @Transactional
-    @Query("UPDATE BankAccount b SET b.balance = b.balance - :money " +
-           "WHERE b.id = :id")
-    void getMoneyFromSender(@Param("money") double money,
-                            @Param("id") long id);
+    @Query("UPDATE BankAccount b SET b.balance = b.balance - :money WHERE b.id = :id")
+    void getMoneyFromSender(@Param("money") double money, @Param("id") long id);
 
     @Modifying
     @Transactional
-    @Query("UPDATE BankAccount b SET b.balance = b.balance + :money " +
-           "WHERE b.id = :id")
-    void addAmountToReceiver(@Param("money") double money,
-                             @Param("id") long id);
+    @Query("UPDATE BankAccount b SET b.balance = b.balance + :money WHERE b.id = :id")
+    void addAmountToReceiver(@Param("money") double money, @Param("id") long id);
 
     @Modifying
     @Transactional

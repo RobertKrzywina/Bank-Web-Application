@@ -1,24 +1,27 @@
 package pl.robert.project.validation;
 
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindingResult;
 import pl.robert.project.bank_account.BankAccount;
 import pl.robert.project.bank_account.BankAccountFacade;
-import pl.robert.project.transactions.dto.SendTransactionDTO;
+import pl.robert.project.transactions.dto.TransactionDTO;
 import pl.robert.project.user.domain.UserFacade;
 import pl.robert.project.user.domain.dto.*;
 
 @Component
 @AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class ValidationFacade implements ValidationStrings {
 
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+    final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    private UserFacade userFacade;
-    private BankAccountFacade bankAccountFacade;
+    UserFacade userFacade;
+    BankAccountFacade bankAccountFacade;
 
     public void checkIfConfirmedPasswordMatchPassword(Object obj, BindingResult result) {
         if (obj instanceof CreateUserDTO) {
@@ -48,7 +51,7 @@ public class ValidationFacade implements ValidationStrings {
         }
     }
 
-    public void checkReceiverBankAccountNumber(String login, SendTransactionDTO dto, BindingResult result) {
+    public void checkReceiverBankAccountNumber(String login, TransactionDTO dto, BindingResult result) {
         dto.setReceiverAccountNumber(modifyBankAccountNumber(dto.getReceiverAccountNumber()));
         BankAccount bankAccount = bankAccountFacade.findByNumber(dto.getReceiverAccountNumber());
 
@@ -88,7 +91,7 @@ public class ValidationFacade implements ValidationStrings {
         return sb.toString();
     }
 
-    public void checkSenderAmount(String login, SendTransactionDTO dto, BindingResult result) {
+    public void checkSenderAmount(String login, TransactionDTO dto, BindingResult result) {
         BankAccount bankAccount = bankAccountFacade.findById(userFacade.findIdByLogin(login));
 
         if (dto.getAmount() != null && (dto.getAmount() > bankAccount.getBalance())) {

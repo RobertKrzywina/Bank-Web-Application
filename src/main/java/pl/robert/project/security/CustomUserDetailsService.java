@@ -1,6 +1,8 @@
 package pl.robert.project.security;
 
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.GrantedAuthority;
@@ -19,11 +21,12 @@ import java.util.UUID;
 
 @Component
 @AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 class CustomUserDetailsService implements UserDetailsService {
 
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+    final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    private UserFacade userFacade;
+    UserFacade userFacade;
 
     @Override
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
