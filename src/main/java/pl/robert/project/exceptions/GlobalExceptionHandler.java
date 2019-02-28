@@ -40,6 +40,7 @@ public class GlobalExceptionHandler {
         } else {
             map.put(520, "UnknownError");
         }
+        e.printStackTrace();
         Map.Entry<Integer,String> entry = map.entrySet().iterator().next();
         logger.warn("{} with {} code on {} URL", entry.getValue(), entry.getKey(), request.getRequestURL());
 

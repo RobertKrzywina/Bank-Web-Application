@@ -16,7 +16,7 @@ import javax.validation.constraints.Pattern;
 public class ChangeEmailDTO implements RegexExpressions {
 
     @IsUnique(fieldName = "Email")
-    @Pattern(regexp = emailRegex, message = "{email.wrongFormat}")
+    @Pattern(regexp = EMAIL_REGEX, message = "{email.wrongFormat}")
     @NotEmpty(message = "{email.notEmpty}")
     private String email;
 

@@ -21,12 +21,12 @@ public class CreateUserDTO implements RegexExpressions {
     private String login;
 
     @IsUnique(fieldName = "Email")
-    @Pattern(regexp = emailRegex, message = "{email.wrongFormat}")
+    @Pattern(regexp = EMAIL_REGEX, message = "{email.wrongFormat}")
     @NotEmpty(message = "{email.notEmpty}")
     private String email;
 
     @IsUnique(fieldName = "Phone")
-    @Pattern(regexp = phoneNumberRegex, message = "{phoneNumber.wrongFormat}")
+    @Pattern(regexp = PHONE_NUMBER_REGEX, message = "{phoneNumber.wrongFormat}")
     @NotEmpty(message = "{phoneNumber.notEmpty}")
     private String phoneNumber;
 

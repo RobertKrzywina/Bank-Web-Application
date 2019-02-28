@@ -16,7 +16,7 @@ import javax.validation.constraints.Pattern;
 public class ChangePhoneNumberDTO implements RegexExpressions {
 
     @IsUnique(fieldName = "Phone")
-    @Pattern(regexp = phoneNumberRegex, message = "{phoneNumber.wrongFormat}")
+    @Pattern(regexp = PHONE_NUMBER_REGEX, message = "{phoneNumber.wrongFormat}")
     @NotEmpty(message = "{phoneNumber.notEmpty}")
     private String phoneNumber;
 

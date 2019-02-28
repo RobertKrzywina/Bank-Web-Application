@@ -61,27 +61,30 @@ public class ValidationFacade implements ValidationStrings {
         }
     }
 
-    private String modifyBankAccountNumber(String number) {
-        if (number.length() == 29) return number;
-        if (number.length() != 22) return null;
-
-        StringBuilder sb = new StringBuilder(29);
-        sb.append("PL");
-
-        char[] arr = number.toCharArray();
-        final int length = arr.length + 5;
-
-        for (int i=0, j=0; i<length; i++) {
-            switch (i) {
-                case 2:  sb.append(' '); break;
-                case 7:  sb.append(' '); break;
-                case 12: sb.append(' '); break;
-                case 17: sb.append(' '); break;
-                case 22: sb.append(' '); break;
-                default: sb.append(arr[j++]);
-            }
+    private static String modifyBankAccountNumber(String numberToCheck) {
+        if (numberToCheck.length() == 29) {
+            return numberToCheck;
         }
 
+        String string = ("PL").concat(numberToCheck).trim().replace(" ", "");
+        if (string.length() == 29) {
+            return string;
+        }
+
+        StringBuilder sb = new StringBuilder(string);
+        if (sb.length() != 24) {
+            return numberToCheck;
+        }
+
+        for (int i=0; i<29; i++) {
+            switch (i) {
+                case 4:
+                case 9:
+                case 14:
+                case 19:
+                case 24: sb.insert(i, " "); break;
+            }
+        }
         return sb.toString();
     }
 

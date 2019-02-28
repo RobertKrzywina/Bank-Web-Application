@@ -28,11 +28,8 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()
                 .loginPage("/login")
                 .failureForwardUrl("/login")
+                .successHandler(new CustomAuthenticationSuccessHandler())
                 .usernameParameter("login")
-            .and()
-                .logout()
-                .logoutUrl("/logout")
-                .logoutSuccessUrl("/login")
             .and()
                 .exceptionHandling().accessDeniedHandler(accessDeniedHandler());
     }
