@@ -1,8 +1,8 @@
-package pl.robert.project.transactions.domain;
+package pl.robert.project.transactions;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import pl.robert.project.bank_account.domain.BankAccountFacade;
+import pl.robert.project.bank_account.BankAccountFacade;
 
 @Configuration
 class TransactionConfiguration {

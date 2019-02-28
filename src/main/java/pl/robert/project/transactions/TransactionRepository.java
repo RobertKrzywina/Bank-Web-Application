@@ -1,4 +1,4 @@
-package pl.robert.project.transactions.domain;
+package pl.robert.project.transactions;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
