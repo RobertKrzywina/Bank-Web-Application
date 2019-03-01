@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.FieldDefaults;
-import pl.robert.project.bank_account.BankAccount;
+import pl.robert.project.bank.account.BankAccount;
 import pl.robert.project.validation.IsUnique;
 import pl.robert.project.validation.RegexExpressions;
 

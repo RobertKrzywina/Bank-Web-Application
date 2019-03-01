@@ -8,7 +8,7 @@ import java.lang.annotation.*;
 @Constraint(validatedBy = LoginPasswordValidator.class)
 @Target( { ElementType.METHOD, ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
-public @interface LoginPassword {
+public @interface LoginPasswordValidation {
 
     String fieldName();
 

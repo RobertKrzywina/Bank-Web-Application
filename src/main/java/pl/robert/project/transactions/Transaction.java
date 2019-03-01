@@ -1,7 +1,7 @@
 package pl.robert.project.transactions;
 
 import lombok.*;
-import pl.robert.project.bank_account.BankAccount;
+import pl.robert.project.bank.account.BankAccount;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

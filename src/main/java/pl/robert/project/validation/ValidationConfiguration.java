@@ -2,7 +2,7 @@ package pl.robert.project.validation;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import pl.robert.project.bank_account.BankAccountFacade;
+import pl.robert.project.bank.account.BankAccountFacade;
 import pl.robert.project.user.domain.UserFacade;
 
 @Configuration

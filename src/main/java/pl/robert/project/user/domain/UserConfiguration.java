@@ -3,7 +3,7 @@ package pl.robert.project.user.domain;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.javamail.JavaMailSender;
-import pl.robert.project.bank_account.BankAccountFacade;
+import pl.robert.project.bank.account.BankAccountFacade;
 
 @Configuration
 class UserConfiguration {

@@ -23,6 +23,8 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/register", "/login", "/confirm-account",
                         "/forgot-password", "/reset-password").not().authenticated()
                 .antMatchers("/").permitAll()
+                .antMatchers("/user-panel*").hasRole("USER")
+                .antMatchers("/admin-panel*").hasRole("ADMIN")
                 .anyRequest().authenticated()
             .and()
                 .formLogin()

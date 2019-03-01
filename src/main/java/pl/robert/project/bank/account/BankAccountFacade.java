@@ -1,4 +1,4 @@
-package pl.robert.project.bank_account;
+package pl.robert.project.bank.account;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -6,7 +6,7 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
-import pl.robert.project.bank_account.dto.ModifyBalanceDTO;
+import pl.robert.project.bank.account.dto.ModifyBalanceDTO;
 
 import java.util.Random;
 

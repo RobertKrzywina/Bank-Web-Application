@@ -10,7 +10,7 @@ import javax.validation.ConstraintValidatorContext;
 
 @SuppressWarnings("FieldCanBeLocal")
 @FieldDefaults(level = AccessLevel.PRIVATE)
-class LoginPasswordValidator implements ConstraintValidator<LoginPassword, String> {
+class LoginPasswordValidator implements ConstraintValidator<LoginPasswordValidation, String> {
 
     String fieldName;
     UserFacade userFacade;
@@ -27,7 +27,7 @@ class LoginPasswordValidator implements ConstraintValidator<LoginPassword, Strin
     }
 
     @Override
-    public void initialize(LoginPassword constraintAnnotation) {
+    public void initialize(LoginPasswordValidation constraintAnnotation) {
         fieldName = constraintAnnotation.fieldName();
     }
 

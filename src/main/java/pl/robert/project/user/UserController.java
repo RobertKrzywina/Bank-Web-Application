@@ -6,15 +6,13 @@ import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import pl.robert.project.bank_account.BankAccount;
-import pl.robert.project.bank_account.BankAccountFacade;
+import pl.robert.project.bank.account.BankAccount;
+import pl.robert.project.bank.account.BankAccountFacade;
 import pl.robert.project.transactions.TransactionFacade;
 import pl.robert.project.transactions.dto.TransactionDTO;
 import pl.robert.project.user.domain.UserFacade;
@@ -30,7 +28,6 @@ import javax.validation.Valid;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @RequestMapping("/user-panel")
-@PreAuthorize("hasRole('ROLE_USER')")
 class UserController implements Messages {
 
     final Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -47,12 +44,7 @@ class UserController implements Messages {
 
     @GetMapping("/about-me")
     public String aboutMe(Model model) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth == null) {
-            return "redirect:/access-denied";
-        }
-        UserQuery userQuery = userFacade.QueryByLogin(auth.getName());
-
+        UserQuery userQuery = userFacade.QueryByLogin(SecurityContextHolder.getContext().getAuthentication().getName());
         ImmutableMap<String, String> map = userFacade.initializeMapWithUserDetails(userQuery);
 
         model.addAttribute("map", map);
@@ -61,11 +53,7 @@ class UserController implements Messages {
 
     @GetMapping("/send-transaction")
     public String sendTransaction(TransactionDTO dto, Model model) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth == null) {
-            return "redirect:/access-denied";
-        }
-        BankAccount bankAccount = bankAccountFacade.findById(userFacade.findIdByLogin(auth.getName()));
+        BankAccount bankAccount = bankAccountFacade.findById(userFacade.findIdByLogin(SecurityContextHolder.getContext().getAuthentication().getName()));
         dto.setSenderAccountNumber(bankAccount.getNumber());
 
         model.addAttribute("senderAccountNumber", bankAccount.getNumber());
@@ -76,58 +64,44 @@ class UserController implements Messages {
 
     @PostMapping("/send-transaction")
     public String sendTransaction(@Valid @ModelAttribute("transaction") TransactionDTO dto, BindingResult result, Model model) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth == null) {
-            return "redirect:/access-denied";
-        }
+        String userLogin = SecurityContextHolder.getContext().getAuthentication().getName();
 
-        validationFacade.checkReceiverBankAccountNumber(auth.getName(), dto, result);
-        validationFacade.checkSenderAmount(auth.getName(), dto, result);
-
+        validationFacade.checkReceiverBankAccountNumber(userLogin, dto, result);
+        validationFacade.checkSenderAmount(userLogin, dto, result);
         if (result.hasErrors()) {
-            BankAccount bankAccount = bankAccountFacade.findById(userFacade.findIdByLogin(auth.getName()));
-
+            BankAccount bankAccount = bankAccountFacade.findById(userFacade.findIdByLogin(userLogin));
             model.addAttribute("senderAccountNumber", bankAccount.getNumber());
             model.addAttribute("currentBalance", bankAccount.getBalance());
             model.addAttribute("transaction", dto);
             return "sendTransaction";
         }
-        BankAccount bankAccount = bankAccountFacade.findById(userFacade.findIdByLogin(auth.getName()));
-        dto.setSenderAccountNumber(bankAccount.getNumber());
 
+        BankAccount bankAccount = bankAccountFacade.findById(userFacade.findIdByLogin(userLogin));
+        dto.setSenderAccountNumber(bankAccount.getNumber());
         transactionFacade.addTransaction(dto);
+
         return "sendTransactionCompleted";
     }
 
     @GetMapping("/received-transactions")
     public String receivedTransactions(Model model, @RequestParam(defaultValue = "0") int page) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth == null) {
-            return "redirect:/access-denied";
-        }
-        long id = userFacade.findIdByLogin(auth.getName());
+        long id = userFacade.findIdByLogin(SecurityContextHolder.getContext().getAuthentication().getName());
         BankAccount bankAccount = bankAccountFacade.findById(id);
 
         model.addAttribute("transactions", transactionFacade.findAllByReceiverAccountNumber(bankAccount.getNumber(), page, 5));
         model.addAttribute("currentPage", page);
         model.addAttribute("values", transactionFacade.getValuesToDisplayId(transactionFacade.getNumberOfElements(), page));
-
         return "receivedTransactions";
     }
 
     @GetMapping("/sent-transactions")
     public String sentTransactions(Model model, @RequestParam(defaultValue = "0") int page) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth == null) {
-            return "redirect:/access-denied";
-        }
-        long id = userFacade.findIdByLogin(auth.getName());
+        long id = userFacade.findIdByLogin(SecurityContextHolder.getContext().getAuthentication().getName());
         BankAccount bankAccount = bankAccountFacade.findById(id);
 
         model.addAttribute("transactions", transactionFacade.findAllBySenderAccountNumber(bankAccount.getNumber(), page, 5));
         model.addAttribute("currentPage", page);
         model.addAttribute("values", transactionFacade.getValuesToDisplayId(transactionFacade.getNumberOfElements(), page));
-
         return "sentTransactions";
     }
 
@@ -139,17 +113,13 @@ class UserController implements Messages {
 
     @PatchMapping("/change-email")
     public String changeEmail(@Valid @ModelAttribute("DTO") ChangeEmailDTO dto, BindingResult result, Model model) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth == null) {
-            return "redirect:/access-denied";
-        }
         validationFacade.checkIfConfirmedEmailMatchEmail(dto, result);
-
         if (result.hasErrors()) {
             model.addAttribute("DTO", dto);
             return "changeEmail";
         }
-        long id = userFacade.findIdByLogin(auth.getName());
+
+        long id = userFacade.findIdByLogin(SecurityContextHolder.getContext().getAuthentication().getName());
         userFacade.changeEmail(id, dto.getConfirmedEmail());
         model.addAttribute("msg", SUCCESSFULLY_CHANGED_EMAIL);
         return "changeValueCompleted";
@@ -163,18 +133,15 @@ class UserController implements Messages {
 
     @PatchMapping("/change-phone")
     public String changePhoneNumber(@Valid @ModelAttribute("DTO") ChangePhoneNumberDTO dto, BindingResult result, Model model) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth == null) {
-            return "redirect:/access-denied";
-        }
         validationFacade.checkIfConfirmedPhoneNumberMatchPhoneNumber(dto, result);
-
         if (result.hasErrors()) {
             model.addAttribute("DTO", dto);
             return "changePhoneNumber";
         }
-        long id = userFacade.findIdByLogin(auth.getName());
+
+        long id = userFacade.findIdByLogin(SecurityContextHolder.getContext().getAuthentication().getName());
         userFacade.changePhoneNumber(id, dto.getConfirmedPhoneNumber());
+
         model.addAttribute("msg", SUCCESSFULLY_CHANGED_PHONE_NUMBER);
         return "changeValueCompleted";
     }
@@ -187,18 +154,15 @@ class UserController implements Messages {
 
     @PatchMapping("/change-password")
     public String changePassword(@Valid @ModelAttribute("DTO") ChangePasswordDTO dto, BindingResult result, Model model) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth == null) {
-            return "redirect:/access-denied";
-        }
         validationFacade.checkIfConfirmedPasswordMatchPassword(dto, result);
-
         if (result.hasErrors()) {
             model.addAttribute("DTO", dto);
             return "changePassword";
         }
-        long id = userFacade.findIdByLogin(auth.getName());
+
+        long id = userFacade.findIdByLogin(SecurityContextHolder.getContext().getAuthentication().getName());
         userFacade.changePassword(id, dto.getConfirmedPassword());
+
         model.addAttribute("msg", SUCCESSFULLY_CHANGED_PASSWORD);
         return "changeValueCompleted";
     }

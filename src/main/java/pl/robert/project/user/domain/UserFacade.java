@@ -16,7 +16,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-import pl.robert.project.bank_account.BankAccountFacade;
+import pl.robert.project.bank.account.BankAccountFacade;
 import pl.robert.project.user.domain.dto.AuthorizationDTO;
 import pl.robert.project.user.domain.dto.CreateUserDTO;
 import pl.robert.project.user.domain.dto.ForgotLoginOrPasswordDTO;

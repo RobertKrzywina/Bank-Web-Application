@@ -2,7 +2,7 @@ package pl.robert.project.user.domain;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import pl.robert.project.bank_account.BankAccount;
+import pl.robert.project.bank.account.BankAccount;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

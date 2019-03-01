@@ -7,8 +7,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindingResult;
-import pl.robert.project.bank_account.BankAccount;
-import pl.robert.project.bank_account.BankAccountFacade;
+import pl.robert.project.bank.account.BankAccount;
+import pl.robert.project.bank.account.BankAccountFacade;
 import pl.robert.project.transactions.dto.TransactionDTO;
 import pl.robert.project.user.domain.UserFacade;
 import pl.robert.project.user.domain.dto.*;
@@ -64,7 +64,7 @@ public class ValidationFacade implements ValidationStrings {
         }
     }
 
-    private static String modifyBankAccountNumber(String numberToCheck) {
+    private String modifyBankAccountNumber(String numberToCheck) {
         if (numberToCheck.length() == 29) {
             return numberToCheck;
         }

@@ -1,6 +1,6 @@
 package pl.robert.project.transactions;
 
-import pl.robert.project.bank_account.BankAccount;
+import pl.robert.project.bank.account.BankAccount;
 import pl.robert.project.transactions.dto.TransactionDTO;
 
 import java.time.LocalDateTime;

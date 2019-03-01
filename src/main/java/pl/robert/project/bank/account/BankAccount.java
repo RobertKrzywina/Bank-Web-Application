@@ -1,4 +1,4 @@
-package pl.robert.project.bank_account;
+package pl.robert.project.bank.account;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
