@@ -4,36 +4,35 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.primitives.Ints;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.mail.MailSendException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Component;
+import org.springframework.validation.BindingResult;
 import pl.robert.project.bank.account.BankAccountFacade;
-import pl.robert.project.user.domain.dto.AuthorizationDTO;
-import pl.robert.project.user.domain.dto.CreateUserDTO;
-import pl.robert.project.user.domain.dto.ForgotLoginOrPasswordDTO;
+import pl.robert.project.user.domain.dto.*;
 import pl.robert.project.user.query.UserQuery;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.util.concurrent.TimeUnit;
 
-@Component
 @AllArgsConstructor
+@NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserFacade {
 
     final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     UserRepository repository;
+    UserValidation validation;
+    PasswordEncoder passwordEncoder;
     BankAccountFacade bankAccountFacade;
     ConfirmationTokenRepository tokenRepository;
     JavaMailSender mailSender;
@@ -54,8 +53,8 @@ public class UserFacade {
             MimeMessage mimeMessage = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, false, "UTF-8");
             String htmlMsg = "To confirm your account, please follow the link below:<br>" +
-                             "<a href='http://localhost:8080/confirm-account?token=" + confirmationToken.getConfirmationToken() + "'>" +
-                             "http://localhost:8080/confirm-account?token=" + confirmationToken.getConfirmationToken() + "</a>";
+                    "<a href='http://localhost:8080/confirm-account?token=" + confirmationToken.getConfirmationToken() + "'>" +
+                    "http://localhost:8080/confirm-account?token=" + confirmationToken.getConfirmationToken() + "</a>";
             mimeMessage.setContent(htmlMsg, "text/html");
             helper.setTo(user.getEmail());
             helper.setSubject("Complete Registration!");
@@ -77,9 +76,9 @@ public class UserFacade {
             MimeMessage mimeMessage = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, false, "UTF-8");
             String htmlMsg = "Thank you for your password reset request. Your login is: <b>" + user.getLogin() + "</b><br>" +
-                             "Please follow the link below to reset your password:<br>" +
-                             "<a href='http://localhost:8080/reset-password?token=" + confirmationToken.getConfirmationToken() + "'>" +
-                             "http://localhost:8080/reset-password?token=" + confirmationToken.getConfirmationToken() + "</a>";
+                    "Please follow the link below to reset your password:<br>" +
+                    "<a href='http://localhost:8080/reset-password?token=" + confirmationToken.getConfirmationToken() + "'>" +
+                    "http://localhost:8080/reset-password?token=" + confirmationToken.getConfirmationToken() + "</a>";
             mimeMessage.setContent(htmlMsg, "text/html");
             helper.setTo(user.getEmail());
             helper.setSubject("Forgotten Password!");
@@ -176,10 +175,6 @@ public class UserFacade {
         return repository.findByLogin(login) != null;
     }
 
-    public boolean isEmailExists(String email) {
-        return repository.findByEmail(email) != null;
-    }
-
     public boolean isLoginAndPasswordCorrect(String login, String password) {
         return repository.findByLoginAndPassword(login, password) != null;
     }
@@ -217,28 +212,39 @@ public class UserFacade {
         return repository.findByLogin(login).getId();
     }
 
-    public void changeEmail(long userId, String newEmail) {
-        repository.findUserByIdAndUpdateEmail(userId, newEmail);
-    }
-
-    public void changePhoneNumber(long userId, String newPhoneNumber) {
-        repository.findUserByIdAndUpdatePhoneNumber(userId, formatPhoneNumber(newPhoneNumber));
-    }
-
-    public void changePassword(long userId, String newPassword) {
-        repository.findUserByIdAndUpdatePassword(userId, passwordEncoder().encode(newPassword));
-    }
-
-    @Bean
-    private PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
     public Page<User> findAll(int page, int size) {
         return repository.findAll(new PageRequest(page, size));
     }
 
     public void deleteById(long id) {
         repository.deleteById(id);
+    }
+
+    public void changeEmail(long userId, String newEmail) {
+        repository.findUserByIdAndUpdateEmail(userId, newEmail);
+    }
+
+    public void checkConfirmedEmail(ChangeEmailDTO dto, BindingResult result) {
+        validation.checkConfirmedEmail(dto, result);
+    }
+
+    public void changePhoneNumber(long userId, String newPhoneNumber) {
+        repository.findUserByIdAndUpdatePhoneNumber(userId, formatPhoneNumber(newPhoneNumber));
+    }
+
+    public void checkConfirmedPhoneNumber(ChangePhoneNumberDTO dto, BindingResult result) {
+        validation.checkConfirmedPhoneNumber(dto, result);
+    }
+
+    public void changePassword(long userId, String newPassword) {
+        repository.findUserByIdAndUpdatePassword(userId, passwordEncoder.encode(newPassword));
+    }
+
+    public void checkConfirmedPassword(Object obj, BindingResult result) {
+        validation.checkConfirmedPassword(obj, result);
+    }
+
+    public void checkForgottenEmail(boolean tokenAlreadySent, ForgotLoginOrPasswordDTO dto, BindingResult result) {
+        validation.checkForgottenEmail(tokenAlreadySent, dto, result);
     }
 }

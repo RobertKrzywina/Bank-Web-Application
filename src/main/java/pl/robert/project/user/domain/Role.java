@@ -10,6 +10,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
+import static pl.robert.project.validation.Constants.LENGTH_MAX_ROLE;
+import static pl.robert.project.validation.Constants.LENGTH_MIN_ROLE;
+
 @Entity(name = "roles")
 @NoArgsConstructor
 @AllArgsConstructor
@@ -22,6 +25,6 @@ public class Role {
     long id;
 
     @NotNull
-    @Length(min = 9, max = 10)
+    @Length(min = LENGTH_MIN_ROLE, max = LENGTH_MAX_ROLE)
     String role;
 }

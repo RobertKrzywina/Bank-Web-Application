@@ -5,17 +5,18 @@ import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.stereotype.Component;
+import org.springframework.validation.BindingResult;
 import pl.robert.project.bank.account.dto.ModifyBalanceDTO;
+import pl.robert.project.transactions.dto.TransactionDTO;
 
 import java.util.Random;
 
-@Component
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class BankAccountFacade {
 
     BankAccountRepository repository;
+    BankAccountValidation validation;
 
     public BankAccount create() {
         return repository.save(BankAccountFactory.create(numberGenerator()));
@@ -61,5 +62,13 @@ public class BankAccountFacade {
 
     public void modifyBalance(ModifyBalanceDTO dto) {
         repository.modifyBalance(dto.getNewBalance(), dto.getId());
+    }
+
+    public void checkReceiverBankAccountNumber(String login, TransactionDTO dto, BindingResult result) {
+        validation.checkReceiverBankAccountNumber(login, dto, result);
+    }
+
+    public void checkSenderAmount(String login, TransactionDTO dto, BindingResult result) {
+        validation.checkSenderAmount(login, dto, result);
     }
 }

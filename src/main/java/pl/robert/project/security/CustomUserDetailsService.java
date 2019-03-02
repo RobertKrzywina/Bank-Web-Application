@@ -10,7 +10,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import pl.robert.project.user.domain.Role;
 import pl.robert.project.user.domain.UserFacade;
 import pl.robert.project.user.domain.dto.AuthorizationDTO;
@@ -19,7 +19,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
-@Component
+@Service
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 class CustomUserDetailsService implements UserDetailsService {

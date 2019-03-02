@@ -9,6 +9,8 @@ import javax.validation.constraints.NotNull;
 import java.util.LinkedList;
 import java.util.List;
 
+import static pl.robert.project.validation.Constants.LENGTH_BANK_ACCOUNT_NUMBER;
+
 @Entity
 @Table(name = "bank_accounts")
 @NoArgsConstructor
@@ -23,7 +25,7 @@ public class BankAccount {
     long id;
 
     @NotNull
-    @Column(length = 29)
+    @Column(length = LENGTH_BANK_ACCOUNT_NUMBER)
     String number;
 
     double balance;

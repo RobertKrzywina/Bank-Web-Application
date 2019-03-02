@@ -9,6 +9,8 @@ import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.Set;
 
+import static pl.robert.project.validation.Constants.*;
+
 @Entity
 @Table(name = "users")
 @NoArgsConstructor
@@ -24,18 +26,18 @@ class User {
     long id;
 
     @NotNull
-    @Column(length = 12)
+    @Column(length = LENGTH_LOGIN)
     String login;
 
     @NotNull
-    @Column(length = 60)
+    @Column(length = LENGTH_PASSWORD)
     String password;
 
     @NotNull
     String email;
 
     @NotNull
-    @Column(name = "phone_number", length = 15)
+    @Column(name = "phone_number", length = LENGTH_PHONE_NUMBER)
     String phoneNumber;
 
     @ManyToMany(fetch = FetchType.EAGER)

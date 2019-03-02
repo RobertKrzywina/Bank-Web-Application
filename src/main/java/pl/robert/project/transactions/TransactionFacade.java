@@ -6,14 +6,12 @@ import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.stereotype.Component;
 import pl.robert.project.bank.account.BankAccount;
 import pl.robert.project.bank.account.BankAccountFacade;
 import pl.robert.project.transactions.dto.TransactionDTO;
 
-@Component
-@FieldDefaults(level = AccessLevel.PRIVATE)
 @AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class TransactionFacade {
 
     private TransactionRepository repository;

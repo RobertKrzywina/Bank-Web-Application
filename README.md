@@ -16,6 +16,7 @@ This project is a bank account web application. I used MVC and Facade patterns.
 * Lombok
 * Guava: Google Libraries for Java
 * SMTP protocol
+* SLF4J
 
 <b>Front-end</b>
 * Thymeleaf

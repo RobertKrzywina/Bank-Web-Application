@@ -7,6 +7,9 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
+import static pl.robert.project.validation.Constants.LENGTH_BANK_ACCOUNT_NUMBER;
+import static pl.robert.project.validation.Constants.LENGTH_TITLE;
+
 @Entity(name = "transactions")
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,17 +23,17 @@ public class Transaction {
     private long id;
 
     @NotNull
-    @Column(length = 40)
+    @Column(length = LENGTH_TITLE)
     private String title;
 
     private String description;
 
     @NotNull
-    @Column(name = "sender_account_number", length = 29)
+    @Column(name = "sender_account_number", length = LENGTH_BANK_ACCOUNT_NUMBER)
     private String senderAccountNumber;
 
     @NotNull
-    @Column(name = "receiver_account_number", length = 29)
+    @Column(name = "receiver_account_number", length = LENGTH_BANK_ACCOUNT_NUMBER)
     private String receiverAccountNumber;
 
     @NotNull

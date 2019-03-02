@@ -20,7 +20,6 @@ import pl.robert.project.user.domain.dto.ChangeEmailDTO;
 import pl.robert.project.user.domain.dto.ChangePasswordDTO;
 import pl.robert.project.user.domain.dto.ChangePhoneNumberDTO;
 import pl.robert.project.user.query.UserQuery;
-import pl.robert.project.validation.ValidationFacade;
 
 import javax.validation.Valid;
 
@@ -33,7 +32,6 @@ class UserController implements Messages {
     final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     UserFacade userFacade;
-    ValidationFacade validationFacade;
     BankAccountFacade bankAccountFacade;
     TransactionFacade transactionFacade;
 
@@ -66,8 +64,8 @@ class UserController implements Messages {
     public String sendTransaction(@Valid @ModelAttribute("transaction") TransactionDTO dto, BindingResult result, Model model) {
         String userLogin = SecurityContextHolder.getContext().getAuthentication().getName();
 
-        validationFacade.checkReceiverBankAccountNumber(userLogin, dto, result);
-        validationFacade.checkSenderAmount(userLogin, dto, result);
+        bankAccountFacade.checkReceiverBankAccountNumber(userLogin, dto, result);
+        bankAccountFacade.checkSenderAmount(userLogin, dto, result);
         if (result.hasErrors()) {
             BankAccount bankAccount = bankAccountFacade.findById(userFacade.findIdByLogin(userLogin));
             model.addAttribute("senderAccountNumber", bankAccount.getNumber());
@@ -113,7 +111,7 @@ class UserController implements Messages {
 
     @PatchMapping("/change-email")
     public String changeEmail(@Valid @ModelAttribute("DTO") ChangeEmailDTO dto, BindingResult result, Model model) {
-        validationFacade.checkIfConfirmedEmailMatchEmail(dto, result);
+        userFacade.checkConfirmedEmail(dto, result);
         if (result.hasErrors()) {
             model.addAttribute("DTO", dto);
             return "changeEmail";
@@ -133,7 +131,7 @@ class UserController implements Messages {
 
     @PatchMapping("/change-phone")
     public String changePhoneNumber(@Valid @ModelAttribute("DTO") ChangePhoneNumberDTO dto, BindingResult result, Model model) {
-        validationFacade.checkIfConfirmedPhoneNumberMatchPhoneNumber(dto, result);
+        userFacade.checkConfirmedPhoneNumber(dto, result);
         if (result.hasErrors()) {
             model.addAttribute("DTO", dto);
             return "changePhoneNumber";
@@ -154,7 +152,7 @@ class UserController implements Messages {
 
     @PatchMapping("/change-password")
     public String changePassword(@Valid @ModelAttribute("DTO") ChangePasswordDTO dto, BindingResult result, Model model) {
-        validationFacade.checkIfConfirmedPasswordMatchPassword(dto, result);
+        userFacade.checkConfirmedPassword(dto, result);
         if (result.hasErrors()) {
             model.addAttribute("DTO", dto);
             return "changePassword";

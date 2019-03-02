@@ -16,7 +16,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.robert.project.user.Messages;
 import pl.robert.project.user.domain.UserFacade;
 import pl.robert.project.user.domain.dto.*;
-import pl.robert.project.validation.ValidationFacade;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -30,7 +29,6 @@ class BaseController implements Messages {
     final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     UserFacade userFacade;
-    ValidationFacade validationFacade;
 
     @GetMapping("/")
     public String index() {
@@ -45,7 +43,7 @@ class BaseController implements Messages {
 
     @PostMapping("/register")
     public String registerForm(@Valid @ModelAttribute("user") CreateUserDTO dto, BindingResult result, Model model) {
-        validationFacade.checkIfConfirmedPasswordMatchPassword(dto, result);
+        userFacade.checkConfirmedPassword(dto, result);
         if (result.hasErrors()) {
             model.addAttribute("user", dto);
             return "register";
@@ -71,7 +69,7 @@ class BaseController implements Messages {
 
     @PostMapping("/forgot-password")
     public String forgotLoginOrPassword(@Valid @ModelAttribute("DTO") ForgotLoginOrPasswordDTO dto, BindingResult result, Model model) {
-        validationFacade.validateForgottenEmail(userFacade.checkIfConfirmationTokenAlreadySent(dto), dto, result);
+        userFacade.checkForgottenEmail(userFacade.checkIfConfirmationTokenAlreadySent(dto), dto, result);
         if (result.hasErrors()) {
             model.addAttribute("DTO", dto);
             return "forgotPassword";
@@ -95,7 +93,7 @@ class BaseController implements Messages {
     @PatchMapping("/reset-password")
     public String resetPassword(@Valid @ModelAttribute("DTO") ChangePasswordDTO dto, BindingResult result,
                                 Model model, @RequestParam("token") String confirmationToken) {
-        validationFacade.checkIfConfirmedPasswordMatchPassword(dto, result);
+        userFacade.checkConfirmedPassword(dto, result);
         if (result.hasErrors()) {
             model.addAttribute("flag", true);
             model.addAttribute("DTO", dto);

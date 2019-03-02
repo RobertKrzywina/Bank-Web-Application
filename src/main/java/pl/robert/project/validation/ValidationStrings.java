@@ -18,6 +18,7 @@ public interface ValidationStrings {
     String C_RECEIVER_ACCOUNT_NUMBER_MATCH_SENDER = "Match.sender.receiver";
     String C_AMOUNT_NOT_ENOUGH = "NotEnough.amount";
     String C_FORGOTTEN_LOGIN_OR_PASSWORD = "NotExists.forgottenEmail";
+    String C_CLASS_INSTANCE_NOT_MATCH = "NotMatch.instance";
 
     /////////////////////////////////////////////////////
 
