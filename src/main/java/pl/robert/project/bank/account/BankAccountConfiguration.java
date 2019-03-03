@@ -8,7 +8,7 @@ class BankAccountConfiguration {
 
     @Bean
     BankAccountFacade bankAccountFacade(BankAccountRepository repository) {
-        return new BankAccountFacade(repository,
-               new BankAccountValidation(repository));
+        return new BankAccountFacade(new BankAccountValidation(repository),
+                                     new BankAccountService(repository));
     }
 }

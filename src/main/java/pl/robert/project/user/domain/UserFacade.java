@@ -25,7 +25,7 @@ public class UserFacade {
 
     public void saveUserAndGenerateAccountConfirmationToken(CreateUserDTO dto) {
         userService.setPhoneNumber(dto);
-        bankAccountFacade.generateBankAccount(dto);
+        bankAccountFacade.saveAndGenerateBankAccount(dto);
         User user = userService.create(dto);
         userService.save(user);
         tokenService.generateAccountConfirmationToken(user);

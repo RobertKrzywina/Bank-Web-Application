@@ -13,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import pl.robert.project.bank.account.BankAccount;
 import pl.robert.project.bank.account.BankAccountFacade;
+import pl.robert.project.bank.account.exception.UpdateMoneyException;
 import pl.robert.project.transactions.TransactionFacade;
 import pl.robert.project.transactions.dto.TransactionDTO;
 import pl.robert.project.user.domain.UserFacade;
@@ -61,7 +62,8 @@ class UserController implements Messages {
     }
 
     @PostMapping("/send-transaction")
-    public String sendTransaction(@Valid @ModelAttribute("transaction") TransactionDTO dto, BindingResult result, Model model) {
+    public String sendTransaction(@Valid @ModelAttribute("transaction") TransactionDTO dto, BindingResult result, Model model)
+            throws UpdateMoneyException {
         String userLogin = SecurityContextHolder.getContext().getAuthentication().getName();
         long id = userFacade.findIdByLogin(userLogin);
         bankAccountFacade.checkReceiverBankAccountNumber(id, dto, result);

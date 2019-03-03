@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import pl.robert.project.bank.account.BankAccount;
 import pl.robert.project.bank.account.BankAccountFacade;
+import pl.robert.project.bank.account.exception.UpdateMoneyException;
 import pl.robert.project.transactions.dto.TransactionDTO;
 
 @AllArgsConstructor
@@ -17,7 +18,7 @@ public class TransactionFacade {
     private TransactionRepository repository;
     private BankAccountFacade bankAccountFacade;
 
-    public void addTransaction(TransactionDTO dto) {
+    public void addTransaction(TransactionDTO dto) throws UpdateMoneyException {
         BankAccount senderBankAccount = bankAccountFacade.findByNumber(dto.getSenderAccountNumber());
         BankAccount receiverBankAccount = bankAccountFacade.findByNumber(dto.getReceiverAccountNumber());
         repository.saveAndFlush(TransactionFactory.create(dto, senderBankAccount));

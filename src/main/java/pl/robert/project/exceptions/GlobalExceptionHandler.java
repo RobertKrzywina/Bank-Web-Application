@@ -5,12 +5,14 @@ import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.mail.MailAuthenticationException;
 import org.springframework.mail.MailSendException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.client.HttpServerErrorException;
+import pl.robert.project.bank.account.exception.UpdateMoneyException;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
@@ -40,6 +42,10 @@ public class GlobalExceptionHandler {
             map.put(401, "UsernameNotFoundException");
         } else if (e instanceof MessagingException || e instanceof MailSendException) {
             map.put(520, e.getMessage());
+        } else if (e instanceof MailAuthenticationException) {
+            map.put(520, "MailAuthenticationException");
+        } else if (e instanceof UpdateMoneyException) {
+            map.put(520, "UpdateMoneyException");
         } else {
             map.put(520, "UnknownError");
         }
