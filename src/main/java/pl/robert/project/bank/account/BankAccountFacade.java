@@ -3,11 +3,14 @@ package pl.robert.project.bank.account;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.validation.BindingResult;
 import pl.robert.project.bank.account.dto.ModifyBalanceDTO;
 import pl.robert.project.transactions.dto.TransactionDTO;
+import pl.robert.project.user.domain.dto.CreateUserDTO;
 
 import java.util.Random;
 
@@ -15,11 +18,15 @@ import java.util.Random;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class BankAccountFacade {
 
+    final Logger logger = LoggerFactory.getLogger(this.getClass());
+
     BankAccountRepository repository;
     BankAccountValidation validation;
 
-    public BankAccount create() {
-        return repository.save(BankAccountFactory.create(numberGenerator()));
+    public void generateBankAccount(CreateUserDTO dto) {
+        BankAccount bankAccount = BankAccountFactory.create(numberGenerator());
+        repository.save(bankAccount);
+        dto.setBankAccount(bankAccount);
     }
 
     private String numberGenerator() {
@@ -64,11 +71,11 @@ public class BankAccountFacade {
         repository.modifyBalance(dto.getNewBalance(), dto.getId());
     }
 
-    public void checkReceiverBankAccountNumber(String login, TransactionDTO dto, BindingResult result) {
-        validation.checkReceiverBankAccountNumber(login, dto, result);
+    public void checkReceiverBankAccountNumber(long id, TransactionDTO dto, BindingResult result) {
+        validation.checkReceiverBankAccountNumber(id, dto, result);
     }
 
-    public void checkSenderAmount(String login, TransactionDTO dto, BindingResult result) {
-        validation.checkSenderAmount(login, dto, result);
+    public void checkSenderAmount(long id, TransactionDTO dto, BindingResult result) {
+        validation.checkSenderAmount(id, dto, result);
     }
 }

@@ -11,21 +11,19 @@ import pl.robert.project.bank.account.BankAccountFacade;
 class UserConfiguration {
 
     @Bean
-    PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-    @Bean
-    UserFacade userFacade(UserRepository repository,
+    UserFacade userFacade(UserRepository userRepository,
                           PasswordEncoder passwordEncoder,
                           BankAccountFacade bankAccountFacade,
                           ConfirmationTokenRepository tokenRepository,
                           JavaMailSender mailSender) {
-        return new UserFacade(repository,
-                              new UserValidation(repository),
-                              passwordEncoder,
+        return new UserFacade(new UserValidation(userRepository),
                               bankAccountFacade,
-                              tokenRepository,
-                              mailSender);
+                              new TokenService(tokenRepository, userRepository, mailSender),
+                              new UserService(userRepository, bankAccountFacade, passwordEncoder));
+    }
+
+    @Bean
+    PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 }

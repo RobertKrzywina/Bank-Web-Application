@@ -63,9 +63,9 @@ class UserController implements Messages {
     @PostMapping("/send-transaction")
     public String sendTransaction(@Valid @ModelAttribute("transaction") TransactionDTO dto, BindingResult result, Model model) {
         String userLogin = SecurityContextHolder.getContext().getAuthentication().getName();
-
-        bankAccountFacade.checkReceiverBankAccountNumber(userLogin, dto, result);
-        bankAccountFacade.checkSenderAmount(userLogin, dto, result);
+        long id = userFacade.findIdByLogin(userLogin);
+        bankAccountFacade.checkReceiverBankAccountNumber(id, dto, result);
+        bankAccountFacade.checkSenderAmount(id, dto, result);
         if (result.hasErrors()) {
             BankAccount bankAccount = bankAccountFacade.findById(userFacade.findIdByLogin(userLogin));
             model.addAttribute("senderAccountNumber", bankAccount.getNumber());
@@ -73,7 +73,6 @@ class UserController implements Messages {
             model.addAttribute("transaction", dto);
             return "sendTransaction";
         }
-
         BankAccount bankAccount = bankAccountFacade.findById(userFacade.findIdByLogin(userLogin));
         dto.setSenderAccountNumber(bankAccount.getNumber());
         transactionFacade.addTransaction(dto);

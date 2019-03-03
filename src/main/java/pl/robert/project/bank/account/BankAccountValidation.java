@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.validation.BindingResult;
 import pl.robert.project.transactions.dto.TransactionDTO;
-import pl.robert.project.user.domain.UserFacade;
 import pl.robert.project.validation.ValidationStrings;
 
 @AllArgsConstructor
@@ -13,9 +12,8 @@ import pl.robert.project.validation.ValidationStrings;
 class BankAccountValidation implements ValidationStrings {
 
     BankAccountRepository repository;
-    UserFacade userFacade;
 
-    void checkReceiverBankAccountNumber(String login, TransactionDTO dto, BindingResult result) {
+    void checkReceiverBankAccountNumber(long id, TransactionDTO dto, BindingResult result) {
         dto.setReceiverAccountNumber(modifyBankAccountNumber(dto.getReceiverAccountNumber()));
         BankAccount bankAccount = repository.findByNumber(dto.getReceiverAccountNumber());
 
@@ -23,7 +21,7 @@ class BankAccountValidation implements ValidationStrings {
             result.rejectValue(F_RECEIVER_ACCOUNT_NUMBER, C_RECEIVER_ACCOUNT_NUMBER_NOT_EXISTS, M_RECEIVER_ACCOUNT_NUMBER_NOT_EXISTS);
         }
 
-        if (bankAccount != null && (userFacade.findIdByLogin(login) == bankAccount.getId())) {
+        if (bankAccount != null && id == bankAccount.getId()) {
             result.rejectValue(F_RECEIVER_ACCOUNT_NUMBER, C_RECEIVER_ACCOUNT_NUMBER_MATCH_SENDER, M_RECEIVER_ACCOUNT_NUMBER_MATCH_SENDER);
         }
     }
@@ -55,8 +53,8 @@ class BankAccountValidation implements ValidationStrings {
         return sb.toString();
     }
 
-    void checkSenderAmount(String login, TransactionDTO dto, BindingResult result) {
-        BankAccount bankAccount = repository.findById(userFacade.findIdByLogin(login));
+    void checkSenderAmount(long id, TransactionDTO dto, BindingResult result) {
+        BankAccount bankAccount = repository.findById(id);
 
         if (dto.getAmount() != null && (dto.getAmount() > bankAccount.getBalance())) {
             result.rejectValue(F_AMOUNT, C_AMOUNT_NOT_ENOUGH, M_AMOUNT_NOT_ENOUGH);

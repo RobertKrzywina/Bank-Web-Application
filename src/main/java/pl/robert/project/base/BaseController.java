@@ -48,15 +48,14 @@ class BaseController implements Messages {
             model.addAttribute("user", dto);
             return "register";
         }
-        userFacade.generateBankAccount(dto);
-        userFacade.generateEmailConfirmationToken(dto);
+        userFacade.saveUserAndGenerateAccountConfirmationToken(dto);
         model.addAttribute("email", dto.getEmail());
         return "tokenSent";
     }
 
     @GetMapping("/confirm-account")
     public String confirmUserAccount(Model model, @RequestParam("token") String confirmationToken) {
-        boolean flag = userFacade.checkConfirmationToken(1, confirmationToken);
+        boolean flag = userFacade.checkAccountConfirmationToken(confirmationToken);
         model.addAttribute("flag", flag);
         return "accountVerification";
     }
@@ -69,19 +68,19 @@ class BaseController implements Messages {
 
     @PostMapping("/forgot-password")
     public String forgotLoginOrPassword(@Valid @ModelAttribute("DTO") ForgotLoginOrPasswordDTO dto, BindingResult result, Model model) {
-        userFacade.checkForgottenEmail(userFacade.checkIfConfirmationTokenAlreadySent(dto), dto, result);
+        userFacade.checkForgottenEmail(userFacade.checkIfTokenAlreadySent(dto), dto, result);
         if (result.hasErrors()) {
             model.addAttribute("DTO", dto);
             return "forgotPassword";
         }
-        userFacade.generateResetToken(dto);
+        userFacade.saveUserAndGenerateResetConfirmationToken(dto);
         model.addAttribute("email", dto.getForgottenEmail());
         return "tokenSent";
     }
 
     @GetMapping("/reset-password")
     public String resetPassword(Model model, @RequestParam("token") String confirmationToken) {
-        boolean flag = userFacade.checkConfirmationToken(2, confirmationToken);
+        boolean flag = userFacade.checkResetConfirmationToken(confirmationToken);
 
         model.addAttribute("flag", flag);
         model.addAttribute("DTO", new ChangePasswordDTO());
@@ -100,7 +99,7 @@ class BaseController implements Messages {
             model.addAttribute("token", confirmationToken);
             return "resetPassword";
         }
-        userFacade.resetPassword(confirmationToken, dto.getConfirmedPassword());
+        userFacade.setNewPasswordAndDeleteToken(dto.getConfirmedPassword(), confirmationToken);
         return "resetPasswordCompleted";
     }
 

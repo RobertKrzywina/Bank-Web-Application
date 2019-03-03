@@ -9,8 +9,6 @@ public interface ValidationStrings {
     String F_AMOUNT = "amount";
     String F_FORGOTTEN_LOGIN_OR_PASSWORD = "forgottenEmail";
 
-    /////////////////////////////////////////////////////
-
     String C_CONFIRMED_PASSWORD_NOT_MATCH = "NotMatch.user.confirmedPassword";
     String C_CONFIRMED_EMAIL_NOT_MATCH = "NotMatch.user.confirmedEmail";
     String C_CONFIRMED_PHONE_NUMBER_NOT_MATCH = "NotMatch.user.confirmedPhoneNumber";
@@ -19,8 +17,6 @@ public interface ValidationStrings {
     String C_AMOUNT_NOT_ENOUGH = "NotEnough.amount";
     String C_FORGOTTEN_LOGIN_OR_PASSWORD = "NotExists.forgottenEmail";
     String C_CLASS_INSTANCE_NOT_MATCH = "NotMatch.instance";
-
-    /////////////////////////////////////////////////////
 
     String M_CONFIRMED_PASSWORD_NOT_MATCH = "Confirmed password not match password";
     String M_CONFIRMED_EMAIL_NOT_MATCH = "Confirmed email not match email";
