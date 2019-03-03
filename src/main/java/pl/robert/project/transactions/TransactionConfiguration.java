@@ -10,6 +10,7 @@ class TransactionConfiguration {
     @Bean
     TransactionFacade transactionFacade(TransactionRepository repository,
                                         BankAccountFacade bankAccountFacade) {
-        return new TransactionFacade(repository, bankAccountFacade);
+        return new TransactionFacade(bankAccountFacade,
+                                     new TransactionService(repository));
     }
 }
