@@ -1,6 +1,7 @@
 package pl.robert.project.transactions;
 
 import lombok.*;
+import lombok.experimental.FieldDefaults;
 import pl.robert.project.bank.account.BankAccount;
 
 import javax.persistence.*;
@@ -10,38 +11,39 @@ import java.time.LocalDateTime;
 import static pl.robert.project.validation.Constants.LENGTH_BANK_ACCOUNT_NUMBER;
 import static pl.robert.project.validation.Constants.LENGTH_TITLE;
 
-@Entity(name = "transactions")
+@Entity
+@Table(name = "transactions")
 @NoArgsConstructor
 @AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 @Getter @Setter
 @Builder
-@ToString
 public class Transaction {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    long id;
 
     @NotNull
     @Column(length = LENGTH_TITLE)
-    private String title;
+    String title;
 
-    private String description;
+    String description;
 
     @NotNull
     @Column(name = "sender_account_number", length = LENGTH_BANK_ACCOUNT_NUMBER)
-    private String senderAccountNumber;
+    String senderAccountNumber;
 
     @NotNull
     @Column(name = "receiver_account_number", length = LENGTH_BANK_ACCOUNT_NUMBER)
-    private String receiverAccountNumber;
+    String receiverAccountNumber;
 
     @NotNull
-    private LocalDateTime date;
+    LocalDateTime date;
 
-    private double amount;
+    double amount;
 
     @ManyToOne
     @JoinColumn(name = "bank_account_id")
-    private BankAccount account;
+    BankAccount account;
 }

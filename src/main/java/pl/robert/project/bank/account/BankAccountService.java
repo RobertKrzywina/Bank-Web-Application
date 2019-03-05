@@ -13,10 +13,10 @@ import pl.robert.project.bank.account.exception.UpdateMoneyException;
 import java.util.Random;
 
 @AllArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE)
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 class BankAccountService {
 
-    final Logger logger = LoggerFactory.getLogger(this.getClass());
+    Logger logger = LoggerFactory.getLogger(this.getClass());
 
     BankAccountRepository repository;
 

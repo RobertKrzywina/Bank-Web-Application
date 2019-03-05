@@ -10,11 +10,11 @@ import pl.robert.project.bank.account.exception.UpdateMoneyException;
 import pl.robert.project.transactions.dto.TransactionDTO;
 
 @AllArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE)
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class TransactionFacade {
 
-    private BankAccountFacade bankAccountFacade;
-    private TransactionService transactionService;
+    BankAccountFacade bankAccountFacade;
+    TransactionService transactionService;
 
     public void addTransaction(TransactionDTO dto) throws UpdateMoneyException {
         BankAccount senderBankAccount = bankAccountFacade.findByNumber(dto.getSenderAccountNumber());

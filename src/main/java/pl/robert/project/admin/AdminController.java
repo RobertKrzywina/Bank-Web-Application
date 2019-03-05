@@ -15,11 +15,11 @@ import pl.robert.project.user.domain.UserFacade;
 
 @Controller
 @AllArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE)
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RequestMapping("/admin-panel")
 class AdminController {
 
-    final Logger logger = LoggerFactory.getLogger(this.getClass());
+    Logger logger = LoggerFactory.getLogger(this.getClass());
 
     UserFacade userFacade;
     BankAccountFacade bankAccountFacade;
@@ -39,8 +39,8 @@ class AdminController {
 
     @DeleteMapping("/users/{id}")
     public String deleteUserById(@PathVariable long id) {
-        logger.info("User has been deleted, id = {}", id);
         userFacade.deleteById(id);
+        logger.info("User has been deleted, id = {}", id);
         return "redirect:/admin-panel/users";
     }
 

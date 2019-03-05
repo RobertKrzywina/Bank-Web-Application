@@ -3,8 +3,6 @@ package pl.robert.project.base;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
@@ -23,10 +21,8 @@ import javax.validation.Valid;
 
 @Controller
 @AllArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE)
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 class BaseController implements Messages {
-
-    final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     UserFacade userFacade;
 

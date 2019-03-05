@@ -1,6 +1,5 @@
 package pl.robert.project.user.domain;
 
-import com.google.common.primitives.Ints;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -13,13 +12,14 @@ import pl.robert.project.user.domain.dto.ForgotLoginOrPasswordDTO;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @AllArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE)
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 class TokenService {
 
-    final Logger logger = LoggerFactory.getLogger(this.getClass());
+    Logger logger = LoggerFactory.getLogger(this.getClass());
 
     ConfirmationTokenRepository tokenRepository;
     UserRepository userRepository;
@@ -98,16 +98,13 @@ class TokenService {
     }
 
     private void cleanAllExpiredTokens() {
-        for (long i=1L; i<getNumberOfTokens(); ++i) {
-            ConfirmationToken tokenToCheck = tokenRepository.findById(i);
+        List<ConfirmationToken> confirmationTokens = tokenRepository.findAll();
+        for (ConfirmationToken token : confirmationTokens) {
+            ConfirmationToken tokenToCheck = tokenRepository.findById(token.getId());
             if (getCurrentTimeInSeconds() - Long.parseLong(tokenToCheck.getCreatedDateInSeconds()) > 900) {
                 tokenRepository.delete(tokenToCheck);
             }
         }
-    }
-
-    private int getNumberOfTokens() {
-        return Ints.checkedCast(tokenRepository.findFirstByOrderByIdDesc().getId());
     }
 
     private long getCurrentTimeInSeconds() {

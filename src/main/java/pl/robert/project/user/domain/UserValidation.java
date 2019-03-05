@@ -10,10 +10,10 @@ import pl.robert.project.user.domain.dto.*;
 import pl.robert.project.validation.ValidationStrings;
 
 @AllArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE)
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 class UserValidation implements ValidationStrings {
 
-    final Logger logger = LoggerFactory.getLogger(this.getClass());
+    Logger logger = LoggerFactory.getLogger(this.getClass());
 
     UserRepository repository;
 

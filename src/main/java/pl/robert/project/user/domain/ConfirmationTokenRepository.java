@@ -5,7 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 interface ConfirmationTokenRepository extends JpaRepository<ConfirmationToken, String> {
 
     ConfirmationToken findByConfirmationToken(String confirmationToken);
-    ConfirmationToken findFirstByOrderByIdDesc();
     ConfirmationToken findById(long id);
     ConfirmationToken findByUser(User user);
 }

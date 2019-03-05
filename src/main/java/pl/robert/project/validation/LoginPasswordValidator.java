@@ -13,7 +13,7 @@ import javax.validation.ConstraintValidatorContext;
 class LoginPasswordValidator implements ConstraintValidator<LoginPasswordValidation, String> {
 
     String fieldName;
-    UserFacade userFacade;
+    final UserFacade userFacade;
 
     static String login;
     static String password;

@@ -4,18 +4,14 @@ import com.google.common.primitives.Ints;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import pl.robert.project.bank.account.BankAccount;
 import pl.robert.project.transactions.dto.TransactionDTO;
 
 @AllArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE)
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 class TransactionService {
-
-    final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     TransactionRepository repository;
 
@@ -43,12 +39,9 @@ class TransactionService {
         int difference = (numberOfElements / 5) * 5 - 5;
         int endIndex = ((numberOfElements / 5) + page) * 5 - difference;
 
-        if (endIndex > numberOfElements) {
-            endIndex = ((numberOfElements / 5) * 5) + 1;
-        }
+        if (endIndex > numberOfElements) endIndex = ((numberOfElements / 5) * 5) + 1;
 
         int startIndex = endIndex - 5;
-
         int[] values = new int[5];
 
         for (int i=startIndex, j=0; i<endIndex; i++, j++) {

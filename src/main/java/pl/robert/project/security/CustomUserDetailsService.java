@@ -21,10 +21,10 @@ import java.util.UUID;
 
 @Service
 @AllArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE)
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 class CustomUserDetailsService implements UserDetailsService {
 
-    final Logger logger = LoggerFactory.getLogger(this.getClass());
+    Logger logger = LoggerFactory.getLogger(this.getClass());
 
     UserFacade userFacade;
 

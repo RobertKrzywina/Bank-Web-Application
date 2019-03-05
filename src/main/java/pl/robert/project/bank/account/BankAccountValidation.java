@@ -8,7 +8,7 @@ import pl.robert.project.transactions.dto.TransactionDTO;
 import pl.robert.project.validation.ValidationStrings;
 
 @AllArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE)
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 class BankAccountValidation implements ValidationStrings {
 
     BankAccountRepository repository;

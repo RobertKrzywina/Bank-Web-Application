@@ -3,8 +3,6 @@ package pl.robert.project.bank.account;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.validation.BindingResult;
 import pl.robert.project.bank.account.dto.ModifyBalanceDTO;
@@ -13,10 +11,8 @@ import pl.robert.project.transactions.dto.TransactionDTO;
 import pl.robert.project.user.domain.dto.CreateUserDTO;
 
 @AllArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE)
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class BankAccountFacade {
-
-    final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     BankAccountValidation validation;
     BankAccountService bankAccountService;

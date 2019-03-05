@@ -4,8 +4,6 @@ import com.google.common.collect.ImmutableMap;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,11 +24,9 @@ import javax.validation.Valid;
 
 @Controller
 @AllArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE)
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RequestMapping("/user-panel")
 class UserController implements Messages {
-
-    final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     UserFacade userFacade;
     BankAccountFacade bankAccountFacade;
@@ -78,7 +74,6 @@ class UserController implements Messages {
         BankAccount bankAccount = bankAccountFacade.findById(userFacade.findIdByLogin(userLogin));
         dto.setSenderAccountNumber(bankAccount.getNumber());
         transactionFacade.addTransaction(dto);
-
         return "sendTransactionCompleted";
     }
 
@@ -117,7 +112,6 @@ class UserController implements Messages {
             model.addAttribute("DTO", dto);
             return "changeEmail";
         }
-
         long id = userFacade.findIdByLogin(SecurityContextHolder.getContext().getAuthentication().getName());
         userFacade.changeEmail(id, dto.getConfirmedEmail());
         model.addAttribute("msg", SUCCESSFULLY_CHANGED_EMAIL);
@@ -137,7 +131,6 @@ class UserController implements Messages {
             model.addAttribute("DTO", dto);
             return "changePhoneNumber";
         }
-
         long id = userFacade.findIdByLogin(SecurityContextHolder.getContext().getAuthentication().getName());
         userFacade.changePhoneNumber(id, dto.getConfirmedPhoneNumber());
 
@@ -158,7 +151,6 @@ class UserController implements Messages {
             model.addAttribute("DTO", dto);
             return "changePassword";
         }
-
         long id = userFacade.findIdByLogin(SecurityContextHolder.getContext().getAuthentication().getName());
         userFacade.changePassword(id, dto.getConfirmedPassword());
 

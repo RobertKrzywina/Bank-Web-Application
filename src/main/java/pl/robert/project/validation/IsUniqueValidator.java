@@ -12,7 +12,7 @@ import javax.validation.ConstraintValidatorContext;
 class IsUniqueValidator implements ConstraintValidator<IsUnique, String>, RegexExpressions {
 
     String fieldName;
-    UserFacade userFacade;
+    final UserFacade userFacade;
 
     @Autowired
     public IsUniqueValidator(UserFacade userFacade) {

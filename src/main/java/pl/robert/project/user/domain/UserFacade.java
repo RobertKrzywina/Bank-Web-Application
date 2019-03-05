@@ -4,8 +4,6 @@ import com.google.common.collect.ImmutableMap;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.validation.BindingResult;
 import pl.robert.project.bank.account.BankAccountFacade;
@@ -13,10 +11,8 @@ import pl.robert.project.user.domain.dto.*;
 import pl.robert.project.user.query.UserQuery;
 
 @AllArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE)
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class UserFacade {
-
-    final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     UserValidation validation;
     BankAccountFacade bankAccountFacade;

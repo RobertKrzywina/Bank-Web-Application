@@ -18,7 +18,6 @@ import static pl.robert.project.validation.Constants.*;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Getter @Setter
 @Builder
-@ToString
 class User {
 
     @Id

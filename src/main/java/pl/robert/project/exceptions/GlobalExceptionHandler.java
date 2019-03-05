@@ -26,12 +26,10 @@ public class GlobalExceptionHandler {
 
     final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    final String DEFAULT_ERROR_VIEW = "error";
     Map<Integer, String> map = new HashMap<>();
 
     @ExceptionHandler({Exception.class})
     public String handleException(HttpServletRequest request, final Exception e, Model model) {
-
         if (e instanceof NullPointerException) {
             map.put(500, "NullPointerException");
         } else if (e instanceof SQLException) {
@@ -55,6 +53,6 @@ public class GlobalExceptionHandler {
 
         model.addAttribute("status", entry.getKey());
         model.addAttribute("title", entry.getValue());
-        return DEFAULT_ERROR_VIEW;
+        return "error";
     }
 }
