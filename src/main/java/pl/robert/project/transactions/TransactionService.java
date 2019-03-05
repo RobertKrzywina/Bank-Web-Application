@@ -20,15 +20,15 @@ class TransactionService {
     }
 
     Page<Transaction> findAllByReceiverAccountNumber(String receiverAccountNumber, int page, int size) {
-        return repository.findAllByReceiverAccountNumber(receiverAccountNumber, new PageRequest(page, size));
+        return repository.findAllByReceiverAccountNumber(receiverAccountNumber, PageRequest.of(page, size));
     }
 
     Page<Transaction> findAllBySenderAccountNumber(String senderAccountNumber, int page, int size) {
-        return repository.findAllBySenderAccountNumber(senderAccountNumber, new PageRequest(page, size));
+        return repository.findAllBySenderAccountNumber(senderAccountNumber, PageRequest.of(page, size));
     }
 
     Page<Transaction> findAll(int page, int size) {
-        return repository.findAll(new PageRequest(page, size));
+        return repository.findAll(PageRequest.of(page, size));
     }
 
     int getNumberOfElements() {

@@ -19,7 +19,6 @@ class LoginPasswordValidator implements ConstraintValidator<LoginPasswordValidat
     static String password;
     static boolean isLoginCorrect;
     static boolean isPasswordCorrect;
-    static boolean isBothCorrect;
 
     @Autowired
     public LoginPasswordValidator(UserFacade userFacade) {
@@ -44,10 +43,7 @@ class LoginPasswordValidator implements ConstraintValidator<LoginPasswordValidat
 
         login = null;
         password = null;
-        isBothCorrect = false;
 
-        if (isLoginCorrect && isPasswordCorrect) isBothCorrect = true;
-
-        return isBothCorrect;
+        return isLoginCorrect && isPasswordCorrect;
     }
 }

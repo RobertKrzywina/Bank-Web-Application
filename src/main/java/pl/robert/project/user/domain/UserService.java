@@ -98,7 +98,7 @@ class UserService {
     }
 
     Page<User> findAll(int page, int size) {
-        return repository.findAll(new PageRequest(page, size));
+        return repository.findAll(PageRequest.of(page, size));
     }
 
     void deleteById(long id) {

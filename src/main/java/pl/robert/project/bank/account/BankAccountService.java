@@ -76,7 +76,7 @@ class BankAccountService {
     }
 
     Page<BankAccount> findAll(int page, int size) {
-        return repository.findAll(new PageRequest(page, size));
+        return repository.findAll(PageRequest.of(page, size));
     }
 
     void modifyBalance(ModifyBalanceDTO dto) {
