@@ -8,15 +8,11 @@ spring:
   jpa:
     hibernate:
       ddlAuto: create
-    showSql: true
     openInView: false
     properties:
       hibernate:
-        jdbc:
-          lob:
-            non_contextual_creation: true
-  main:
-    allow-bean-definition-overriding: true
+        temp:
+          use_jdbc_metadata_defaults: false
 
   mail:
     host: smtp.gmail.com
@@ -33,3 +29,19 @@ spring:
 
   banner:
     location: banner.txt
+
+logging:
+  level:
+    org:
+      springframework:
+        web:
+          servlet:
+            mvc:
+              method:
+                annotation: TRACE
+      hibernate:
+        SQL: DEBUG
+        type:
+          descriptor:
+            sql:
+              BasicBinder: TRACE
