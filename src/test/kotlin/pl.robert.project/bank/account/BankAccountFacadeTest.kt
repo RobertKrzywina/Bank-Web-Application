@@ -74,8 +74,11 @@ class BankAccountFacadeTest {
             facade.updateMoney(500.0, sender.id, receiver.id)
         } catch (e: UpdateMoneyException) {
             throw UpdateMoneyException()
+        } finally {
+            // Check if balances has not been changed
+            Assertions.assertEquals(0.0, facade.findById(sender.id).balance)
+            Assertions.assertEquals(0.0, facade.findById(receiver.id).balance)
         }
-
     }
 
     @Test fun `Should modify balance successfully`() {

@@ -16,7 +16,7 @@ public class TransactionFacade {
     BankAccountFacade bankAccountFacade;
     TransactionService transactionService;
 
-    public void addTransaction(TransactionDTO dto) throws UpdateMoneyException {
+    public void sendTransaction(TransactionDTO dto) throws UpdateMoneyException {
         BankAccount senderBankAccount = bankAccountFacade.findByNumber(dto.getSenderAccountNumber());
         BankAccount receiverBankAccount = bankAccountFacade.findByNumber(dto.getReceiverAccountNumber());
         transactionService.save(dto, senderBankAccount);

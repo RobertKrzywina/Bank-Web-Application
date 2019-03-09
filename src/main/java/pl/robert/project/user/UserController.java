@@ -73,7 +73,7 @@ class UserController implements Messages {
         }
         BankAccount bankAccount = bankAccountFacade.findById(userFacade.findIdByLogin(userLogin));
         dto.setSenderAccountNumber(bankAccount.getNumber());
-        transactionFacade.addTransaction(dto);
+        transactionFacade.sendTransaction(dto);
         return "sendTransactionCompleted";
     }
 
