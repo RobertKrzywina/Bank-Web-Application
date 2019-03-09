@@ -8,7 +8,6 @@ import org.springframework.validation.BindingResult;
 import pl.robert.project.bank.account.dto.ModifyBalanceDTO;
 import pl.robert.project.bank.account.exception.UpdateMoneyException;
 import pl.robert.project.transactions.dto.TransactionDTO;
-import pl.robert.project.user.domain.dto.CreateUserDTO;
 
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
@@ -17,10 +16,12 @@ public class BankAccountFacade {
     BankAccountValidation validation;
     BankAccountService bankAccountService;
 
-    public void saveAndGenerateBankAccount(CreateUserDTO dto) {
-        BankAccount bankAccount = bankAccountService.create();
-        bankAccountService.save(bankAccount);
-        dto.setBankAccount(bankAccount);
+    public BankAccount generateBankAccount() {
+        return bankAccountService.create();
+    }
+
+    public void save(BankAccount account) {
+        bankAccountService.save(account);
     }
 
     public BankAccount findById(long id) {
@@ -43,11 +44,11 @@ public class BankAccountFacade {
         bankAccountService.modifyBalance(dto);
     }
 
-    public void checkReceiverBankAccountNumber(long id, TransactionDTO dto, BindingResult result) {
-        validation.checkReceiverBankAccountNumber(id, dto, result);
+    public void checkReceiverBankAccountNumber(long senderId, TransactionDTO dto, BindingResult result) {
+        validation.checkReceiverBankAccountNumber(senderId, dto, result);
     }
 
-    public void checkSenderAmount(long id, TransactionDTO dto, BindingResult result) {
-        validation.checkSenderAmount(id, dto, result);
+    public void checkSenderAmount(long senderId, TransactionDTO dto, BindingResult result) {
+        validation.checkSenderAmount(senderId, dto, result);
     }
 }

@@ -67,7 +67,7 @@ class BankAccountService {
         double senderEndBalance = repository.findById(senderId).getBalance();
         double receiverEndBalance = repository.findById(receiverId).getBalance();
 
-        if (senderBeginBalance <= senderEndBalance || receiverBeginBalance >= receiverEndBalance) {
+        if (senderBeginBalance <= Math.abs(senderEndBalance) || receiverBeginBalance >= receiverEndBalance) {
             repository.modifyBalance(senderBeginBalance, senderId);
             repository.modifyBalance(receiverBeginBalance, receiverId);
             throw new UpdateMoneyException();

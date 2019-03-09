@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.data.domain.Page;
 import org.springframework.validation.BindingResult;
+import pl.robert.project.bank.account.BankAccount;
 import pl.robert.project.bank.account.BankAccountFacade;
 import pl.robert.project.user.domain.dto.*;
 import pl.robert.project.user.query.UserQuery;
@@ -21,7 +22,8 @@ public class UserFacade {
 
     public void saveUserAndGenerateAccountConfirmationToken(CreateUserDTO dto) {
         userService.setPhoneNumber(dto);
-        bankAccountFacade.saveAndGenerateBankAccount(dto);
+        BankAccount account = bankAccountFacade.generateBankAccount();
+        bankAccountFacade.save(account);
         User user = userService.create(dto);
         userService.save(user);
         tokenService.generateAccountConfirmationToken(user);
