@@ -5,42 +5,41 @@
 <body>
     <th:block th:replace="fragments/navAdminPanel"/>
 
-    <div class="userPanel">
-        <div class="container">
-            <hr/>
-            <div class="row">
-                <div class="col-sm-6 col-md-5 offset-md-1">
-                    <figure>
-                        <div class="overlay">
-                            <a th:href="@{/admin-panel/users}"><img src="#" th:src="@{/img/users.png}" alt=""></a>
-                            <a class="link" th:href="@{/admin-panel/users}">
-                                <span class="icon"><i class="icon-users"></i><p><i>List of all users!</i></p></span></a>
-                        </div>
-                        <p class="description">Users</p>
-                    </figure>
-                </div>
+    <div class="container">
+        <h3 class="headerTitle" th:text="'Welcome in the admin panel ' + ${username}"></h3>
+        <hr/>
+        <div class="row userPanel">
+            <div class="col-sm-6 col-md-5 offset-md-1">
+                <figure>
+                    <div class="overlay">
+                        <a th:href="@{/admin-panel/users}"><img src="#" th:src="@{/img/users.png}" alt=""></a>
+                        <a class="link" th:href="@{/admin-panel/users}">
+                            <span class="icon"><i class="icon-users"></i><p><i>List of all users!</i></p></span></a>
+                    </div>
+                    <p class="description">Users</p>
+                </figure>
+            </div>
 
-                <div class="col-sm-6 col-md-5">
-                    <figure>
-                        <div class="overlay">
-                            <a th:href="@{/admin-panel/bank-accounts}"><img src="#" th:src="@{/img/accounts.png}" alt=""></a>
-                            <a class="link" th:href="@{/admin-panel/bank-accounts}">
-                                <span class="icon"><i class="icon-accounts"></i><p><i>List of all bank accounts!</i></p></span></a>
-                        </div>
-                        <p class="description">Accounts</p>
-                    </figure>
-                </div>
+            <div class="col-sm-6 col-md-5">
+                <figure>
+                    <div class="overlay">
+                        <a th:href="@{/admin-panel/bank-accounts}"><img src="#" th:src="@{/img/accounts.png}" alt=""></a>
+                        <a class="link" th:href="@{/admin-panel/bank-accounts}">
+                            <span class="icon"><i class="icon-accounts"></i><p><i>List of all bank accounts!</i></p></span></a>
+                    </div>
+                    <p class="description">Accounts</p>
+                </figure>
+            </div>
 
-                <div class="col-sm-6 col-md-5" style="margin-left: 29%">
-                    <figure>
-                        <div class="overlay">
-                            <a th:href="@{/admin-panel/transactions}"><img src="#" th:src="@{/img/transactions.png}" alt=""></a>
-                            <a class="link" th:href="@{/admin-panel/transactions}">
-                                <span class="icon"><i class="icon-transactions"></i><p><i>List of all transactions!</i></p></span></a>
-                        </div>
-                        <p class="description">Transactions</p>
-                    </figure>
-                </div>
+            <div class="col-sm-6 col-md-5" style="margin-left: 29%">
+                <figure>
+                    <div class="overlay">
+                        <a th:href="@{/admin-panel/transactions}"><img src="#" th:src="@{/img/transactions.png}" alt=""></a>
+                        <a class="link" th:href="@{/admin-panel/transactions}">
+                            <span class="icon"><i class="icon-transactions"></i><p><i>List of all transactions!</i></p></span></a>
+                    </div>
+                    <p class="description">Transactions</p>
+                </figure>
             </div>
         </div>
     </div>

@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +27,8 @@ class AdminController {
     TransactionFacade transactionFacade;
 
     @GetMapping
-    public String adminPanel() {
+    public String adminPanel(Model model) {
+        model.addAttribute("username", "'" + SecurityContextHolder.getContext().getAuthentication().getName() + "'");
         return "adminPanel";
     }
 

@@ -33,7 +33,8 @@ class UserController implements Messages {
     TransactionFacade transactionFacade;
 
     @GetMapping
-    public String userPanel() {
+    public String userPanel(Model model) {
+        model.addAttribute("username", "'" + SecurityContextHolder.getContext().getAuthentication().getName() + "'");
         return "userPanel";
     }
 

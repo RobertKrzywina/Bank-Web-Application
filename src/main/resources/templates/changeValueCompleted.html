@@ -2,14 +2,14 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/header(${'Change value completed'})"></head>
-<body>
+<body onload="successAlert('Congratulations', 'You changed your value!', 'success')">
     <th:block th:replace="fragments/navAuthenticatedUser"/>
 
     <div class="container">
-        <h3>Change value completed</h3>
+        <h3 class="headerTitle">Change value completed</h3>
         <hr/>
-        <h3 class="alert alert-success" th:text="${msg}"></h3>
-        <a th:href="@{/user-panel/about-me}">Back to the about me!</a>
+        <h3 th:text="${msg}"></h3>
+        <h3><a th:href="@{/user-panel/about-me}"><i><u>Back to the about me!</u></i></a></h3>
     </div>
 
     <th:block th:replace="fragments/footer"/>

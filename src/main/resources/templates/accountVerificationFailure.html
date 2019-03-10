@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header(${'Confirmation token expired'})"></head>
+<body onload="successAlert('Oops...', 'Confirmation token has been expired!', 'warning')">
+    <th:block th:replace="fragments/navAnonymousUser"/>
+
+    <div class="container">
+        <h3 class="headerTitle">Account verification failure</h3>
+        <hr/>
+        <h4>But don't worry! U can <a th:href="@{/register}"><i><u>register</u></i></a> your account again!</h4>
+    </div>
+
+    <th:block th:replace="fragments/footer"/>
+    <th:block th:replace="fragments/scripts"/>
+</body>
+</html>

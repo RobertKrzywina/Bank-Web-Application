@@ -6,6 +6,7 @@
     <th:block th:replace="fragments/navLogin"/>
 
     <div class="container">
+        <h3 class="headerTitle">Log into application</h3>
         <hr/>
         <h3 th:if="${msg!=null}" class="alert alert-info">You have successfully logged out!</h3>
         <form method="post" action="#" th:action="@{/login}" th:object="${user}">
@@ -24,8 +25,8 @@
 
             <button type="submit" class="btn btn-primary btn-block">Login</button>
         </form>
-        <a th:href="@{/register}">Don't have account yet?</a><br>
-        <a th:href="@{/forgot-password}">Forgot your password?</a>
+        <a th:href="@{/register}"><i><u>Don't have account yet?</u></i></a><br>
+        <a th:href="@{/forgot-password}"><i><u>Forgot your password?</u></i></a>
     </div>
 
     <th:block th:replace="fragments/footer"/>

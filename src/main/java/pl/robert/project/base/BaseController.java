@@ -46,14 +46,17 @@ class BaseController implements Messages {
         }
         userFacade.saveUserAndGenerateAccountConfirmationToken(dto);
         model.addAttribute("email", dto.getEmail());
+        model.addAttribute("typeOfToken", "Account confirmation ");
         return "tokenSent";
     }
 
     @GetMapping("/confirm-account")
-    public String confirmUserAccount(Model model, @RequestParam("token") String confirmationToken) {
-        boolean flag = userFacade.confirmAccountToken(confirmationToken);
-        model.addAttribute("flag", flag);
-        return "accountVerification";
+    public String confirmUserAccount(@RequestParam("token") String confirmationToken) {
+        boolean isCorrect = userFacade.confirmAccountToken(confirmationToken);
+        if (isCorrect) {
+            return "accountVerificationSuccess";
+        }
+        return "accountVerificationFailure";
     }
 
     @GetMapping("/forgot-password")
@@ -71,18 +74,19 @@ class BaseController implements Messages {
         }
         userFacade.generateAndSaveResetConfirmationToken(dto);
         model.addAttribute("email", dto.getForgottenEmail());
+        model.addAttribute("typeOfToken", "Reset");
         return "tokenSent";
     }
 
     @GetMapping("/reset-password")
     public String resetPassword(Model model, @RequestParam("token") String confirmationToken) {
-        boolean flag = userFacade.confirmResetToken(confirmationToken);
-
-        model.addAttribute("flag", flag);
-        model.addAttribute("DTO", new ChangePasswordDTO());
-        model.addAttribute("token", confirmationToken);
-
-        return "resetPassword";
+        boolean isCorrect = userFacade.confirmResetToken(confirmationToken);
+        if (isCorrect) {
+            model.addAttribute("DTO", new ChangePasswordDTO());
+            model.addAttribute("token", confirmationToken);
+            return "resetPassword";
+        }
+        return "resetPasswordFailure";
     }
 
     @PatchMapping("/reset-password")

@@ -5,53 +5,52 @@
 <body>
     <th:block th:replace="fragments/navUserPanel"/>
 
-    <div class="userPanel">
-        <div class="container">
-            <hr/>
-            <div class="row">
-                <div class="col-sm-6 col-md-5 offset-md-1">
-                    <figure>
-                        <div class="overlay">
-                            <a th:href="@{/user-panel/about-me}"><img src="#" th:src="@{/img/aboutMe.png}" alt=""></a>
-                            <a class="link" th:href="@{/user-panel/about-me}">
-                                <span class="icon"><i class="icon-user"></i><p><i>Information about your account!</i></p></span></a>
-                        </div>
-                        <p class="description">About me</p>
-                    </figure>
-                </div>
+    <div class="container">
+        <h3 class="headerTitle" th:text="'Welcome in the user panel ' + ${username}"></h3>
+        <hr/>
+        <div class="row userPanel">
+            <div class="col-sm-6 col-md-5 offset-md-1">
+                <figure>
+                    <div class="overlay">
+                        <a th:href="@{/user-panel/about-me}"><img src="#" th:src="@{/img/aboutMe.png}" alt=""></a>
+                        <a class="link" th:href="@{/user-panel/about-me}">
+                            <span class="icon"><i class="icon-user"></i><p><i>Information about your account!</i></p></span></a>
+                    </div>
+                    <p class="description">About me</p>
+                </figure>
+            </div>
 
-                <div class="col-sm-6 col-md-5">
-                    <figure>
-                        <div class="overlay">
-                            <a th:href="@{/user-panel/send-transaction}"><img src="#" th:src="@{/img/sendTransaction.png}" alt=""></a>
-                            <a class="link" th:href="@{/user-panel/send-transaction}">
-                                <span class="icon"><i class="icon-sendTransaction"></i><p><i>Send transaction to other user!</i></p></span></a>
-                        </div>
-                        <p class="description">Send transaction</p>
-                    </figure>
-                </div>
+            <div class="col-sm-6 col-md-5">
+                <figure>
+                    <div class="overlay">
+                        <a th:href="@{/user-panel/send-transaction}"><img src="#" th:src="@{/img/sendTransaction.png}" alt=""></a>
+                        <a class="link" th:href="@{/user-panel/send-transaction}">
+                            <span class="icon"><i class="icon-sendTransaction"></i><p><i>Send transaction to other user!</i></p></span></a>
+                    </div>
+                    <p class="description">Send transaction</p>
+                </figure>
+            </div>
 
-                <div class="col-sm-6 col-md-5 offset-md-1">
-                    <figure>
-                        <div class="overlay">
-                            <a th:href="@{/user-panel/received-transactions}"><img src="#" th:src="@{/img/receivedTransactions.png}" alt=""></a>
-                            <a class="link" th:href="@{/user-panel/received-transactions}">
-                                <span class="icon"><i class="icon-receivedTransactions"></i><p><i>List of your received transactions!</i></p></span></a>
-                        </div>
-                        <p class="description">Received transactions</p>
-                    </figure>
-                </div>
+            <div class="col-sm-6 col-md-5 offset-md-1">
+                <figure>
+                    <div class="overlay">
+                        <a th:href="@{/user-panel/received-transactions}"><img src="#" th:src="@{/img/receivedTransactions.png}" alt=""></a>
+                        <a class="link" th:href="@{/user-panel/received-transactions}">
+                            <span class="icon"><i class="icon-receivedTransactions"></i><p><i>List of your received transactions!</i></p></span></a>
+                    </div>
+                    <p class="description">Received transactions</p>
+                </figure>
+            </div>
 
-                <div class="col-sm-6 col-md-5">
-                    <figure>
-                        <div class="overlay">
-                            <a th:href="@{/user-panel/sent-transactions}"><img src="#" th:src="@{/img/sentTransactions.png}" alt=""></a>
-                            <a class="link" th:href="@{/user-panel/sent-transactions}">
-                                <span class="icon"><i class="icon-sentTransactions"></i><p><i>List of your sent transactions!</i></p></span></a>
-                        </div>
-                        <p class="description">Sent transactions</p>
-                    </figure>
-                </div>
+            <div class="col-sm-6 col-md-5">
+                <figure>
+                    <div class="overlay">
+                        <a th:href="@{/user-panel/sent-transactions}"><img src="#" th:src="@{/img/sentTransactions.png}" alt=""></a>
+                        <a class="link" th:href="@{/user-panel/sent-transactions}">
+                            <span class="icon"><i class="icon-sentTransactions"></i><p><i>List of your sent transactions!</i></p></span></a>
+                    </div>
+                    <p class="description">Sent transactions</p>
+                </figure>
             </div>
         </div>
     </div>

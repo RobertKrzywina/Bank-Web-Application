@@ -2,13 +2,14 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/header(${'Token sent'})"></head>
-<body>
+<body onload="successAlert('Success', 'Token has been sent!', 'success')">
     <th:block th:replace="fragments/navAnonymousUser"/>
 
     <div class="container">
+        <h3 class="headerTitle" th:text="${typeOfToken} + ' token sent'"></h3>
         <hr/>
-        <h3 class="alert alert-success" th:text="'A verification token has been sent to: ' + ${email}"></h3>
-        <h3>Confirmation token has been sent to your email. After 15 minutes token will expire so please, confirm it.</h3>
+        <h4 th:text="${typeOfToken} + ' token has been sent to: ' + ${email}"></h4>
+        <h4 th:text="'Link is active for 15 minutes from now!'"></h4>
     </div>
 
     <th:block th:replace="fragments/footer"/>

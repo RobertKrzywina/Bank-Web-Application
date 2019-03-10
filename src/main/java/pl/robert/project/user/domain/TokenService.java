@@ -72,18 +72,15 @@ class TokenService {
 
     boolean confirmAccountToken(String confirmationToken) {
         cleanAllExpiredTokens();
-
         ConfirmationToken token = tokenRepository.findByConfirmationToken(confirmationToken);
-        User user = userRepository.findByEmail(token.getUser().getEmail());
-
         if (token != null) {
+            User user = userRepository.findByEmail(token.getUser().getEmail());
             userRepository.findUserByEmailAndUpdateEnabled(user.getEmail());
             tokenRepository.delete(token);
             logger.info("Email confirmation correct");
             return true;
         }
-        logger.warn("Token expired! User email = {} is deleting now", user.getEmail());
-        userRepository.delete(user);
+        logger.warn("Confirmation token has been expired!");
         return false;
     }
 
