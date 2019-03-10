@@ -51,7 +51,7 @@ class BaseController implements Messages {
 
     @GetMapping("/confirm-account")
     public String confirmUserAccount(Model model, @RequestParam("token") String confirmationToken) {
-        boolean flag = userFacade.checkAccountConfirmationToken(confirmationToken);
+        boolean flag = userFacade.confirmAccountToken(confirmationToken);
         model.addAttribute("flag", flag);
         return "accountVerification";
     }
@@ -69,14 +69,14 @@ class BaseController implements Messages {
             model.addAttribute("DTO", dto);
             return "forgotPassword";
         }
-        userFacade.saveUserAndGenerateResetConfirmationToken(dto);
+        userFacade.generateAndSaveResetConfirmationToken(dto);
         model.addAttribute("email", dto.getForgottenEmail());
         return "tokenSent";
     }
 
     @GetMapping("/reset-password")
     public String resetPassword(Model model, @RequestParam("token") String confirmationToken) {
-        boolean flag = userFacade.checkResetConfirmationToken(confirmationToken);
+        boolean flag = userFacade.confirmResetToken(confirmationToken);
 
         model.addAttribute("flag", flag);
         model.addAttribute("DTO", new ChangePasswordDTO());

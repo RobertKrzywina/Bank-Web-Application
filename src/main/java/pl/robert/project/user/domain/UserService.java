@@ -85,10 +85,6 @@ class UserService {
         return repository.findByPhoneNumber(formatPhoneNumber(phone)) == null;
     }
 
-    boolean isLoginExists(String login) {
-        return repository.findByLogin(login) != null;
-    }
-
     boolean isLoginAndPasswordCorrect(String login, String password) {
         return repository.findByLoginAndPassword(login, password) != null;
     }

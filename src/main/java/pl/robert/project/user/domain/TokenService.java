@@ -47,7 +47,7 @@ class TokenService {
         }
     }
 
-    void generateResetConfirmationToken(User user) {
+    void generateAndSaveResetConfirmationToken(User user) {
         ConfirmationToken confirmationToken = new ConfirmationToken(user);
         tokenRepository.save(confirmationToken);
 
@@ -70,7 +70,7 @@ class TokenService {
         }
     }
 
-    boolean checkAccountConfirmationToken(String confirmationToken) {
+    boolean confirmAccountToken(String confirmationToken) {
         cleanAllExpiredTokens();
 
         ConfirmationToken token = tokenRepository.findByConfirmationToken(confirmationToken);
@@ -87,7 +87,7 @@ class TokenService {
         return false;
     }
 
-    boolean checkResetConfirmationToken(String confirmationToken) {
+    boolean confirmResetToken(String confirmationToken) {
         cleanAllExpiredTokens();
         return tokenRepository.findByConfirmationToken(confirmationToken) != null;
     }
@@ -119,7 +119,15 @@ class TokenService {
         return tokenRepository.findByUser(user) != null;
     }
 
+    ConfirmationToken findConfirmationTokenByUser(User user) {
+        return tokenRepository.findByUser(user);
+    }
+
     ConfirmationToken findByConfirmationToken(String confirmationToken) {
         return tokenRepository.findByConfirmationToken(confirmationToken);
+    }
+
+    boolean isTokenExists(String token) {
+        return tokenRepository.findByConfirmationToken(token) != null;
     }
 }

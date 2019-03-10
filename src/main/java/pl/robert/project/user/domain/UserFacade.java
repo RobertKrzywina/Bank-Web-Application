@@ -29,16 +29,24 @@ public class UserFacade {
         tokenService.generateAccountConfirmationToken(user);
     }
 
-    public void saveUserAndGenerateResetConfirmationToken(ForgotLoginOrPasswordDTO dto) {
-        tokenService.generateResetConfirmationToken(userService.findByEmail(dto.getForgottenEmail()));
+    public User findUserByEmail(String email) {
+        return userService.findByEmail(email);
     }
 
-    public boolean checkAccountConfirmationToken(String confirmationToken) {
-        return tokenService.checkAccountConfirmationToken(confirmationToken);
+    public ConfirmationToken findConfirmationTokenByUser(User user) {
+        return tokenService.findConfirmationTokenByUser(user);
     }
 
-    public boolean checkResetConfirmationToken(String confirmationToken) {
-        return tokenService.checkResetConfirmationToken(confirmationToken);
+    public void generateAndSaveResetConfirmationToken(ForgotLoginOrPasswordDTO dto) {
+        tokenService.generateAndSaveResetConfirmationToken(userService.findByEmail(dto.getForgottenEmail()));
+    }
+
+    public boolean confirmAccountToken(String confirmationToken) {
+        return tokenService.confirmAccountToken(confirmationToken);
+    }
+
+    public boolean confirmResetToken(String confirmationToken) {
+        return tokenService.confirmResetToken(confirmationToken);
     }
 
     public boolean checkIfTokenAlreadySent(ForgotLoginOrPasswordDTO dto) {
@@ -64,8 +72,8 @@ public class UserFacade {
         return userService.isPhoneUnique(phone);
     }
 
-    public boolean isLoginExists(String login) {
-        return userService.isLoginExists(login);
+    public boolean isTokenExists(String token) {
+        return tokenService.isTokenExists(token);
     }
 
     public boolean isLoginAndPasswordCorrect(String login, String password) {

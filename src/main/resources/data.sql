@@ -21,7 +21,8 @@ VALUES ('a', '$2a$10$nTtRs2ckjtjWuY/hP.SnnOkud3pLv0kyawerUaN.FdYzSvzg.H4bu',  'c
        ('f', '$2a$10$4V1UW6iAipENbb3Gv.oEoutPSWK8hXUO1IPDxNGfo8sROhKsDLvHe',  'eeeelpmas@email.com', '+48 554-236-124', 6, true),
        ('g', '$2a$10$mKb/F4cNb4YIZMFFkBh5YuOBeYcSdIkYcAYR0pWehGMy1dgcFfXPu',  'uygeeffoc@email.com', '+48 453-534-322', 7, true),
        ('h', '$2a$10$dYGQ68zutjcH3kboolV7jeEl8bNfAOp7MYZpARhtgqBXpesUArFcu',  'elimaelim@email.com', '+48 534-453-555', 8, true),
-       ('i', '$2a$10$kRRvoiFr1w2PTWusk5Cgj.b6uadBnN5x0maWvDnlIzsYXCkS02Ihq',  'ogarniam100@wp.pl',   '+48 657-236-463', 9, true);
+       ('fakeJohnDoe', '$2a$10$kRRvoiFr1w2PTWusk5Cgj.b6uadBnN5x0maWvDnlIzsYXCkS02Ihq',
+                                                                    'helloimcopyoftruejohndoe@wp.pl','+48 657-236-463', 9, true);
 
 INSERT INTO users_roles (user_id, roles_id) VALUES (1, 1), (1, 2),
                                                    (2, 1), (2, 2),

@@ -34,7 +34,7 @@ class LoginPasswordValidator implements ConstraintValidator<LoginPasswordValidat
     public boolean isValid(String value, ConstraintValidatorContext context) {
         if (fieldName.equals("Login")) {
             login = value;
-            isLoginCorrect = userFacade.isLoginExists(login);
+            isLoginCorrect = !userFacade.isLoginUnique(login);
             return true;
         } else if (fieldName.equals("Password")) {
             password = value;
