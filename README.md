@@ -11,6 +11,7 @@ This project is a bank account web application. I used MVC and Facade patterns.
 * Spring Data
 * Spring Validation
 * Spring Security
+* JPA
 * Hibernate
 * PostgreSQL
 * Lombok
@@ -25,6 +26,10 @@ This project is a bank account web application. I used MVC and Facade patterns.
 * CSS
 * JS
 
+<b>Tests</b>
+* Kotlin
+* JUnit 5 Jupiter
+
 <b>Code editor</b>
 * Intellij
 * Visual Studio Code
@@ -36,7 +41,7 @@ Application requires running PostgreSQL database with:
 * username: postgres
 * password: admin
 
-### Build it with Maven and run Java application
+### Build with Maven and run Java application
 
 ```sh
 $ mvn clean install
@@ -45,17 +50,20 @@ $ mvn clean install
 $ java -jar target/project-0.0.1-SNAPSHOT.jar
 ```
 
+### Tests
+Run all tests with <b><i>FeatureTestSuite.kt</i></b> class in <b><i>src/test/kotlin/pl.robert.project</i></b>
+
 ### About project
 
-* login and password for admin account are a:a and b:b
-* application uses 2 roles, user and admin, that means each account can have 1 or 2 roles 
+* login and password for admin accounts are a:a and b:b
+* application uses 2 roles, user and admin
 * anonymous user can create new account
 * when creating new account, server will send a verification token to given email
 * when user forgot password or login, he can reset it by giving correct email and server will send a verification token to given email
-* after successfully created account, server will automatically create random bank account number and balance which equals 0
-* application has 2 panels, for user and admin
-* in user panel u can change details about your account, send transaction to other users and see list of received/sent transactions
-* in admin panel u can make CRUD operations on users
+* each user after success registration, get random generated bank account number
+* application has 2 panels, user panel and admin panel
+* in user panel you can change details about your account, send transaction to other users and see list of received/sent transactions
+* in admin panel you can make CRUD operations on users
 
 ### Database structure
 ![ScreenShot](database_structure.png)

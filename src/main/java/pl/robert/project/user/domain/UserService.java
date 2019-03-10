@@ -44,6 +44,18 @@ class UserService {
         repository.save(user);
     }
 
+    User findByEmail(String email) {
+        return repository.findByEmail(email);
+    }
+
+    long findIdByLogin(String login) {
+        return repository.findByLogin(login).getId();
+    }
+
+    Page<User> findAll(int page, int size) {
+        return repository.findAll(PageRequest.of(page, size));
+    }
+
     AuthorizationDTO findByLogin(String login) throws NullPointerException {
         User user = repository.findByLogin(login);
 
@@ -89,14 +101,6 @@ class UserService {
         return repository.findByLoginAndPassword(login, password) != null;
     }
 
-    long findIdByLogin(String login) {
-        return repository.findByLogin(login).getId();
-    }
-
-    Page<User> findAll(int page, int size) {
-        return repository.findAll(PageRequest.of(page, size));
-    }
-
     void deleteById(long id) {
         repository.deleteById(id);
     }
@@ -111,9 +115,5 @@ class UserService {
 
     void changePassword(long userId, String newPassword) {
         repository.findUserByIdAndUpdatePassword(userId, passwordEncoder.encode(newPassword));
-    }
-
-    User findByEmail(String email) {
-        return repository.findByEmail(email);
     }
 }

@@ -29,14 +29,6 @@ public class UserFacade {
         tokenService.generateAccountConfirmationToken(user);
     }
 
-    public User findUserByEmail(String email) {
-        return userService.findByEmail(email);
-    }
-
-    public ConfirmationToken findConfirmationTokenByUser(User user) {
-        return tokenService.findConfirmationTokenByUser(user);
-    }
-
     public void generateAndSaveResetConfirmationToken(ForgotLoginOrPasswordDTO dto) {
         tokenService.generateAndSaveResetConfirmationToken(userService.findByEmail(dto.getForgottenEmail()));
     }
@@ -80,10 +72,6 @@ public class UserFacade {
         return userService.isLoginAndPasswordCorrect(login, password);
     }
 
-    public AuthorizationDTO findByLogin(String login) throws NullPointerException {
-        return userService.findByLogin(login);
-    }
-
     public UserQuery QueryByLogin(String login) throws NullPointerException {
         return userService.queryByLogin(login);
     }
@@ -92,8 +80,20 @@ public class UserFacade {
         return userService.initializeMapWithUserDetails(userQuery);
     }
 
+    public AuthorizationDTO findByLogin(String login) throws NullPointerException {
+        return userService.findByLogin(login);
+    }
+
     public long findIdByLogin(String login) {
         return userService.findIdByLogin(login);
+    }
+
+    public User findUserByEmail(String email) {
+        return userService.findByEmail(email);
+    }
+
+    public ConfirmationToken findConfirmationTokenByUser(User user) {
+        return tokenService.findConfirmationTokenByUser(user);
     }
 
     public Page<User> findAll(int page, int size) {

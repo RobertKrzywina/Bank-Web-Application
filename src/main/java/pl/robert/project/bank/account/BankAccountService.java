@@ -57,6 +57,10 @@ class BankAccountService {
         return repository.findByNumber(number);
     }
 
+    Page<BankAccount> findAll(int page, int size) {
+        return repository.findAll(PageRequest.of(page, size));
+    }
+
     void updateMoney(double money, long senderId, long receiverId) throws UpdateMoneyException {
         double senderBeginBalance = repository.findById(senderId).getBalance();
         double receiverBeginBalance = repository.findById(receiverId).getBalance();
@@ -73,10 +77,6 @@ class BankAccountService {
             throw new UpdateMoneyException();
         }
         logger.info("Money has been updated successfully");
-    }
-
-    Page<BankAccount> findAll(int page, int size) {
-        return repository.findAll(PageRequest.of(page, size));
     }
 
     void modifyBalance(ModifyBalanceDTO dto) {
