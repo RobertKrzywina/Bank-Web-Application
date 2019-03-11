@@ -13,6 +13,8 @@ spring:
       hibernate:
         temp:
           use_jdbc_metadata_defaults: false
+  messages:
+    basename: locale/messages
 
   mail:
     host: smtp.gmail.com

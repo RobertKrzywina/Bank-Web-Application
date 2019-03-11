@@ -6,13 +6,39 @@
     <th:block th:replace="fragments/navHome"/>
 
     <div class="container">
-        <h3 class="headerTitle">Homepage</h3>
+        <h3 class="headerTitle" th:text="#{homepageHeader}"></h3>
         <hr/>
-        <h1 style="text-align: center">Welcome to my web bank account application! <br>
-        <a target="_blank" href="https://github.com/RobertKrzywina/project"><i><u>Click to see code at GitHub.</u></i></a></h1>
+        <h1 style="text-align: center" th:text="#{homepageGreeting}"></h1>
+        <h1 style="text-align: center"><i><u><a target="_blank" href="https://github.com/RobertKrzywina/project" th:text="#{github}"></a></u></i></h1>
+        <br>
+        <h1 style="text-align: center" th:text="#{switchLanguage}"></h1>
+        <div class="col-sm-12 text-center">
+            <button class="btn btn-info btn-lg" onclick="changeLanguage('pl')" th:text="#{polish}"></button>
+            <button class="btn btn-info btn-lg" onclick="changeLanguage('en')" th:text="#{english}">English</button>
+        </div>
     </div>
 
     <th:block th:replace="fragments/footer"/>
-    <th:block th:replace="fragments/scripts"/>
+    <script>
+        function changeLanguage(language) {
+            var lastLanguage = window.location.href.substring(window.location.href.length-2, window.location.href.length);
+            if (language === 'pl' && lastLanguage !== 'pl') {
+
+                if (lastLanguage === 'en') {
+                    window.location.href = window.location.href.replace('en', 'pl');
+                } else {
+                    window.location.search += "lang=pl";
+                }
+
+            } else if (language === 'en' && lastLanguage !== 'en') {
+
+                if (lastLanguage === 'pl') {
+                    window.location.href = window.location.href.replace('pl', 'en');
+                } else {
+                    window.location.search += "lang=en";
+                }
+            }
+        }
+    </script>
 </body>
 </html>

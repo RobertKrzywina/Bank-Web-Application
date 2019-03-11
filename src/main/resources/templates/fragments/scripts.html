@@ -4,4 +4,13 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script th:src="@{/js/script.js}"></script>
+    <script>
+        var currentLanguage = window.location.href.substring(window.location.href.length - 2, window.location.href.length);
+        var lastLanguage = document.referrer.substring(document.referrer.length - 2, document.referrer.length);
+        if (currentLanguage !== 'pl' && lastLanguage === 'pl') {
+            window.history.pushState('', '', window.location.href + '/?lang=pl');
+        } else if (currentLanguage !== 'en' && lastLanguage === 'en') {
+            window.history.pushState('', '', window.location.href + '/?lang=en');
+        }
+    </script>
 </div>
