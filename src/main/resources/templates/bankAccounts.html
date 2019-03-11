@@ -3,20 +3,20 @@
       xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/header(${'Bank accounts'})"></head>
 <body>
-    <th:block th:replace="fragments/navAuthenticatedAdmin"/>
+    <th:block th:replace="fragments/navAdminPanel"/>
 
     <div class="container">
         <h3 class="headerTitle">List of all bank accounts</h3>
         <hr/>
         <div th:if="${!bankAccounts.isEmpty()}">
-            <table class="table">
-                <tr class="tableHeader">
+            <table class="table table-striped table-dark">
+                <tr>
                     <th>User id</th>
                     <th>Number</th>
                     <th>Balance</th>
                     <th>Action</th>
                 </tr>
-                <tr class="tableContent" th:each="account:${bankAccounts}">
+                <tr th:each="account:${bankAccounts}">
                     <td th:text="${account.id}"></td>
                     <td th:text="${account.number}"></td>
                     <td th:text="${account.balance}"></td>

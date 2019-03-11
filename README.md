@@ -23,8 +23,7 @@ This project is a bank account web application. I used MVC and Facade patterns.
 * Thymeleaf
 * Thymeleaf Extras Springsecurity5
 * Bootstrap 4
-* CSS
-* JS
+* SweetAlert
 
 <b>Tests</b>
 * Kotlin
@@ -51,7 +50,7 @@ $ java -jar target/project-0.0.1-SNAPSHOT.jar
 ```
 
 ### Tests
-Run all tests with <b><i>FeatureTestSuite.kt</i></b> class in <b><i>src/test/kotlin/pl.robert.project</i></b>
+Run all tests with <i>FeatureTestSuite.kt</i> class in <i>src/test/kotlin/pl.robert.project</i>
 
 ### About project
 

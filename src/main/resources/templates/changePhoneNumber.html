@@ -3,7 +3,7 @@
       xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/header::header(${'Change phone number'})"></head>
 <body>
-    <th:block th:replace="fragments/navAuthenticatedUser::navAuthenticatedUser"/>
+    <th:block th:replace="fragments/navUserPanel"/>
 
     <div class="container">
         <h3 class="headerTitle">Change phone number</h3>
@@ -29,6 +29,7 @@
 
             <button type="submit" class="btn btn-primary btn-block">Change</button>
         </form>
+        <br><h3><a th:href="@{/user-panel/about-me}"><i><u>Go to the about me page!</u></i></a></h3>
     </div>
 
     <th:block th:replace="fragments/footer"/>

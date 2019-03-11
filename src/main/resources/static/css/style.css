@@ -67,6 +67,12 @@ hr {
 
 .userPanel p.description {
     margin-top: 8px;
+    font-family: 'Indie Flower', cursive;
+}
+
+@font-face {
+    font-family: 'Indie Flower', cursive;
+    src: url('https://fonts.googleapis.com/css?family=Indie+Flower');
 }
 
 .overlay {
@@ -108,15 +114,6 @@ hr {
 
 table {
     text-align: center;
-}
-
-.tableHeader {
-    background-color: #428bca;
-    color: #efefef;
-}
-
-.tableContent {
-    color: #efefef;
 }
 
 input[readonly] {
