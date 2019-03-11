@@ -10,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.robert.project.user.Messages;
 import pl.robert.project.user.domain.UserFacade;
 import pl.robert.project.user.domain.dto.*;
@@ -119,12 +118,11 @@ class BaseController implements Messages {
     }
 
     @GetMapping("/logout")
-    public String logMeOut(HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttributes) {
+    public String logMeOut(HttpServletRequest request, HttpServletResponse response) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null) {
             new SecurityContextLogoutHandler().logout(request, response, authentication);
         }
-        redirectAttributes.addFlashAttribute("msg", SUCCESSFULLY_LOGGED_OUT);
         return "redirect:/login";
     }
 

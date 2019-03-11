@@ -12,7 +12,7 @@ public @interface LoginPasswordValidation {
 
     String fieldName();
 
-    String message() default "Given login or password are incorrect OR your account is not verified by email.";
+    String message() default "{javax.validation.constraints.works.LoginPasswordValidation.message}";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }

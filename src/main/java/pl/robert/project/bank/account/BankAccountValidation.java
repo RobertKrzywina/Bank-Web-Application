@@ -18,11 +18,11 @@ class BankAccountValidation implements ValidationStrings {
         BankAccount bankAccount = repository.findByNumber(dto.getReceiverAccountNumber());
 
         if (bankAccount == null) {
-            result.rejectValue(F_RECEIVER_ACCOUNT_NUMBER, C_RECEIVER_ACCOUNT_NUMBER_NOT_EXISTS, M_RECEIVER_ACCOUNT_NUMBER_NOT_EXISTS);
+            result.rejectValue(F_RECEIVER_ACCOUNT_NUMBER, C_RECEIVER_ACCOUNT_NUMBER_NOT_EXISTS);
         }
 
         if (bankAccount != null && senderId == bankAccount.getId()) {
-            result.rejectValue(F_RECEIVER_ACCOUNT_NUMBER, C_RECEIVER_ACCOUNT_NUMBER_MATCH_SENDER, M_RECEIVER_ACCOUNT_NUMBER_MATCH_SENDER);
+            result.rejectValue(F_RECEIVER_ACCOUNT_NUMBER, C_RECEIVER_ACCOUNT_NUMBER_MATCH_SENDER);
         }
     }
 
@@ -57,7 +57,7 @@ class BankAccountValidation implements ValidationStrings {
         BankAccount bankAccount = repository.findById(senderId);
 
         if (dto.getAmount() != null && (dto.getAmount() > bankAccount.getBalance())) {
-            result.rejectValue(F_AMOUNT, C_AMOUNT_NOT_ENOUGH, M_AMOUNT_NOT_ENOUGH);
+            result.rejectValue(F_AMOUNT, C_AMOUNT_NOT_ENOUGH);
         }
     }
 }

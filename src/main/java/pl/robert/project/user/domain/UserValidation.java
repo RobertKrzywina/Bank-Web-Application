@@ -19,13 +19,13 @@ class UserValidation implements ValidationStrings {
 
     void checkConfirmedEmail(ChangeEmailDTO dto, BindingResult result) {
         if (!dto.getEmail().equals(dto.getConfirmedEmail())) {
-            result.rejectValue(F_CONFIRMED_EMAIL, C_CONFIRMED_EMAIL_NOT_MATCH, M_CONFIRMED_EMAIL_NOT_MATCH);
+            result.rejectValue(F_CONFIRMED_EMAIL, C_CONFIRMED_EMAIL_NOT_MATCH);
         }
     }
 
     void checkConfirmedPhoneNumber(ChangePhoneNumberDTO dto, BindingResult result) {
         if (!dto.getPhoneNumber().equals(dto.getConfirmedPhoneNumber())) {
-            result.rejectValue(F_CONFIRMED_PHONE_NUMBER, C_CONFIRMED_PHONE_NUMBER_NOT_MATCH, M_CONFIRMED_PHONE_NUMBER_NOT_MATCH);
+            result.rejectValue(F_CONFIRMED_PHONE_NUMBER, C_CONFIRMED_PHONE_NUMBER_NOT_MATCH);
         }
     }
 
@@ -34,13 +34,13 @@ class UserValidation implements ValidationStrings {
             CreateUserDTO dto = (CreateUserDTO) obj;
 
             if (!dto.getPassword().equals(dto.getConfirmedPassword())) {
-                result.rejectValue(F_CONFIRMED_PASSWORD, C_CONFIRMED_PASSWORD_NOT_MATCH, M_CONFIRMED_PASSWORD_NOT_MATCH);
+                result.rejectValue(F_CONFIRMED_PASSWORD, C_CONFIRMED_PASSWORD_NOT_MATCH );
             }
         } else if (obj instanceof ChangePasswordDTO) {
             ChangePasswordDTO dto = (ChangePasswordDTO) obj;
 
             if (!dto.getPassword().equals(dto.getConfirmedPassword())) {
-                result.rejectValue(F_CONFIRMED_PASSWORD, C_CONFIRMED_PASSWORD_NOT_MATCH, M_CONFIRMED_PASSWORD_NOT_MATCH);
+                result.rejectValue(F_CONFIRMED_PASSWORD, C_CONFIRMED_PASSWORD_NOT_MATCH);
             }
         } else {
             logger.warn("Given object is not an instance of CreateUserDTO and ChangePasswordDTO");
@@ -51,11 +51,11 @@ class UserValidation implements ValidationStrings {
     void checkForgottenEmail(boolean tokenAlreadySent, ForgotLoginOrPasswordDTO dto, BindingResult result) {
         if (!dto.getForgottenEmail().isEmpty()) {
             if (repository.findByEmail(dto.getForgottenEmail()) == null) {
-                result.rejectValue(F_FORGOTTEN_LOGIN_OR_PASSWORD, C_FORGOTTEN_LOGIN_OR_PASSWORD, M_FORGOTTEN_LOGIN_OR_PASSWORD);
+                result.rejectValue(F_FORGOTTEN_LOGIN_OR_PASSWORD, C_FORGOTTEN_LOGIN_OR_PASSWORD);
             }
 
             if (tokenAlreadySent) {
-                result.rejectValue(F_FORGOTTEN_LOGIN_OR_PASSWORD, C_FORGOTTEN_LOGIN_OR_PASSWORD, M_FORGOTTEN_LOGIN_OR_PASSWORD_TOKEN_SENT);
+                result.rejectValue(F_FORGOTTEN_LOGIN_OR_PASSWORD, C_FORGOTTEN_LOGIN_OR_PASSWORD);
             }
         }
     }

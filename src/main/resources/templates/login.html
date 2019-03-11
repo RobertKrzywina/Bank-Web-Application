@@ -1,32 +1,32 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/header(${'Sign in'})"></head>
+<head th:replace="fragments/header(#{loginTitle})"></head>
 <body>
     <th:block th:replace="fragments/navLogin"/>
 
     <div class="container">
-        <h3 class="headerTitle">Log into application</h3>
+        <h3 class="headerTitle" th:text="#{loginHeader}"></h3>
         <hr/>
-        <h3 th:if="${msg!=null}" class="alert alert-info">You have successfully logged out!</h3>
+        <h3 th:if="${msg!=null}" class="alert alert-info" th:text="#{successfullyLoggedOut}"></h3>
         <form method="post" action="#" th:action="@{/login}" th:object="${user}">
             <div class="row">
                 <div class="col">
-                    <label class="col-sm-2 col-form-label">Login</label>
+                    <label class="col-sm-2 col-form-label" th:text="#{loginText}"></label>
                     <input type="text" class="form-control" th:field="*{login}">
                 </div>
                 <div class="col">
-                    <label class="col-sm-2 col-form-label">Password</label>
+                    <label class="col-sm-2 col-form-label" th:text="#{passwordText}"></label>
                     <input type="password" class="form-control" th:field="*{password}">
                 </div>
             </div>
             <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="alert alert-danger"></p>
             <div th:unless="${#fields.hasErrors('password')}"><br></div>
 
-            <button type="submit" class="btn btn-primary btn-block">Login</button>
+            <button type="submit" class="btn btn-primary btn-block" th:text="#{loginButton}"></button>
         </form>
-        <a th:href="@{/register}"><i><u>Don't have account yet?</u></i></a><br>
-        <a th:href="@{/forgot-password}"><i><u>Forgot your password?</u></i></a>
+        <i><u><a th:href="@{/register}" th:text="#{dontHaveAccountYet}"></a></u></i><br>
+        <i><u><a th:href="@{/forgot-password}" th:text="#{forgotYourPassword}"></a></u></i>
     </div>
 
     <th:block th:replace="fragments/footer"/>

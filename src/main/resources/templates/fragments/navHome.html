@@ -4,29 +4,29 @@
         <div sec:authorize="isAnonymous()">
             <ul class="navbar-nav">
                 <li class="active">
-                    <a th:href="@{/}" class="nav-link">Home</a>
+                    <a th:href="@{/}" class="nav-link" th:text="#{navHome}"></a>
                 </li>
                 <li class="nav-item">
-                    <a th:href="@{/register}" class="nav-link">Register</a>
+                    <a th:href="@{/register}" class="nav-link" th:text="#{navRegister}"></a>
                 </li>
                 <li class="nav-item">
-                    <a th:href="@{/login}" class="nav-link">Sign In</a>
+                    <a th:href="@{/login}" class="nav-link" th:text="#{navLogin}"></a>
                 </li>
             </ul>
         </div>
         <div sec:authorize="isAuthenticated()">
             <ul class="navbar-nav">
                 <li class="active">
-                    <a th:href="@{/}" class="nav-link">Home</a>
+                    <a th:href="@{/}" class="nav-link" th:text="#{navHome}"></a>
                 </li>
                 <li class="nav-item">
-                    <a th:href="@{/user-panel}" class="nav-link">User panel</a>
+                    <a th:href="@{/user-panel}" class="nav-link" th:text="#{navUserPanel}"></a>
                 </li>
                 <li sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item">
-                    <a th:href="@{/admin-panel}" class="nav-link">Admin panel</a>
+                    <a th:href="@{/admin-panel}" class="nav-link" th:text="#{navAdminPanel}"></a>
                 </li>
                 <li class="nav-item">
-                    <a th:href="@{/logout}" class="nav-link" onclick="clicked(event, 'logout')">Logout</a>
+                    <a th:href="@{/logout}" class="nav-link" onclick="clicked(event, 'logout')" th:text="#{navLogout}"></a>
                 </li>
             </ul>
         </div>
