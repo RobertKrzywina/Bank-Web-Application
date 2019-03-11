@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/header(${'Error'})"></head>
+<head th:replace="fragments/header(#{errorTitle})"></head>
 <body>
     <th:block th:replace="fragments/navErrors"/>
 
     <div class="container">
-        <h3 class="headerTitle" th:text="${status} + ' http code'"></h3>
+        <h3 class="headerTitle" th:text="${status} + ' ' + #{errorHeader}"></h3>
         <hr/>
     </div>
 
     <div class="error">
         <div class="error-code m-b-10 m-t-20" th:text="${status}"><i class="fa fa-warning"></i></div>
-        <h3 class="font-bold" th:if="${status!=404}" th:text="${title} + ' appeared...'"></h3>
+        <h3 class="font-bold" th:if="${status!=404}" th:text="${title} + ' ' + #{errorText1}"></h3>
         <h3 class="font-bold" th:unless="${status!=404}">NotFoundException appeared...</h3>
-        <div><a th:href="@{/}"><i class="fa fa-arrow-left"></i>Go back to Homepage</a></div>
+        <div><i class="fa fa-arrow-left"><u><a th:href="@{/}" th:text="#{errorText2}"></a></u></i></div>
     </div>
 
     <th:block th:replace="fragments/footer"/>

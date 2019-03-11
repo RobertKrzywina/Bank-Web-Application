@@ -55,7 +55,7 @@ class BaseController implements Messages {
         if (isCorrect) {
             return "accountVerificationSuccess";
         }
-        return "accountVerificationFailure";
+        return "accountVerificationFailed";
     }
 
     @GetMapping("/forgot-password")
@@ -85,7 +85,7 @@ class BaseController implements Messages {
             model.addAttribute("token", confirmationToken);
             return "resetPassword";
         }
-        return "resetPasswordFailure";
+        return "resetPasswordFailed";
     }
 
     @PatchMapping("/reset-password")

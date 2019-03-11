@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/header(${'Verification success'})"></head>
+<head th:replace="fragments/header(#{accountVerificationSuccessTitle})"></head>
 <body onload="successAlert('Congratulations', 'Your account has been verified!', 'success')">
     <th:block th:replace="fragments/navAnonymousUser"/>
 
     <div class="container">
-        <h3 class="headerTitle">Account verification success</h3>
+        <h3 class="headerTitle" th:text="#{accountVerificationSuccessHeader}"></h3>
         <hr/>
-        <h4>Now u can <a th:href="@{/login}"><i><u>sign in</u></i></a> to the bank application!</h4>
+        <h3 th:text="#{accountVerificationSuccessText1}"></h3>
+        <h3><i><u><a th:href="@{/register}" th:text="#{accountVerificationSuccessText2}"></a></u></i></h3>
     </div>
 
     <th:block th:replace="fragments/footer"/>
