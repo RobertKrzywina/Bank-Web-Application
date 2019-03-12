@@ -17,6 +17,8 @@ function changeLanguage(language) {
 
         if (lastLanguage === 'en') {
             window.location.href = window.location.href.replace('en', 'pl');
+        } else if (lastLanguage === 'de') {
+            window.location.href = window.location.href.replace('de', 'pl');
         } else {
             window.location.search += "lang=pl";
         }
@@ -25,8 +27,20 @@ function changeLanguage(language) {
 
         if (lastLanguage === 'pl') {
             window.location.href = window.location.href.replace('pl', 'en');
+        } else if (lastLanguage === 'de') {
+            window.location.href = window.location.href.replace('de', 'en');
         } else {
             window.location.search += "lang=en";
+        }
+
+    } else if (language === 'de' && lastLanguage !== 'de') {
+
+        if (lastLanguage === 'en') {
+            window.location.href = window.location.href.replace('en', 'de');
+        } else if (lastLanguage === 'pl') {
+            window.location.href = window.location.href.replace('pl', 'de');
+        } else {
+            window.location.search += "lang=de";
         }
     }
 }
