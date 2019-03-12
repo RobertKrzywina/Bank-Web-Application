@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/header(#{adminPanelTitle})"></head>
+<head>
+    <link rel="stylesheet" th:href="@{/css/fontello/fontello.css}">
+    <th:block th:replace="fragments/header(#{adminPanelTitle})"/>
+</head>
 <body>
     <th:block th:replace="fragments/navAdminPanel"/>
 

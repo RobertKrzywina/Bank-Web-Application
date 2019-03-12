@@ -8,11 +8,11 @@ import java.lang.annotation.*;
 @Constraint(validatedBy = IsUniqueValidator.class)
 @Target( { ElementType.METHOD, ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
-public @interface IsUnique {
+public @interface IsUniqueValidation {
 
     String fieldName();
 
-    String message() default "{fieldName} already exists.";
+    String message() default "{javax.validation.constraints.works.IsUniqueValidation.message}";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }

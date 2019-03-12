@@ -9,7 +9,7 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 @FieldDefaults(level = AccessLevel.PRIVATE)
-class IsUniqueValidator implements ConstraintValidator<IsUnique, String>, RegexExpressions {
+class IsUniqueValidator implements ConstraintValidator<IsUniqueValidation, String>, RegexExpressions {
 
     String fieldName;
     final UserFacade userFacade;
@@ -20,7 +20,7 @@ class IsUniqueValidator implements ConstraintValidator<IsUnique, String>, RegexE
     }
 
     @Override
-    public void initialize(IsUnique constraintAnnotation) {
+    public void initialize(IsUniqueValidation constraintAnnotation) {
         fieldName = constraintAnnotation.fieldName();
     }
 

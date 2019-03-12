@@ -2,7 +2,7 @@ package pl.robert.project.user.domain.dto;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import pl.robert.project.validation.IsUnique;
+import pl.robert.project.validation.IsUniqueValidation;
 import pl.robert.project.validation.RegexExpressions;
 
 import javax.validation.constraints.NotEmpty;
@@ -14,7 +14,7 @@ import javax.validation.constraints.Pattern;
 @Getter @Setter
 public class ChangeEmailDTO implements RegexExpressions {
 
-    @IsUnique(fieldName = "Email")
+    @IsUniqueValidation(fieldName = "Email")
     @Pattern(regexp = EMAIL_REGEX, message = "{email.wrongFormat}")
     @NotEmpty(message = "{email.notEmpty}")
     String email;
