@@ -49,20 +49,20 @@ $ mvn clean install
 $ java -jar target/project-0.0.1-SNAPSHOT.jar
 ```
 
-### Tests
+### Running the tests
 Run all tests with <i>FeatureTestSuite.kt</i> class in <i>src/test/kotlin/pl.robert.project</i>
 
-### About project
+### Features
 
-* login and password for admin accounts are a:a and b:b
-* application uses 2 roles, user and admin
-* anonymous user can create new account
-* when creating new account, server will send a verification token to given email
-* when user forgot password or login, he can reset it by giving correct email and server will send a verification token to given email
-* each user after success registration, get random generated bank account number
-* application has 2 panels, user panel and admin panel
-* in user panel you can change details about your account, send transaction to other users and see list of received/sent transactions
-* in admin panel you can make CRUD operations on users
+-[x] login and password for admin accounts are a:a and b:b
+-[x] ability to switch language to english, polish or german at homepage
+-[x] application uses user and admin role, that means there is a separate panel for each of these roles
+-[x] anonymous user can create or recover his account
+-[x] after create or recover account, server will automatically send a confirmation token to given email
+-[x] after success registration, each user get random number of his bank account
+-[x] application has user and admin panel
+-[x] at user panel there is ability to change details about your account, send transaction to other users and see list of received/sent transactions
+-[x] at admin panel there is ability to make CRUD operations on users accounts
 
 ### Database structure
-![ScreenShot](database_structure.png)
+![ScreenShot](src/main/resources/static/img/database_structure.png)
