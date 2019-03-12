@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/header(${'Access denied'})"></head>
+<head th:replace="fragments/header(#{accessDeniedTitle})"></head>
 <body>
     <th:block th:replace="fragments/navErrors"/>
 
     <div class="container">
-        <h3 class="headerTitle">Access denied</h3>
+        <h3 class="headerTitle" th:text="#{accessDeniedHeader}"></h3>
         <hr/>
     </div>
 
     <div class="error">
         <div class="error-code m-b-10 m-t-20">403 <i class="fa fa-warning"></i></div>
-        <h3 class="font-bold">You don't have permissions to access this page..</h3>
-        <div><a th:href="@{/}"><i class="fa fa-arrow-left"></i>Go back to Homepage</a></div>
+        <h3 class="font-bold" th:text="#{accessDeniedText1}"></h3>
+        <div><i class="fa fa-arrow-left"><u><a th:href="@{/}" th:text="#{hrefHomepage}"></a></u></i></div>
     </div>
 
     <th:block th:replace="fragments/footer"/>

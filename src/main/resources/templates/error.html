@@ -14,7 +14,7 @@
         <div class="error-code m-b-10 m-t-20" th:text="${status}"><i class="fa fa-warning"></i></div>
         <h3 class="font-bold" th:if="${status!=404}" th:text="${title} + ' ' + #{errorText1}"></h3>
         <h3 class="font-bold" th:unless="${status!=404}">NotFoundException appeared...</h3>
-        <div><i class="fa fa-arrow-left"><u><a th:href="@{/}" th:text="#{errorText2}"></a></u></i></div>
+        <div><i class="fa fa-arrow-left"><u><a th:href="@{/}" th:text="#{hrefHomepage}"></a></u></i></div>
     </div>
 
     <th:block th:replace="fragments/footer"/>

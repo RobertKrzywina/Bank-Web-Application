@@ -1,63 +1,63 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/header(${'About me'})"></head>
+<head th:replace="fragments/header(#{aboutMeTitle})"></head>
 <body>
     <th:block th:replace="fragments/navUserPanel"/>
 
     <div class="container" th:object="${map}">
-        <h3 class="headerTitle">About me</h3>
+        <h3 class="headerTitle" th:text="#{aboutMeHeader}"></h3>
         <hr/>
         <div class="row">
             <div class="col">
-                <label class="col-sm-2 col-form-label">Id</label>
+                <label class="col-sm-2 col-form-label" th:text="#{valueId}"></label>
                 <input readonly type="text" class="form-control" th:placeholder="${map.get('id')}">
             </div>
             <div class="col">
-                <label class="col-sm-2 col-form-label">Login</label>
+                <label class="col-sm-2 col-form-label" th:text="#{valueLogin}"></label>
                 <input readonly type="text" class="form-control" th:placeholder="${map.get('login')}">
             </div>
         </div>
         <br>
         <div class="row">
             <div class="col">
-                <label class="col-sm-2 col-form-label">Email</label>
+                <label class="col-sm-2 col-form-label" th:text="#{valueEmail}"></label>
                 <input readonly type="text" class="form-control" th:placeholder="${map.get('email')}">
             </div>
             <div class="col">
-                <label class="col-sm-2 col-form-label">Phone</label>
+                <label class="col-sm-2 col-form-label" th:text="#{valuePhoneNumber}"></label>
                 <input readonly type="text" class="form-control" th:placeholder="${map.get('phoneNumber')}">
             </div>
         </div>
         <br>
         <div class="row">
             <div class="col">
-                <label class="col-sm-2 col-form-label">Password</label>
+                <label class="col-sm-2 col-form-label" th:text="#{valuePassword}"></label>
                 <input readonly type="text" class="form-control" placeholder="Your password is encoded by default in our data base">
             </div>
             <div class="col">
-                <label class="col-sm-2 col-form-label">Balance</label>
+                <label class="col-sm-2 col-form-label" th:text="#{valueBalance}"></label>
                 <input readonly type="text" class="form-control" th:placeholder="${map.get('balance')}">
             </div>
         </div>
         <br>
         <div class="row">
             <div class="col">
-                <label class="col-sm-2 col-form-label">Number</label>
+                <label class="col-sm-2 col-form-label" th:text="#{valueNumber}"></label>
                 <input readonly type="text" class="form-control" th:placeholder="${map.get('bankAccountNumber')}">
             </div>
         </div>
         <br>
         <form action="#" method="get" th:action="@{/user-panel/change-email}">
-            <button type="submit" class="btn btn-primary btn-block">Change email</button>
+            <button type="submit" class="btn btn-primary btn-block" th:text="#{buttonChangeEmail}"></button>
         </form>
         <br>
         <form action="#" method="get" th:action="@{/user-panel/change-phone}">
-            <button type="submit" class="btn btn-primary btn-block">Change phone number</button>
+            <button type="submit" class="btn btn-primary btn-block" th:text="#{buttonChangePhoneNumber}"></button>
         </form>
         <br>
         <form action="#" method="get" th:action="@{/user-panel/change-password}">
-            <button type="submit" class="btn btn-primary btn-block">Change password</button>
+            <button type="submit" class="btn btn-primary btn-block"  th:text="#{buttonChangePassword}"></button>
         </form>
     </div>
 

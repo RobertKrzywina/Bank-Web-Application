@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/header(${'Send transaction completed'})"></head>
+<head th:replace="fragments/header(#{sendTransactionCompletedTitle})"></head>
 <body>
     <th:block th:replace="fragments/navUserPanel"/>
 
     <div class="container">
-        <h3 class="headerTitle">Send transaction completed</h3>
+        <h3 class="headerTitle" th:text="#{sendTransactionCompletedHeader}"></h3>
         <hr/>
-        <h3 class="alert alert-success">You have successfully sent transaction!</h3>
-        <a th:href="@{/user-panel/sent-transactions}">See list of your sent transactions!</a>
+        <h3 class="alert alert-success" th:text="#{sendTransactionCompletedText1}"></h3>
+        <h3><i><u><a th:href="@{/user-panel/sent-transactions}" th:text="#{sendTransactionCompletedText2}"></a></u></i></h3>
     </div>
 
     <th:block th:replace="fragments/footer"/>

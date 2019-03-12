@@ -1,23 +1,23 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/header(${'Send transaction'})"></head>
+<head th:replace="fragments/header(#{sendTransactionTitle})"></head>
 <body>
     <th:block th:replace="fragments/navUserPanel"/>
 
     <div class="container">
-        <h3 class="headerTitle">Send transaction</h3>
+        <h3 class="headerTitle" th:text="#{sendTransactionHeader}"></h3>
         <hr/>
         <form action="#" method="post" th:action="@{/user-panel/send-transaction}" th:object="${transaction}">
             <div class="form-group row">
-                <label class="col-sm-2 col-form-label">Current balance</label>
+                <label class="col-sm-2 col-form-label" th:text="#{valueCurrentBalance}"></label>
                 <div class="col-sm-10">
                     <input readonly class="form-control" th:placeholder="${currentBalance}">
                 </div>
             </div>
 
             <div class="form-group row">
-                <label class="col-sm-2 col-form-label">Title</label>
+                <label class="col-sm-2 col-form-label" th:text="#{valueTitle}"></label>
                 <div class="col-sm-10">
                     <input type="text" class="form-control" th:field="*{title}">
                 </div>
@@ -26,7 +26,7 @@
             <div th:unless="${#fields.hasErrors('title')}"><br></div>
 
             <div class="form-group row">
-                <label class="col-sm-2 col-form-label">Description</label>
+                <label class="col-sm-2 col-form-label" th:text="#{valueDescription}"></label>
                 <div class="col-sm-10">
                     <textarea rows="3" cols="89" style="resize: none;" th:field="*{description}" maxlength="255"></textarea>
                 </div>
@@ -35,14 +35,14 @@
             <div th:unless="${#fields.hasErrors('description')}"><br></div>
 
             <div class="form-group row">
-                <label class="col-sm-2 col-form-label">From</label>
+                <label class="col-sm-2 col-form-label" th:text="#{valueFrom}"></label>
                 <div class="col-sm-10">
                     <input readonly type="text" class="form-control" th:placeholder="${senderAccountNumber}">
                 </div>
             </div>
 
             <div class="form-group row">
-                <label class="col-sm-2 col-form-label">To</label>
+                <label class="col-sm-2 col-form-label" th:text="#{valueTo}"></label>
                 <div class="col-sm-10">
                     <input type="text" class="form-control" th:field="*{receiverAccountNumber}" maxlength="29">
                 </div>
@@ -51,7 +51,7 @@
             <div th:unless="${#fields.hasErrors('receiverAccountNumber')}"><br></div>
 
             <div class="form-group row">
-                <label class="col-sm-2 col-form-label">Amount</label>
+                <label class="col-sm-2 col-form-label" th:text="#{valueAmount}"></label>
                 <div class="col-sm-10">
                     <input type="number" step="any" class="form-control" th:field="*{amount}">
                 </div>
@@ -59,7 +59,7 @@
             <p th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}" class="alert alert-danger"></p>
             <div th:unless="${#fields.hasErrors('amount')}"><br></div>
 
-            <button type="submit" class="btn btn-primary btn-block">Send</button>
+            <button type="submit" class="btn btn-primary btn-block" th:text="#{buttonSend}"></button>
         </form>
     </div>
 

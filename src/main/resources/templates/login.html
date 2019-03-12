@@ -12,18 +12,18 @@
         <form method="post" action="#" th:action="@{/login}" th:object="${user}">
             <div class="row">
                 <div class="col">
-                    <label class="col-sm-2 col-form-label" th:text="#{loginText}"></label>
+                    <label class="col-sm-2 col-form-label" th:text="#{valueLogin}"></label>
                     <input type="text" class="form-control" th:field="*{login}">
                 </div>
                 <div class="col">
-                    <label class="col-sm-2 col-form-label" th:text="#{passwordText}"></label>
+                    <label class="col-sm-2 col-form-label" th:text="#{valuePassword}"></label>
                     <input type="password" class="form-control" th:field="*{password}">
                 </div>
             </div>
             <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="alert alert-danger"></p>
             <div th:unless="${#fields.hasErrors('password')}"><br></div>
 
-            <button type="submit" class="btn btn-primary btn-block" th:text="#{loginButton}"></button>
+            <button type="submit" class="btn btn-primary btn-block" th:text="#{buttonLogin}"></button>
         </form>
         <i><u><a th:href="@{/register}" th:text="#{dontHaveAccountYet}"></a></u></i><br>
         <i><u><a th:href="@{/forgot-password}" th:text="#{forgotYourPassword}"></a></u></i>

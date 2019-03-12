@@ -1,22 +1,22 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/header(${'Sent transactions'})"></head>
+<head th:replace="fragments/header(#{sentTransactionsTitle})"></head>
 <body>
     <th:block th:replace="fragments/navUserPanel"/>
 
     <div class="container">
-        <h3 class="headerTitle">List of your sent transactions</h3>
+        <h3 class="headerTitle" th:text="#{sentTransactionsHeader}"></h3>
         <hr/>
         <div th:if="${!transactions.isEmpty()}">
             <table class="table table-striped table-dark">
                 <tr>
-                    <th>Id</th>
-                    <th>Title</th>
-                    <th>Description</th>
-                    <th>To</th>
-                    <th>Date</th>
-                    <th>Amount</th>
+                    <th th:text="#{valueId}"></th>
+                    <th th:text="#{valueTitle}"></th>
+                    <th th:text="#{valueDescription}"></th>
+                    <th th:text="#{valueTo}"></th>
+                    <th th:text="#{valueDate}"></th>
+                    <th th:text="#{valueAmount}"></th>
                 </tr>
                 <tr th:each="transaction, iterator:${transactions}">
                     <td th:text="${values[iterator.index]}"></td>
@@ -36,7 +36,7 @@
             </ul>
         </div>
         <div th:unless="${!transactions.isEmpty()}">
-            <h3 class="alert alert-info">You have no sent transactions!</h3>
+            <h3 class="alert alert-info" th:text="#{sentTransactionsEmpty}"></h3>
         </div>
     </div>
 

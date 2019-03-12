@@ -115,7 +115,6 @@ class UserController implements Messages {
         }
         long id = userFacade.findIdByLogin(SecurityContextHolder.getContext().getAuthentication().getName());
         userFacade.changeEmail(id, dto.getConfirmedEmail());
-        model.addAttribute("msg", SUCCESSFULLY_CHANGED_EMAIL);
         return "changeValueCompleted";
     }
 
@@ -134,8 +133,6 @@ class UserController implements Messages {
         }
         long id = userFacade.findIdByLogin(SecurityContextHolder.getContext().getAuthentication().getName());
         userFacade.changePhoneNumber(id, dto.getConfirmedPhoneNumber());
-
-        model.addAttribute("msg", SUCCESSFULLY_CHANGED_PHONE_NUMBER);
         return "changeValueCompleted";
     }
 
@@ -154,8 +151,6 @@ class UserController implements Messages {
         }
         long id = userFacade.findIdByLogin(SecurityContextHolder.getContext().getAuthentication().getName());
         userFacade.changePassword(id, dto.getConfirmedPassword());
-
-        model.addAttribute("msg", SUCCESSFULLY_CHANGED_PASSWORD);
         return "changeValueCompleted";
     }
 }
