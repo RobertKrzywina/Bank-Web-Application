@@ -10,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import pl.robert.project.user.Messages;
 import pl.robert.project.user.domain.UserFacade;
 import pl.robert.project.user.domain.dto.*;
 
@@ -21,7 +20,7 @@ import javax.validation.Valid;
 @Controller
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-class BaseController implements Messages {
+class BaseController {
 
     UserFacade userFacade;
 

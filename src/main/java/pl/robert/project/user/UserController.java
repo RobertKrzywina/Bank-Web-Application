@@ -26,7 +26,7 @@ import javax.validation.Valid;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RequestMapping("/user-panel")
-class UserController implements Messages {
+class UserController {
 
     UserFacade userFacade;
     BankAccountFacade bankAccountFacade;

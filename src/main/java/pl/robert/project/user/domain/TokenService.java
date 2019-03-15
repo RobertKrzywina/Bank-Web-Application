@@ -42,7 +42,8 @@ class TokenService {
             mailSender.send(mimeMessage);
         } catch (MessagingException | MailSendException e) {
             tokenRepository.delete(confirmationToken);
-            logger.info("Deleting token cause {} appeared...", e.getClass());
+            userRepository.delete(user);
+            logger.info("Deleting token and user cause {} appeared...", e.getClass());
             throw new MailSendException("MailSendException | MessagingException");
         }
     }

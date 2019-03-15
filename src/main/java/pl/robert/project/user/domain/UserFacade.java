@@ -64,10 +64,6 @@ public class UserFacade {
         return userService.isPhoneUnique(phone);
     }
 
-    public boolean isTokenExists(String token) {
-        return tokenService.isTokenExists(token);
-    }
-
     public boolean isLoginAndPasswordCorrect(String login, String password) {
         return userService.isLoginAndPasswordCorrect(login, password);
     }
@@ -86,14 +82,6 @@ public class UserFacade {
 
     public long findIdByLogin(String login) {
         return userService.findIdByLogin(login);
-    }
-
-    public User findUserByEmail(String email) {
-        return userService.findByEmail(email);
-    }
-
-    public ConfirmationToken findConfirmationTokenByUser(User user) {
-        return tokenService.findConfirmationTokenByUser(user);
     }
 
     public Page<User> findAll(int page, int size) {
