@@ -22,6 +22,7 @@ class UserFactory {
                 .roles(new HashSet<>(Collections.singleton(new Role(1L, "ROLE_USER"))))
                 .bankAccount(dto.getBankAccount())
                 .isEnabled(false)
+                .bankAccount(dto.getBankAccount())
                 .build();
     }
 

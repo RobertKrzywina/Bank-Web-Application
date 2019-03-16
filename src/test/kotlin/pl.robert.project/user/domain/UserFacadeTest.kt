@@ -32,8 +32,8 @@ class UserFacadeTest {
         // Save user and generate confirmation token
         facade.saveUserAndGenerateAccountConfirmationToken(dto)
 
-        // Find it by login and it won't be a null
-        Assertions.assertNotNull(facade.findByLogin(dto.login))
+        // Find it by email and it won't be a null
+        Assertions.assertNotNull(facade.findUserByEmail(dto.email))
 
         // Find created user and confirmation token
         val user = facade.findUserByEmail(dto.email)
@@ -188,7 +188,7 @@ class UserFacadeTest {
 
     @Test fun `Should change email, phone number and password`() {
         // Find user by email
-        val user = facade.findUserByEmail("emailemai@email.com")
+        val user = facade.findUserByEmail("linus.torvalds@linux.com")
 
         // Change his email
         facade.changeEmail(user.id, "imHisNewEmail@email.com")

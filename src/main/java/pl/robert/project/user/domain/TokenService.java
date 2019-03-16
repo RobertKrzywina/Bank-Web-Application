@@ -120,4 +120,12 @@ class TokenService {
     ConfirmationToken findByConfirmationToken(String confirmationToken) {
         return tokenRepository.findByConfirmationToken(confirmationToken);
     }
+
+    ConfirmationToken findConfirmationTokenByUser(User user) {
+        return tokenRepository.findByUser(user);
+    }
+
+    boolean isTokenExists(String token) {
+        return tokenRepository.findByConfirmationToken(token) != null;
+    }
 }

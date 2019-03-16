@@ -24,6 +24,7 @@ public class UserFacade {
         userService.setPhoneNumber(dto);
         BankAccount account = bankAccountFacade.generateBankAccount();
         bankAccountFacade.save(account);
+        dto.setBankAccount(account);
         User user = userService.create(dto);
         userService.save(user);
         tokenService.generateAccountConfirmationToken(user);
@@ -64,6 +65,10 @@ public class UserFacade {
         return userService.isPhoneUnique(phone);
     }
 
+    public boolean isTokenExists(String token) {
+        return tokenService.isTokenExists(token);
+    }
+
     public boolean isLoginAndPasswordCorrect(String login, String password) {
         return userService.isLoginAndPasswordCorrect(login, password);
     }
@@ -86,6 +91,14 @@ public class UserFacade {
 
     public Page<User> findAll(int page, int size) {
         return userService.findAll(page, size);
+    }
+
+    public User findUserByEmail(String email) {
+        return userService.findByEmail(email);
+    }
+
+    public ConfirmationToken findConfirmationTokenByUser(User user) {
+        return tokenService.findConfirmationTokenByUser(user);
     }
 
     public void deleteById(long id) {
